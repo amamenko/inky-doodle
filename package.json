@@ -10,6 +10,7 @@
     "react-scripts": "3.0.1",
     "react-select": "^4.0.2",
     "react-select-nes-css-theme": "^1.0.1",
+    "react-spinners": "^0.10.4",
     "styled-components": "^5.2.1"
   },
   "scripts": {
