@@ -26,6 +26,9 @@ const StyledMainContainer = styled.div`
     margin-top: ${(props) => (props.parentInkyDoodles ? "10vh" : "15vh")};
     padding-left: 0;
     padding-right: 0;
+    &:last-child {
+      padding-bottom: 15vh;
+    }
   }
   @media (max-width: 768px) {
     padding-left: 0;
@@ -121,28 +124,70 @@ const App = () => {
       });
   }, [parentInkyDoodlesQuery]);
 
-  const gen3InkyDoodlesQuery = `
-    query {
-        inkyDoodleCollection(where: {generation_in: 3, parents_contains_all: [${
-          leftGen2.name ? JSON.stringify(leftGen2.name) : null
-        }, ${rightGen2.name ? JSON.stringify(rightGen2.name) : null}]}) {
-            items {
-                generation
-                name
-                parents
-                image {
-                    url
+  useEffect(() => {
+    if (leftGen2 && rightGen2) {
+      if (leftGen2.name && rightGen2.name) {
+        if (leftGen2.name === rightGen2.name) {
+          if (gen3.name !== leftGen2.name) {
+            changeGen3(leftGen2);
+          }
+        }
+      } else {
+        if (leftGen2.label && rightGen2.label) {
+          if (leftGen2.label === rightGen2.label) {
+            if (gen3.name !== leftGen2.label) {
+              changeGen3(leftGen2);
+            }
+          }
+        }
+      }
+    }
+  }, [gen3.name, leftGen2, rightGen2]);
+
+  useEffect(() => {
+    const getGen3Function = async (parent1, parent2) => {
+      changeGen3Loading(true);
+
+      const gen3InkyDoodlesQuery = `
+        query {
+            inkyDoodleCollection(where: {parents_contains_all: [${
+              parent1
+                ? parent1.name
+                  ? JSON.stringify(parent1.name)
+                  : parent1.label
+                  ? JSON.stringify(parent1.label)
+                  : null
+                : leftGen2.name
+                ? JSON.stringify(leftGen2.name)
+                : leftGen2.label
+                ? JSON.stringify(leftGen2.label)
+                : null
+            }, ${
+        parent2
+          ? parent2.name
+            ? JSON.stringify(parent2.name)
+            : parent2.label
+            ? JSON.stringify(parent2.label)
+            : null
+          : rightGen2.name
+          ? JSON.stringify(rightGen2.name)
+          : rightGen2.label
+          ? JSON.stringify(rightGen2.label)
+          : null
+      }]}) {
+                items {
+                    generation
+                    name
+                    parents
+                    image {
+                        url
+                    }
                 }
             }
         }
-    }
-`;
+      `;
 
-  useEffect(() => {
-    const getGen3Function = () => {
-      changeGen3Loading(true);
-
-      axios({
+      await axios({
         url: `https://graphql.contentful.com/content/v1/spaces/${process.env.REACT_APP_SPACE_ID}`,
         method: "post",
         headers: {
@@ -163,7 +208,20 @@ const App = () => {
           }
 
           if (data.inkyDoodleCollection.items[0]) {
-            changeGen3(data.inkyDoodleCollection.items[0]);
+            if (leftGen2 && rightGen2) {
+              if (
+                (leftGen2.name &&
+                  rightGen2.name &&
+                  leftGen2.name === rightGen2.name) ||
+                (leftGen2.label &&
+                  rightGen2.label &&
+                  leftGen2.label === rightGen2.label)
+              ) {
+                changeGen3(leftGen2);
+              } else {
+                changeGen3(data.inkyDoodleCollection.items[0]);
+              }
+            }
           } else {
             changeGen3("No Match");
           }
@@ -172,26 +230,144 @@ const App = () => {
 
     if (leftGen2) {
       if (rightGen2) {
-        if (leftGen2.name && rightGen2.name) {
-          if (
-            JSON.stringify(leftGen2.name) === JSON.stringify(rightGen2.name)
-          ) {
-            changeGen3(leftGen2);
-          } else {
-            getGen3Function();
-          }
+        if (
+          (leftGen2.name &&
+            rightGen2.name &&
+            leftGen2.name === rightGen2.name) ||
+          (leftGen2.label &&
+            rightGen2.label &&
+            leftGen2.label === rightGen2.label)
+        ) {
+          changeGen3(leftGen2);
         } else {
-          if (
-            JSON.stringify(leftGen2.label) === JSON.stringify(rightGen2.label)
-          ) {
-            changeGen3(leftGen2);
-          } else {
-            getGen3Function();
+          const firstGenArr = [
+            leftTreeLeftParent,
+            leftTreeRightParent,
+            rightTreeLeftParent,
+            rightTreeRightParent,
+          ];
+
+          const firstGenNames = firstGenArr.map((x) => x.label);
+
+          let nameFrequencyObj = {};
+
+          for (let i = 0; i < firstGenArr.length; i++) {
+            if (nameFrequencyObj[firstGenArr[i].label]) {
+              nameFrequencyObj[firstGenArr[i].label]++;
+            } else {
+              nameFrequencyObj[firstGenArr[i].label] = 1;
+            }
+          }
+
+          for (let c in nameFrequencyObj) {
+            if (nameFrequencyObj[c] >= 3) {
+              changeGen3(
+                firstGenArr[
+                  firstGenNames.indexOf(
+                    Object.keys(nameFrequencyObj).find(
+                      (key) => nameFrequencyObj[key] === nameFrequencyObj[c]
+                    )
+                  )
+                ]
+              );
+
+              return;
+            } else if (
+              nameFrequencyObj[c] === 2 &&
+              Object.values(nameFrequencyObj).indexOf(2) ===
+                Object.values(nameFrequencyObj).lastIndexOf(2)
+            ) {
+              const mostFreq = Object.keys(nameFrequencyObj).find(
+                (key) => nameFrequencyObj[key] === nameFrequencyObj[c]
+              );
+              const remainingArr = Object.keys(nameFrequencyObj).filter(
+                (x) => x !== mostFreq
+              );
+
+              const getGen2Function = async (parent1, parent2) => {
+                const gen2InkyDoodlesQuery = `
+              query {
+                  inkyDoodleCollection(where: {generation_in: 2, parents_contains_all: [${JSON.stringify(
+                    parent1
+                  )}, ${JSON.stringify(parent2)}]}) {
+                      items {
+                          generation
+                          name
+                          parents
+                          image {
+                              url
+                          }
+                      }
+                  }
+              }
+          `;
+
+                const response = await axios({
+                  url: `https://graphql.contentful.com/content/v1/spaces/${process.env.REACT_APP_SPACE_ID}`,
+                  method: "post",
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${process.env.REACT_APP_ACCESS_TOKEN}`,
+                  },
+                  data: {
+                    query: gen2InkyDoodlesQuery,
+                  },
+                })
+                  .then((res) => {
+                    return res.data;
+                  })
+                  .then(({ data, errors }) => {
+                    if (errors) {
+                      console.error(errors);
+                    }
+
+                    return data.inkyDoodleCollection.items[0];
+                  });
+
+                return response;
+              };
+
+              Promise.all(
+                remainingArr.map(
+                  async (item) => await getGen2Function(mostFreq, item)
+                )
+              ).then((res) => {
+                getGen3Function(res[0], res[1]);
+              });
+            } else if (leftGen2.name && rightGen2.name) {
+              if (
+                JSON.stringify(leftGen2.name) === JSON.stringify(rightGen2.name)
+              ) {
+                changeGen3(leftGen2);
+              } else {
+                getGen3Function();
+              }
+            } else {
+              if (leftGen2.label && rightGen2.label) {
+                if (
+                  JSON.stringify(leftGen2.label) ===
+                  JSON.stringify(rightGen2.label)
+                ) {
+                  changeGen3(leftGen2);
+                } else {
+                  getGen3Function();
+                }
+              } else {
+                getGen3Function();
+              }
+            }
           }
         }
       }
     }
-  }, [gen3InkyDoodlesQuery, leftGen2, rightGen2]);
+  }, [
+    leftGen2,
+    rightGen2,
+    leftTreeRightParent,
+    leftTreeLeftParent,
+    rightTreeRightParent,
+    rightTreeLeftParent,
+  ]);
 
   useEffect(() => {
     // In order to prevent iOS keyboard from opening on dropdown focus

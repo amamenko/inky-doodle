@@ -138,10 +138,6 @@ input {
     -webkit-transform: scale(0.5) translateY(0.4rem);
     transform: scale(0.5) translateY(0.4rem);
   }
-
-  .cksuQK:last-child {
-    padding-bottom: 15vh;
-  }
 }
 
 @media only screen and (min-width: 1025px) {

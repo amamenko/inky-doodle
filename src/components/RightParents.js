@@ -37,10 +37,10 @@ const RightParents = (props) => {
 `;
 
   useEffect(() => {
-    const getGen2Function = () => {
+    const getGen2Function = async () => {
       changeRightGen2Loading(true);
 
-      axios({
+      const response = await axios({
         url: `https://graphql.contentful.com/content/v1/spaces/${process.env.REACT_APP_SPACE_ID}`,
         method: "post",
         headers: {
@@ -63,6 +63,8 @@ const RightParents = (props) => {
 
           changeRightGen2(data.inkyDoodleCollection.items[0]);
         });
+
+      return response;
     };
 
     if (rightTreeLeftParent) {
@@ -74,7 +76,7 @@ const RightParents = (props) => {
           ) {
             changeRightGen2(rightTreeLeftParent);
           } else {
-            getGen2Function();
+            getGen2Function().then((res) => res);
           }
         } else {
           if (
@@ -83,7 +85,7 @@ const RightParents = (props) => {
           ) {
             changeRightGen2(rightTreeLeftParent);
           } else {
-            getGen2Function();
+            getGen2Function().then((res) => res);
           }
         }
       }
