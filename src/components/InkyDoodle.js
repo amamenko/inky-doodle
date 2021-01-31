@@ -30,11 +30,23 @@ const StyledX = styled.p`
   color: red;
   font-size: calc(2vw + 17px);
   position: absolute;
-  top: 25%;
+  top: 30%;
   bottom: 0;
   left: 0;
   right: 0;
   margin: 0 auto;
+  @media (min-width: 768px) {
+    top: 40%;
+  }
+  @media (max-width: 1024px) and (orientation: landscape) {
+    top: 30%;
+  }
+  @media (min-width: 1024px) {
+    top: 35%;
+  }
+  @media (min-width: 1400px) {
+    top: 25%;
+  }
 `;
 
 const StyledNESContainer = styled.div`
@@ -44,12 +56,25 @@ const StyledNESContainer = styled.div`
   align-self: center;
   align-items: center;
   justify-content: center;
-  @media (max-width: 768px) {
+  @media (max-width: 340px) {
+    margin-bottom: 2rem !important;
+  }
+  @media (max-width: 767px) {
     max-width: 100px;
     max-height: 10vh;
   }
-  @media (min-width: 769px) {
+  @media (min-width: 768px) {
+    min-width: 150px;
+    max-height: 10vh;
+  }
+  @media (max-width: 1024px) and (orientation: landscape) {
+    max-height: 25vh;
+    height: 25vh;
+    margin-bottom: 2rem !important;
+  }
+  @media (min-width: 1024px) {
     min-width: 220px;
+    max-height: 15vh;
   }
 `;
 
@@ -58,8 +83,6 @@ const StyledTitle = styled.div`
   align-self: flex-start;
   white-space: nowrap;
 `;
-
-const ChildNESContainer = styled.div``;
 
 const InkyDoodle = (props) => {
   const {
@@ -114,10 +137,22 @@ const InkyDoodle = (props) => {
     changeRightTreeRightParent,
   ]);
 
+  useEffect(() => {
+    const nesDropdown = document.getElementsByTagName("INPUT");
+
+    if (nesDropdown) {
+      Array.from(nesDropdown).forEach((el) => {
+        el.setAttribute("readonly");
+      });
+    }
+  }, []);
+
   return (
     <StyledContainer>
       <StyledNESContainer
-        className="nes-container is-rounded with-title"
+        className={`nes-container is-rounded with-title ${
+          !gen2Identifier && !gen3Identifier ? "gen1_parents" : null
+        }`}
         style={{ marginBottom: "3rem" }}
       >
         <StyledTitle className="title" style={{ fontSize: "0.6rem" }}>

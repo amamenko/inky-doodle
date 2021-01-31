@@ -9,6 +9,7 @@ import "./App.css";
 
 const StyledAppContainer = styled.div`
   max-height: 100vh;
+  max-width: 100vw;
 `;
 
 const StyledMainContainer = styled.div`
@@ -16,11 +17,23 @@ const StyledMainContainer = styled.div`
   font-size: 1rem;
   padding-left: 10%;
   padding-right: 10%;
-  margin-top: ${(props) => (props.parentInkyDoodles ? "5vh" : "7vh")};
+  margin-top: ${(props) => (props.parentInkyDoodles ? "2vh" : "7vh")};
   display: flex;
   align-items: center;
   width: 100%;
   justify-content: space-evenly;
+  @media (max-width: 1024px) and (orientation: landscape) {
+    margin-top: ${(props) => (props.parentInkyDoodles ? "10vh" : "15vh")};
+    padding-left: 0;
+    padding-right: 0;
+  }
+  @media (max-width: 768px) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  @media (max-width: 340px) {
+    margin-top: ${(props) => (props.parentInkyDoodles ? "8vh" : "13vh")};
+  }
 `;
 
 const StyledParentsContainer = styled.div`
@@ -30,17 +43,23 @@ const StyledParentsContainer = styled.div`
 `;
 
 const StyledNavLogo = styled.img`
-  width: 5%;
-  height: 5%;
   position: absolute;
   top: 0;
   left: 0;
+  max-width: 100%;
 `;
 
 const StyledAnchor = styled.a`
+  height: 5vh;
   display: block;
   position: relative;
-  width: 100%;
+  width: 100px;
+  margin-top: 1rem;
+  margin-left: 1rem;
+  @media (max-width: 1024px) and (orientation: landscape) {
+    margin-top: 0.5rem;
+    margin-left: 0rem;
+  }
 `;
 
 const App = () => {
@@ -173,6 +192,23 @@ const App = () => {
       }
     }
   }, [gen3InkyDoodlesQuery, leftGen2, rightGen2]);
+
+  useEffect(() => {
+    // In order to prevent iOS keyboard from opening on dropdown focus
+    window.addEventListener("load", () => {
+      const nesDropdowns = [...document.getElementsByTagName("INPUT")];
+      if (nesDropdowns.length > 0) {
+        nesDropdowns.forEach((item) => item.setAttribute("readonly", true));
+      }
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const nesDropdowns = [...document.getElementsByTagName("INPUT")];
+      if (nesDropdowns.length > 0) {
+        nesDropdowns.forEach((item) => item.setAttribute("readonly", true));
+      }
+    });
+  }, []);
 
   return (
     <StyledAppContainer>
