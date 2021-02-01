@@ -96,16 +96,75 @@ const LeftParents = (props) => {
     changeLeftGen2Loading,
   ]);
 
+  useEffect(() => {
+    if (leftTreeLeftParent || leftTreeRightParent) {
+      const listenForMenu = setInterval(() => {
+        [...document.getElementsByClassName("right_parents")].forEach(
+          (item) => {
+            if (item) {
+              if (item.childNodes) {
+                if (item.childNodes[2]) {
+                  if (item.childNodes[2].firstChild) {
+                    if (
+                      item.childNodes[2].firstChild.classList.value.includes(
+                        "MenuList"
+                      ) ||
+                      item.childNodes[2].firstChild.classList.value.includes(
+                        "menu"
+                      ) ||
+                      item.childNodes[2].firstChild.classList.value.includes(
+                        "css-1tci6j0"
+                      )
+                    ) {
+                      item.childNodes[2].firstChild.childNodes.forEach((x) => {
+                        if (
+                          JSON.stringify(x.textContent) ===
+                            JSON.stringify(leftTreeLeftParent.label) ||
+                          JSON.stringify(x.textContent) ===
+                            JSON.stringify(leftTreeRightParent.label)
+                        ) {
+                          const relevantParent = parentInkyDoodles.filter(
+                            (parent) =>
+                              JSON.stringify(x.textContent) ===
+                              JSON.stringify(parent.name)
+                          );
+
+                          if (relevantParent) {
+                            if (relevantParent.length > 0) {
+                              x.style.backgroundColor = `${relevantParent[0].color}77`;
+                            }
+                          }
+                        } else {
+                          x.style.backgroundColor = "#FFF";
+                        }
+                      });
+                    }
+                  }
+                }
+              }
+            }
+          }
+        );
+      }, 100);
+
+      return () => {
+        clearInterval(listenForMenu);
+      };
+    }
+  }, [leftTreeRightParent, leftTreeLeftParent, parentInkyDoodles]);
+
   return (
     <>
       <InkyDoodle
         parentInkyDoodles={parentInkyDoodles}
         leftTreeLeftParent={leftTreeLeftParent}
+        leftTreeRightParent={leftTreeRightParent}
         changeLeftTreeLeftParent={changeLeftTreeLeftParent}
         leftLeft
       />
       <InkyDoodle
         parentInkyDoodles={parentInkyDoodles}
+        leftTreeLeftParent={leftTreeLeftParent}
         leftTreeRightParent={leftTreeRightParent}
         changeLeftTreeRightParent={changeLeftTreeRightParent}
         leftRight

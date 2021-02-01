@@ -97,6 +97,8 @@ const App = () => {
                 image {
                     url
                 }
+                color 
+                number
             }
         }
     }
@@ -223,7 +225,32 @@ const App = () => {
               }
             }
           } else {
-            changeGen3("No Match");
+            if (
+              leftTreeLeftParent &&
+              leftTreeRightParent &&
+              rightTreeLeftParent &&
+              rightTreeRightParent
+            ) {
+              if (
+                leftTreeLeftParent.label &&
+                leftTreeRightParent.label &&
+                rightTreeLeftParent.label &&
+                rightTreeRightParent.label
+              ) {
+                const nameArr = [
+                  leftTreeLeftParent.label,
+                  leftTreeRightParent.label,
+                  rightTreeLeftParent.label,
+                  rightTreeRightParent.label,
+                ];
+
+                const uniqueNames = [...new Set(nameArr)];
+
+                if (uniqueNames.length === 4) {
+                  changeGen3("No Match");
+                }
+              }
+            }
           }
         });
     };
@@ -413,6 +440,8 @@ const App = () => {
             rightTreeLeftParent={rightTreeLeftParent}
             changeRightTreeLeftParent={changeRightTreeLeftParent}
             rightTreeRightParent={rightTreeRightParent}
+            leftTreeLeftParent={leftTreeLeftParent}
+            leftTreeRightParent={leftTreeRightParent}
             changeRightTreeRightParent={changeRightTreeRightParent}
             changeRightGen2={changeRightGen2}
             changeRightGen2Loading={changeRightGen2Loading}

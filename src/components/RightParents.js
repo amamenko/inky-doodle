@@ -5,6 +5,8 @@ import InkyDoodle from "./InkyDoodle";
 const RightParents = (props) => {
   const {
     parentInkyDoodles,
+    leftTreeLeftParent,
+    leftTreeRightParent,
     rightTreeLeftParent,
     changeRightTreeLeftParent,
     rightTreeRightParent,
@@ -98,6 +100,61 @@ const RightParents = (props) => {
     changeRightGen2Loading,
   ]);
 
+  useEffect(() => {
+    if (rightTreeLeftParent || rightTreeRightParent) {
+      const listenForMenu = setInterval(() => {
+        [...document.getElementsByClassName("left_parents")].forEach((item) => {
+          if (item) {
+            if (item.childNodes) {
+              if (item.childNodes[2]) {
+                if (item.childNodes[2].firstChild) {
+                  if (
+                    item.childNodes[2].firstChild.classList.value.includes(
+                      "MenuList"
+                    ) ||
+                    item.childNodes[2].firstChild.classList.value.includes(
+                      "menu"
+                    ) ||
+                    item.childNodes[2].firstChild.classList.value.includes(
+                      "css-1tci6j0"
+                    )
+                  ) {
+                    item.childNodes[2].firstChild.childNodes.forEach((x) => {
+                      if (
+                        JSON.stringify(x.textContent) ===
+                          JSON.stringify(rightTreeLeftParent.label) ||
+                        JSON.stringify(x.textContent) ===
+                          JSON.stringify(rightTreeRightParent.label)
+                      ) {
+                        const relevantParent = parentInkyDoodles.filter(
+                          (parent) =>
+                            JSON.stringify(x.textContent) ===
+                            JSON.stringify(parent.name)
+                        );
+
+                        if (relevantParent) {
+                          if (relevantParent.length > 0) {
+                            x.style.backgroundColor = `${relevantParent[0].color}77`;
+                          }
+                        }
+                      } else {
+                        x.style.backgroundColor = "#FFF";
+                      }
+                    });
+                  }
+                }
+              }
+            }
+          }
+        });
+      }, 100);
+
+      return () => {
+        clearInterval(listenForMenu);
+      };
+    }
+  }, [rightTreeLeftParent, rightTreeRightParent, parentInkyDoodles]);
+
   return (
     <>
       <InkyDoodle
@@ -105,12 +162,16 @@ const RightParents = (props) => {
         rightTreeLeftParent={rightTreeLeftParent}
         changeRightTreeLeftParent={changeRightTreeLeftParent}
         rightLeft
+        leftTreeLeftParent={leftTreeLeftParent}
+        leftTreeRightParent={leftTreeRightParent}
       />
       <InkyDoodle
         parentInkyDoodles={parentInkyDoodles}
         rightTreeRightParent={rightTreeRightParent}
         changeRightTreeRightParent={changeRightTreeRightParent}
         rightRight
+        leftTreeLeftParent={leftTreeLeftParent}
+        leftTreeRightParent={leftTreeRightParent}
       />
     </>
   );

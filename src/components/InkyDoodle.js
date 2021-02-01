@@ -106,6 +106,7 @@ const InkyDoodle = (props) => {
     leftLeft,
     leftRight,
     rightLeft,
+    rightRight,
     leftGen2,
     rightGen2,
     gen3,
@@ -302,16 +303,25 @@ const InkyDoodle = (props) => {
           value={value}
           onChange={changeValue}
           isSearchable={false}
+          className={`${
+            leftLeft || leftRight
+              ? "left_parents"
+              : rightLeft || rightRight
+              ? "right_parents"
+              : ""
+          }`}
           options={
             parentInkyDoodles
               ? parentInkyDoodles.length > 0
-                ? parentInkyDoodles.map((item, i) => {
-                    return {
-                      value: i,
-                      label: item.name,
-                      imageURL: item.image.url,
-                    };
-                  })
+                ? parentInkyDoodles
+                    .map((item, i) => {
+                      return {
+                        value: i,
+                        label: item.name,
+                        imageURL: item.image.url,
+                      };
+                    })
+                    .sort((a, b) => a.number > b.number)
                 : []
               : []
           }
