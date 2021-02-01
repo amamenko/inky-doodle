@@ -7,6 +7,18 @@ import { css } from "@emotion/core";
 import "nes.css/css/nes.min.css";
 
 const StyledContainer = styled.div`
+  @keyframes slideInFromTop {
+    0% {
+      transform: translate3d(0, -40px, 0);
+      opacity: 0;
+    }
+    100% {
+      transform: translate3d(0, 0, 0);
+      opacity: 1;
+    }
+  }
+
+  animation: 0.5s ease slideInFromTop;
   display: flex;
   flex-direction: column;
   max-width: 15rem;
@@ -153,9 +165,39 @@ const InkyDoodle = (props) => {
         className={`nes-container is-rounded with-title ${
           !gen2Identifier && !gen3Identifier ? "gen1_parents" : null
         }`}
-        style={{ marginBottom: "3rem" }}
+        style={{
+          marginBottom: "3rem",
+          background: gen2Identifier
+            ? leftGen2 || rightGen2
+              ? "#fff"
+              : "rgb(160, 160, 160)"
+            : gen3Identifier
+            ? gen3
+              ? "#fff"
+              : "rgb(160, 160, 160)"
+            : "#fff",
+        }}
       >
-        <StyledTitle className="title" style={{ fontSize: "0.6rem" }}>
+        <StyledTitle
+          gen2Identifier={gen2Identifier}
+          gen3Identifier={gen2Identifier}
+          leftGen2={leftGen2}
+          rightGen2={leftGen2}
+          gen3={gen3}
+          className="title"
+          style={{
+            fontSize: "0.6rem",
+            background: gen2Identifier
+              ? leftGen2 || rightGen2
+                ? "#fff"
+                : "rgb(160, 160, 160)"
+              : gen3Identifier
+              ? gen3
+                ? "#fff"
+                : "rgb(160, 160, 160)"
+              : "#fff",
+          }}
+        >
           {gen2Identifier ? "Gen. 2" : gen3Identifier ? "Gen. 3" : "Gen. 1"}
         </StyledTitle>
         {leftGen2Loading || rightGen2Loading || gen3Loading ? (
@@ -259,6 +301,7 @@ const InkyDoodle = (props) => {
           styles={nesTheme}
           value={value}
           onChange={changeValue}
+          isSearchable={false}
           options={
             parentInkyDoodles
               ? parentInkyDoodles.length > 0

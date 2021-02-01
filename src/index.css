@@ -59,7 +59,7 @@ input {
   }
 }
 
-@media only screen and (min-width: 376px) and (max-width: 768px) {
+@media only screen and (min-width: 400px) and (max-width: 768px) {
   .css-1y20v6-menu > div[aria-hidden="true"],
   .css-1hb7zxy-IndicatorsContainer,
   .css-tj5bde-Svg,
@@ -67,8 +67,28 @@ input {
   .css-g7jtzl-DropdownIndicator {
     -webkit-transform: scale(0.4) !important;
     transform: scale(0.4) !important;
-    margin-left: 0.4rem;
+    margin-left: 0.6rem;
     word-wrap: break-word;
+  }
+}
+
+@media only screen and (max-width: 330px) {
+  .css-1y20v6-menu > div[aria-hidden="true"],
+  .css-1hb7zxy-IndicatorsContainer,
+  .css-tj5bde-Svg,
+  .css-1wy0on6,
+  .css-g7jtzl-DropdownIndicator {
+    margin-left: 0.1rem;
+  }
+}
+
+@media only screen and (min-width: 331px) and (max-width: 399px) {
+  .css-1y20v6-menu > div[aria-hidden="true"],
+  .css-1hb7zxy-IndicatorsContainer,
+  .css-tj5bde-Svg,
+  .css-1wy0on6,
+  .css-g7jtzl-DropdownIndicator {
+    margin-left: 0.3rem;
   }
 }
 
