@@ -191,6 +191,7 @@ input {
   color: rgb(125, 125, 125);
 }
 
-.randomizer_dropdown [class*="DropdownIndicator"] {
+.randomizer_dropdown [class*="DropdownIndicator"],
+.randomizer_dropdown [class*="css-1nsljk2"] {
   display: none;
 }

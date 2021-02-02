@@ -87,7 +87,7 @@ const StyledRandomizedDropdownContainer = styled.div`
     width: 250px;
   }
   @media (min-width: 1025px) {
-    width: 200px;
+    width: 225px;
   }
 `;
 
