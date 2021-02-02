@@ -5,6 +5,9 @@ import axios from "axios";
 import LeftParents from "./components/LeftParents";
 import RightParents from "./components/RightParents";
 import InkyLogo from "./inky.png";
+import Select from "react-select";
+import nesTheme from "react-select-nes-css-theme";
+import "nes.css/css/nes.min.css";
 import "./App.css";
 
 const StyledAppContainer = styled.div`
@@ -65,6 +68,26 @@ const StyledAnchor = styled.a`
   }
 `;
 
+const StyledRandomizedDropdownContainer = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  font-size: 2rem;
+  margin-top: 1rem;
+  margin-right: 1rem;
+  @media (max-width: 330px) {
+    width: 175px;
+  }
+  @media (min-width: 331px) {
+    width: 200px;
+  }
+  @media (max-width: 1024px) and (orientation: landscape) {
+    margin-top: 0.5rem;
+    width: 250px;
+  }
+`;
+
 const App = () => {
   const [parentInkyDoodles, changeParentInkyDoodles] = useState("");
 
@@ -87,6 +110,9 @@ const App = () => {
   // Gen 3
   const [gen3, changeGen3] = useState("");
   const [gen3Loading, changeGen3Loading] = useState(false);
+
+  const [randomizedSelection, changeRandomizedSelection] = useState("");
+  const [randomizing, changeRandomizing] = useState(false);
 
   const parentInkyDoodlesQuery = `
         query {
@@ -144,7 +170,7 @@ const App = () => {
         }
       }
     }
-  }, [gen3.name, leftGen2, rightGen2]);
+  }, [gen3, leftGen2, rightGen2]);
 
   useEffect(() => {
     const getGen3Function = async (parent1, parent2) => {
@@ -413,6 +439,142 @@ const App = () => {
     });
   }, []);
 
+  useEffect(() => {
+    if (randomizedSelection) {
+      if (randomizedSelection.label) {
+        changeLeftTreeLeftParent("");
+        changeLeftTreeRightParent("");
+        changeRightTreeLeftParent("");
+        changeRightTreeRightParent("");
+        changeRandomizing(true);
+
+        const randomIndex = Math.floor(
+          Math.random() * parentInkyDoodles.length
+        );
+
+        const newObj = {
+          value: randomIndex,
+          label: parentInkyDoodles[randomIndex].name,
+          imageURL: parentInkyDoodles[randomIndex].image.url,
+        };
+
+        let secondRandomIndex = Math.floor(
+          Math.random() * parentInkyDoodles.length
+        );
+
+        while (secondRandomIndex === randomIndex) {
+          secondRandomIndex = Math.floor(
+            Math.random() * parentInkyDoodles.length
+          );
+        }
+
+        const secondNewObj = {
+          value: secondRandomIndex,
+          label: parentInkyDoodles[secondRandomIndex].name,
+          imageURL: parentInkyDoodles[secondRandomIndex].image.url,
+        };
+
+        let thirdRandomIndex = Math.floor(
+          Math.random() * parentInkyDoodles.length
+        );
+
+        while (
+          thirdRandomIndex === randomIndex ||
+          thirdRandomIndex === secondRandomIndex
+        ) {
+          thirdRandomIndex = Math.floor(
+            Math.random() * parentInkyDoodles.length
+          );
+        }
+
+        const thirdNewObj = {
+          value: thirdRandomIndex,
+          label: parentInkyDoodles[thirdRandomIndex].name,
+          imageURL: parentInkyDoodles[thirdRandomIndex].image.url,
+        };
+
+        let fourthRandomIndex = Math.floor(
+          Math.random() * parentInkyDoodles.length
+        );
+
+        while (
+          fourthRandomIndex === randomIndex ||
+          fourthRandomIndex === secondRandomIndex ||
+          fourthRandomIndex === thirdRandomIndex
+        ) {
+          fourthRandomIndex = Math.floor(
+            Math.random() * parentInkyDoodles.length
+          );
+        }
+
+        const fourthNewObj = {
+          value: fourthRandomIndex,
+          label: parentInkyDoodles[fourthRandomIndex].name,
+          imageURL: parentInkyDoodles[fourthRandomIndex].image.url,
+        };
+
+        if (randomizedSelection.label === "AAAA") {
+          changeLeftTreeLeftParent(newObj);
+          changeLeftTreeRightParent(newObj);
+          changeRightTreeLeftParent(newObj);
+          changeRightTreeRightParent(newObj);
+          changeRandomizedSelection("");
+        } else if (randomizedSelection.label === "AAAB") {
+          changeLeftTreeLeftParent(newObj);
+          changeLeftTreeRightParent(newObj);
+          changeRightTreeLeftParent(newObj);
+          changeRightTreeRightParent(secondNewObj);
+          changeRandomizedSelection("");
+        } else if (randomizedSelection.label === "AABB") {
+          changeLeftTreeLeftParent(newObj);
+          changeLeftTreeRightParent(newObj);
+          changeRightTreeLeftParent(secondNewObj);
+          changeRightTreeRightParent(secondNewObj);
+          changeRandomizedSelection("");
+        } else if (randomizedSelection.label === "ABAB") {
+          changeLeftTreeLeftParent(newObj);
+          changeLeftTreeRightParent(secondNewObj);
+          changeRightTreeLeftParent(newObj);
+          changeRightTreeRightParent(secondNewObj);
+          changeRandomizedSelection("");
+        } else if (randomizedSelection.label === "ABAC") {
+          changeLeftTreeLeftParent(newObj);
+          changeLeftTreeRightParent(secondNewObj);
+          changeRightTreeLeftParent(newObj);
+          changeRightTreeRightParent(thirdNewObj);
+          changeRandomizedSelection("");
+        } else if (randomizedSelection.label === "AABC") {
+          changeLeftTreeLeftParent(newObj);
+          changeLeftTreeRightParent(newObj);
+          changeRightTreeLeftParent(secondNewObj);
+          changeRightTreeRightParent(thirdNewObj);
+          changeRandomizedSelection("");
+        } else if (randomizedSelection.label === "ABCD") {
+          changeLeftTreeLeftParent(newObj);
+          changeLeftTreeRightParent(secondNewObj);
+          changeRightTreeLeftParent(thirdNewObj);
+          changeRightTreeRightParent(fourthNewObj);
+          changeGen3("No Match");
+          changeRandomizedSelection("");
+        } else {
+          const selectionArr = [
+            { value: 0, label: "AAAA" },
+            { value: 1, label: "AAAB" },
+            { value: 2, label: "AABB" },
+            { value: 3, label: "ABAB" },
+            { value: 4, label: "ABAC" },
+            { value: 5, label: "AABC" },
+            { value: 6, label: "ABCD" },
+          ];
+
+          const randomIndex = Math.floor(Math.random() * selectionArr.length);
+
+          changeRandomizedSelection(selectionArr[randomIndex]);
+        }
+      }
+    }
+  }, [parentInkyDoodles, randomizedSelection]);
+
   return (
     <StyledAppContainer>
       <link
@@ -422,6 +584,26 @@ const App = () => {
       <StyledAnchor href="/">
         <StyledNavLogo src={InkyLogo} alt="Inky Doodle Logo" />
       </StyledAnchor>
+      <StyledRandomizedDropdownContainer>
+        <Select
+          className="randomizer_dropdown"
+          styles={nesTheme}
+          value={randomizedSelection}
+          onChange={changeRandomizedSelection}
+          isSearchable={false}
+          placeholder={"Randomize"}
+          options={[
+            { value: 0, label: "AAAA" },
+            { value: 1, label: "AAAB" },
+            { value: 2, label: "AABB" },
+            { value: 3, label: "ABAB" },
+            { value: 4, label: "ABAC" },
+            { value: 5, label: "AABC" },
+            { value: 6, label: "ABCD" },
+            { value: 7, label: "RANDOM" },
+          ]}
+        />
+      </StyledRandomizedDropdownContainer>
       <StyledMainContainer parentInkyDoodles={parentInkyDoodles}>
         <StyledParentsContainer>
           <LeftParents
@@ -432,6 +614,8 @@ const App = () => {
             changeLeftTreeRightParent={changeLeftTreeRightParent}
             changeLeftGen2={changeLeftGen2}
             changeLeftGen2Loading={changeLeftGen2Loading}
+            randomizing={randomizing}
+            changeRandomizing={changeRandomizing}
           />
         </StyledParentsContainer>
         <StyledParentsContainer>
@@ -445,6 +629,8 @@ const App = () => {
             changeRightTreeRightParent={changeRightTreeRightParent}
             changeRightGen2={changeRightGen2}
             changeRightGen2Loading={changeRightGen2Loading}
+            randomizing={randomizing}
+            changeRandomizing={changeRandomizing}
           />
         </StyledParentsContainer>
       </StyledMainContainer>

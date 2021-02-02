@@ -166,3 +166,31 @@ input {
     font-size: 0.7rem;
   }
 }
+
+.randomizer_dropdown [class*="control"] {
+  border-radius: 0px !important;
+  background: rgb(255, 0, 0, 0.2) !important;
+}
+
+.randomizer_dropdown > * > * {
+  font-family: "Press Start 2P";
+  font-size: 1rem !important;
+}
+
+.randomizer_dropdown > * > * > * {
+  background: transparent !important;
+}
+
+.randomizer_dropdown [class*="menu"] {
+  z-index: 9999999999 !important;
+  background: #fff !important;
+}
+
+.randomizer_dropdown [class*="placeholder"] {
+  margin-left: 0;
+  color: rgb(125, 125, 125);
+}
+
+.randomizer_dropdown [class*="DropdownIndicator"] {
+  display: none;
+}

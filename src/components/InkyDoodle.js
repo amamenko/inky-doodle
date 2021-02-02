@@ -86,6 +86,9 @@ const StyledNESContainer = styled.div`
   }
   @media (min-width: 1024px) {
     min-width: 220px;
+    max-height: 13vh;
+  }
+  @media (min-width: 1600px) {
     max-height: 15vh;
   }
 `;
@@ -103,6 +106,10 @@ const InkyDoodle = (props) => {
     changeLeftTreeRightParent,
     changeRightTreeLeftParent,
     changeRightTreeRightParent,
+    leftTreeLeftParent,
+    leftTreeRightParent,
+    rightTreeLeftParent,
+    rightTreeRightParent,
     leftLeft,
     leftRight,
     rightLeft,
@@ -115,6 +122,8 @@ const InkyDoodle = (props) => {
     gen3Loading,
     gen2Identifier,
     gen3Identifier,
+    randomizing,
+    changeRandomizing,
   } = props;
 
   const [value, changeValue] = useState("");
@@ -126,6 +135,14 @@ const InkyDoodle = (props) => {
     right: 0;
     margin: 0 auto;
   `;
+
+  useEffect(() => {
+    if (randomizing) {
+      changeValue("");
+      changeRandomizing(false);
+      console.log(value);
+    }
+  }, [randomizing, changeRandomizing, value]);
 
   useEffect(() => {
     if (value) {
@@ -151,14 +168,65 @@ const InkyDoodle = (props) => {
   ]);
 
   useEffect(() => {
-    const nesDropdown = document.getElementsByTagName("INPUT");
-
-    if (nesDropdown) {
-      Array.from(nesDropdown).forEach((el) => {
-        el.setAttribute("readonly");
-      });
+    if (!value) {
+      if (leftLeft) {
+        if (leftTreeLeftParent) {
+          changeValue(leftTreeLeftParent);
+        }
+      } else if (leftRight) {
+        if (leftTreeRightParent) {
+          changeValue(leftTreeRightParent);
+        }
+      } else if (rightLeft) {
+        if (rightTreeLeftParent) {
+          changeValue(rightTreeLeftParent);
+        }
+      } else {
+        if (rightTreeRightParent) {
+          changeValue(rightTreeRightParent);
+        }
+      }
+    } else {
+      if (leftLeft) {
+        if (
+          value.label !== leftTreeLeftParent.name &&
+          value.name !== leftTreeLeftParent.name
+        ) {
+          changeValue(leftTreeLeftParent);
+        }
+      } else if (leftRight) {
+        if (
+          value.label !== leftTreeRightParent.name &&
+          value.name !== leftTreeRightParent.name
+        ) {
+          changeValue(leftTreeRightParent);
+        }
+      } else if (rightLeft) {
+        if (
+          value.label !== rightTreeLeftParent.name &&
+          value.name !== rightTreeLeftParent.name
+        ) {
+          changeValue(rightTreeLeftParent);
+        }
+      } else {
+        if (
+          value.label !== rightTreeRightParent.name &&
+          value.name !== rightTreeRightParent.name
+        ) {
+          changeValue(rightTreeRightParent);
+        }
+      }
     }
-  }, []);
+  }, [
+    leftLeft,
+    leftRight,
+    leftTreeLeftParent,
+    leftTreeRightParent,
+    rightLeft,
+    rightTreeLeftParent,
+    rightTreeRightParent,
+    value,
+  ]);
 
   return (
     <StyledContainer>
@@ -204,7 +272,18 @@ const InkyDoodle = (props) => {
         {leftGen2Loading || rightGen2Loading || gen3Loading ? (
           <ClipLoader loading={true} css={override} size={50} />
         ) : value ? (
-          <StyledImage src={value.imageURL} alt={value.name} />
+          <StyledImage
+            src={
+              value.imageURL
+                ? value.imageURL
+                : value.image
+                ? value.image.url
+                  ? value.image.url
+                  : null
+                : null
+            }
+            alt={value.name}
+          />
         ) : leftGen2 ? (
           <StyledImage
             src={
@@ -321,7 +400,13 @@ const InkyDoodle = (props) => {
                         imageURL: item.image.url,
                       };
                     })
-                    .sort((a, b) => a.number > b.number)
+                    .sort((a, b) => {
+                      if (a.number > b.number) {
+                        return -1;
+                      } else {
+                        return 1;
+                      }
+                    })
                 : []
               : []
           }

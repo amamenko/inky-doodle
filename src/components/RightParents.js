@@ -5,14 +5,14 @@ import InkyDoodle from "./InkyDoodle";
 const RightParents = (props) => {
   const {
     parentInkyDoodles,
-    leftTreeLeftParent,
-    leftTreeRightParent,
     rightTreeLeftParent,
-    changeRightTreeLeftParent,
     rightTreeRightParent,
+    changeRightTreeLeftParent,
     changeRightTreeRightParent,
     changeRightGen2,
     changeRightGen2Loading,
+    randomizing,
+    changeRandomizing,
   } = props;
 
   const parentInkyDoodlesQuery = `
@@ -159,19 +159,21 @@ const RightParents = (props) => {
     <>
       <InkyDoodle
         parentInkyDoodles={parentInkyDoodles}
-        rightTreeLeftParent={rightTreeLeftParent}
         changeRightTreeLeftParent={changeRightTreeLeftParent}
         rightLeft
-        leftTreeLeftParent={leftTreeLeftParent}
-        leftTreeRightParent={leftTreeRightParent}
+        rightTreeRightParent={rightTreeRightParent}
+        rightTreeLeftParent={rightTreeLeftParent}
+        randomizing={randomizing}
+        changeRandomizing={changeRandomizing}
       />
       <InkyDoodle
         parentInkyDoodles={parentInkyDoodles}
-        rightTreeRightParent={rightTreeRightParent}
         changeRightTreeRightParent={changeRightTreeRightParent}
         rightRight
-        leftTreeLeftParent={leftTreeLeftParent}
-        leftTreeRightParent={leftTreeRightParent}
+        rightTreeRightParent={rightTreeRightParent}
+        rightTreeLeftParent={rightTreeLeftParent}
+        randomizing={randomizing}
+        changeRandomizing={changeRandomizing}
       />
     </>
   );

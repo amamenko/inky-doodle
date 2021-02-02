@@ -11,6 +11,8 @@ const LeftParents = (props) => {
     changeLeftTreeRightParent,
     changeLeftGen2,
     changeLeftGen2Loading,
+    randomizing,
+    changeRandomizing,
   } = props;
 
   const parentInkyDoodlesQuery = `
@@ -161,6 +163,8 @@ const LeftParents = (props) => {
         leftTreeRightParent={leftTreeRightParent}
         changeLeftTreeLeftParent={changeLeftTreeLeftParent}
         leftLeft
+        randomizing={randomizing}
+        changeRandomizing={changeRandomizing}
       />
       <InkyDoodle
         parentInkyDoodles={parentInkyDoodles}
@@ -168,6 +172,8 @@ const LeftParents = (props) => {
         leftTreeRightParent={leftTreeRightParent}
         changeLeftTreeRightParent={changeLeftTreeRightParent}
         leftRight
+        randomizing={randomizing}
+        changeRandomizing={changeRandomizing}
       />
     </>
   );
