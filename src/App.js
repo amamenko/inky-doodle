@@ -86,6 +86,9 @@ const StyledRandomizedDropdownContainer = styled.div`
     margin-top: 0.5rem;
     width: 250px;
   }
+  @media (min-width: 1025px) {
+    width: 200px;
+  }
 `;
 
 const App = () => {
