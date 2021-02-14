@@ -16,6 +16,8 @@
     <br />
     <a href="https://inkydoodle.ml">View Demo</a>
     ·
+    <a href="https://www.youtube.com/watch?v=VPKyCoFkgS0">Watch Video Demo</a>
+    ·
     <a href="https://github.com/amamenko/inky-doodle/issues">Report Issue</a> 
   </p>
 </p>
