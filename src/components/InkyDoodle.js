@@ -140,7 +140,6 @@ const InkyDoodle = (props) => {
     if (randomizing) {
       changeValue("");
       changeRandomizing(false);
-      console.log(value);
     }
   }, [randomizing, changeRandomizing, value]);
 

@@ -159,14 +159,22 @@ const App = () => {
     if (leftGen2 && rightGen2) {
       if (leftGen2.name && rightGen2.name) {
         if (leftGen2.name === rightGen2.name) {
-          if (gen3.name !== leftGen2.name) {
+          if (gen3) {
+            if (gen3.name !== leftGen2.name) {
+              changeGen3(leftGen2);
+            }
+          } else {
             changeGen3(leftGen2);
           }
         }
       } else {
         if (leftGen2.label && rightGen2.label) {
           if (leftGen2.label === rightGen2.label) {
-            if (gen3.name !== leftGen2.label) {
+            if (gen3) {
+              if (gen3.name !== leftGen2.label) {
+                changeGen3(leftGen2);
+              }
+            } else {
               changeGen3(leftGen2);
             }
           }
