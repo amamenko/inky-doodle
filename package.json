@@ -1,37 +1,29 @@
 {
   "name": "inky-doodle",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
+  "description": "Collect. Combine. Inky Doodle!",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amamenko/inky-doodle.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amamenko/inky-doodle/issues"
+  },
+  "homepage": "https://github.com/amamenko/inky-doodle#readme",
   "dependencies": {
     "axios": "^0.21.1",
-    "nes.css": "^2.3.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-scripts": "3.0.1",
-    "react-select": "^4.0.2",
-    "react-select-nes-css-theme": "^1.0.1",
-    "react-spinners": "^0.10.4",
-    "styled-components": "^5.2.1"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "instagram-web-api": "^2.2.2",
+    "node-cron": "^2.0.3",
+    "png-to-jpeg": "^1.0.1",
+    "sharp": "^0.27.2"
   }
 }

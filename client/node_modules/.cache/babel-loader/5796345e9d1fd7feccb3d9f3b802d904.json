@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { serializeStyles } from '@emotion/serialize';\n\nfunction css() {\n  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {\n    args[_key] = arguments[_key];\n  }\n\n  return serializeStyles(args);\n}\n\nexport default css;","map":null,"metadata":{},"sourceType":"module"}
