@@ -5,8 +5,8 @@
 <br />
 <p align="center">
   <a href="https://github.com/amamenko/inky-doodle">
-    <img src="src/images/InkyDoodleLogo.png" alt="Logo" width="350"  />
-  </a>
+    <img src="client/src/images/InkyDoodleLogo.png" alt="Logo" width="350"  />
+  </a> 
 
   <h3 align="center">Inky Doodle</h3>
 
@@ -46,7 +46,7 @@ arrows designate breeding to create a new generation:
 <br /> 
 <p align="center">
 <a href="https://inkydoodle.ml">
-    <img  src="src/images/ResponsiveDesignImage.png" alt="Inky Doodle Responsiveness Demo Screenshots" width="700" />
+    <img  src="client/src/images/ResponsiveDesignImage.png" alt="Inky Doodle Responsiveness Demo Screenshots" width="700" />
 </a>
 </span>
 <br/ >
@@ -60,8 +60,8 @@ Inky Doodles are the intellectual property of Alex Jaloza. Inky Doodle assets, i
 <br />
 
 <div align="center">
-  <img  src="src/images/PreliminarySketch.PNG" alt="Inky Doodle Preliminary Sketch" width="300" />
-  <img  src="src/images/ProductionScreenshot.png" alt="Inky Doodle Production Screenshot" width="400" />
+  <img  src="client/src/images/PreliminarySketch.PNG" alt="Inky Doodle Preliminary Sketch" width="300" />
+  <img  src="client/src/images/ProductionScreenshot.png" alt="Inky Doodle Production Screenshot" width="400" />
 </div>
 
 <br />
