@@ -59,7 +59,7 @@ cron.schedule("0 16 * * *", () => {
           },
         })
           .then((res) => res.data)
-          .then(({ data, errors }) => {
+          .then(async ({ data, errors }) => {
             if (errors) {
               console.error(errors);
             }
@@ -79,11 +79,19 @@ cron.schedule("0 16 * * *", () => {
                   : ""
               }#inkydoodle #gen${updatedInkyDoodle.generation}`;
 
-              sharp(updatedInkyDoodle.image.url)
+              // Sharp needs an array buffer input, otherwise will throw an "Input file is missing" error
+              const imageInput = (
+                await axios({
+                  url: updatedInkyDoodle.image.url,
+                  responseType: "arraybuffer",
+                })
+              ).data;
+
+              sharp(imageInput)
                 .resize(405, 405)
                 .toBuffer()
                 .then((buffer) => {
-                  pngToJpeg({ quality: 90 })(buffer).then(async (output) => {
+                  pngToJpeg({ quality: 100 })(buffer).then(async (output) => {
                     fs.writeFileSync(`./${updatedInkyDoodle.name}.jpg`, output);
 
                     // Upload converted and resized JPG to Instagram feed
