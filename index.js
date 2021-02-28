@@ -1,9 +1,8 @@
 const express = require("express");
 const app = express();
 const axios = require("axios");
-const sharp = require("sharp");
 const fs = require("fs");
-const pngToJpeg = require("png-to-jpeg");
+const Jimp = require("jimp");
 const Instagram = require("instagram-web-api");
 const cron = require("node-cron");
 
@@ -79,37 +78,30 @@ cron.schedule("0 16 * * *", () => {
                   : ""
               }#inkydoodle #gen${updatedInkyDoodle.generation}`;
 
-              // Sharp needs an array buffer input, otherwise will throw an "Input file is missing" error
-              const imageInput = (
-                await axios({
-                  url: updatedInkyDoodle.image.url,
-                  responseType: "arraybuffer",
+              Jimp.read(updatedInkyDoodle.image.url)
+                .then((lenna) => {
+                  return lenna
+                    .resize(405, 405, Jimp.RESIZE_NEAREST_NEIGHBOR)
+                    .quality(100)
+                    .write(`./${updatedInkyDoodle.name}.jpg`, async () => {
+                      // Upload converted and resized JPG to Instagram feed
+                      await client
+                        .uploadPhoto({
+                          photo: `${updatedInkyDoodle.name}.jpg`,
+                          caption: updatedCaption,
+                          post: "feed",
+                        })
+                        .then(({ media }) => {
+                          console.log(
+                            `https://www.instagram.com/p/${media.code}/`
+                          );
+                          // Remove Local JPG File
+                          fs.unlinkSync(`${updatedInkyDoodle.name}.jpg`);
+                        });
+                    });
                 })
-              ).data;
-
-              sharp(imageInput)
-                .resize(405, 405)
-                .toBuffer()
-                .then((buffer) => {
-                  pngToJpeg({ quality: 100 })(buffer).then(async (output) => {
-                    fs.writeFileSync(`./${updatedInkyDoodle.name}.jpg`, output);
-
-                    // Upload converted and resized JPG to Instagram feed
-                    await client
-                      .uploadPhoto({
-                        photo: `${updatedInkyDoodle.name}.jpg`,
-                        caption: updatedCaption,
-                        post: "feed",
-                      })
-                      .then(({ media }) => {
-                        console.log(
-                          `https://www.instagram.com/p/${media.code}/`
-                        );
-
-                        // Remove Local JPG File
-                        fs.unlinkSync(`${updatedInkyDoodle.name}.jpg`);
-                      });
-                  });
+                .catch((err) => {
+                  console.log(err);
                 });
             }
           });
