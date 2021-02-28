@@ -109,6 +109,6 @@ cron.schedule("0 16 * * *", () => {
   });
 });
 
-app.listen(4000, () => {
+app.listen(port, () => {
   console.log(`Listening on port ${port}...`);
 });
