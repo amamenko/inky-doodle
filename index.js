@@ -9,6 +9,8 @@ const cron = require("node-cron");
 
 require("dotenv").config();
 
+const port = process.env.PORT || 4000;
+
 // Upload new Inky Doodle to Instagram every day at 4:00 PM
 cron.schedule("0 16 * * *", () => {
   const client = new Instagram({
@@ -108,5 +110,5 @@ cron.schedule("0 16 * * *", () => {
 });
 
 app.listen(4000, () => {
-  console.log("Listening on port 4000...");
+  console.log(`Listening on port ${port}...`);
 });
