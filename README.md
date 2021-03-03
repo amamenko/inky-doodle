@@ -19,6 +19,8 @@
     <a href="https://www.youtube.com/watch?v=VPKyCoFkgS0">Watch Video Demo</a>
     ·
     <a href="https://github.com/amamenko/inky-doodle/issues">Report Issue</a> 
+    ·
+    <a href="https://www.instagram.com/inkydoodle.ml">Follow @inkydoodle.ml</a> 
   </p>
 </p>
 
@@ -59,10 +61,10 @@ Inky Doodles are the intellectual property of Alex Jaloza. Inky Doodle assets, i
 
 <br />
 
-<div align="center">
+<p align="center">
   <img  src="client/src/images/PreliminarySketch.PNG" alt="Inky Doodle Preliminary Sketch" width="300" />
-  <img  src="client/src/images/ProductionScreenshot.png" alt="Inky Doodle Production Screenshot" width="400" />
-</div>
+  <img src="client/src/images/ProductionScreenshot.png" alt="Inky Doodle Production Screenshot" width="400" /> 
+</p>
 
 <br />
 
@@ -74,6 +76,12 @@ to suggest a next selection that will produce a successful generation 3 offsprin
 A randomizer button was also added in production that automatically selects first generation parents according to one of the seven breeding combinations mentioned in the introduction.
 
 Project was deployed to [Vercel](https://vercel.com), custom domain acquired from [Freenom](https://www.freenom.com/en/index.html?lang=en).
+
+## Automated Server-side Instagram Posting
+
+The project also incudes an [Express](https://expressjs.com) server that posts a new Inky Doodle from [Contentful](https://www.contentful.com/) with a custom caption (including the Inky Doodle's name, ID number, parents, if any, and its generation) to the [@inkydoodle.ml](https://www.instagram.com/inkydoodle.ml) Instagram page every day at 4PM EST via [node-cron](https://www.npmjs.com/package/node-cron) and [instagram-web-api](https://www.npmjs.com/package/instagram-web-api). 
+
+The server was deployed to [Heroku](https://www.heroku.com) and the Heroku dyno kept awake with [Kaffeine](https://kaffeine.herokuapp.com).
 
 ## Local Development
 
@@ -94,16 +102,35 @@ You will need to have the following software installed:
    ```sh
    git clone https://github.com/amamenko/inky-doodle.git
    ```
-3. Install all NPM packages.
+3. Install all server-side NPM packages.
    ```sh
    npm install
    ```
-4. Enter your Contentful Content Delivery API credentials as environment variables.
+4. Add your server-side environment variables.
+   ```JS
+   INSTAGRAM_USERNAME=YOUR INSTAGRAM USERNAME
+   INSTAGRAM_PASSWORD=YOUR INSTAGRAM PASSWORD
+   CONTENTFUL_SPACE_ID=YOUR CONTENTFUL SPACE ID
+   CONTENTFUL_ACCESS_TOKEN=YOUR CONTENTFUL ACCESS TOKEN
+   ```
+5. `cd` into the client-side directory.
+   ```sh
+   cd client
+   ```
+6. Install all client-side NPM packages.
+   ```sh
+   npm install
+   ```
+7. Enter your Contentful Content Delivery API credentials as client-side environment variables.
    ```JS
    REACT_APP_SPACE_ID=YOUR CONTENTFUL SPACE ID
    REACT_APP_ACCESS_TOKEN=YOUR CONTENTFUL ACCESS TOKEN
    ```
-5. Build for production.
+8. Start the local server.
+   ```JS
+   npm start
+   ```
+9. Build for production.
    ```JS
    npm run build
    ```
@@ -143,6 +170,9 @@ Project Link: [https://github.com/amamenko/inky-doodle](https://github.com/amame
 - [NES.css](https://github.com/nostalgic-css/NES.css)
 - [react-select-nes-css-theme](https://www.npmjs.com/package/react-select-nes-css-theme)
 - [Vercel](https://vercel.com)
+- [Heroku](https://www.heroku.com)
+- [instagram-web-api](https://www.npmjs.com/package/instagram-web-api)
+- [Jimp](https://www.npmjs.com/package/jimp)
 - [React Icons](https://react-icons.github.io/react-icons)
 - [React Spinners](https://www.npmjs.com/package/react-spinners)
 - [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
