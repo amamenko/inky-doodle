@@ -707,27 +707,27 @@ const App = () => {
           ]}
         />
       </StyledRandomizedDropdownContainer>
-      <StyledIconsSection class="icon-list">
+      <StyledIconsSection className="icon-list">
         <a
           href="https://www.instagram.com/inkydoodle.ml"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <i class="nes-icon instagram is-medium" />
+          <i className="nes-icon instagram is-medium" />
         </a>
         <a
           href="https://github.com/amamenko/inky-doodle"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <i class="nes-icon github is-medium" />
+          <i className="nes-icon github is-medium" />
         </a>
         <a
           href="https://www.youtube.com/watch?v=VPKyCoFkgS0"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <i class="nes-icon youtube is-medium" />
+          <i className="nes-icon youtube is-medium" />
         </a>
       </StyledIconsSection>
       <StyledMainContainer parentInkyDoodles={parentInkyDoodles}>
