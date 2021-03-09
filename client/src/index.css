@@ -195,3 +195,33 @@ input {
 .randomizer_dropdown [class*="css-1nsljk2"] {
   display: none;
 }
+
+@media only screen and (max-width: 375px) {
+  .is-medium {
+    transform: scale(1.5) !important;
+    width: 0 !important;
+  }
+}
+
+@media only screen and (max-width: 1024px) and (orientation: landscape) {
+  .randomizer_dropdown > * > * {
+    font-size: 0.5rem !important;
+  }
+}
+@media only screen and (max-width: 1023px) {
+  .randomizer_dropdown > * > * {
+    font-size: 0.5rem !important;
+  }
+}
+
+@media only screen and (min-width: 376px) and (max-width: 768px) {
+  .is-medium {
+    transform: scale(2.5) !important;
+  }
+}
+
+@media only screen and (min-width: 769px) {
+  .is-medium {
+    transform: scale(2.5) !important;
+  }
+}
