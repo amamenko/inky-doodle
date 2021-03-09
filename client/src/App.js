@@ -20,7 +20,7 @@ const StyledMainContainer = styled.div`
   font-size: 1rem;
   padding-left: 10%;
   padding-right: 10%;
-  margin-top: ${(props) => (props.parentInkyDoodles ? "3rem" : "7vh")};
+  margin-top: ${(props) => (props.parentInkyDoodles ? "1.8rem" : "7vh")};
   display: flex;
   align-items: center;
   width: 100%;
@@ -42,6 +42,9 @@ const StyledMainContainer = styled.div`
   }
   @media (max-width: 340px) {
     margin-top: ${(props) => (props.parentInkyDoodles ? "2rem" : "13vh")};
+  }
+  @media (min-width: 1025px) {
+    margin-top: ${(props) => (props.parentInkyDoodles ? "3rem" : "7vh")};
   }
 `;
 
