@@ -215,6 +215,7 @@ const App = () => {
                 items   {
                 generation
                 name
+                wave
                 image {
                     url
                 }
@@ -243,7 +244,17 @@ const App = () => {
           console.error(errors);
         }
 
-        changeParentInkyDoodles(data.inkyDoodleCollection.items);
+        if (data) {
+          if (data.inkyDoodleCollection) {
+            if (data.inkyDoodleCollection.items) {
+              changeParentInkyDoodles(
+                data.inkyDoodleCollection.items
+                  .filter((item) => !item.wave)
+                  .sort((a, b) => a.number - b.number)
+              );
+            }
+          }
+        }
       });
   }, [parentInkyDoodlesQuery]);
 
