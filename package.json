@@ -21,8 +21,11 @@
     "axios": "^0.21.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "imap-simple": "^5.0.0",
     "instagram-web-api": "^2.2.2",
     "jimp": "^0.16.1",
+    "lodash": "^4.17.21",
+    "mailparser": "^3.1.0",
     "node-cron": "^2.0.3"
   }
 }
