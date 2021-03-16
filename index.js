@@ -14,7 +14,7 @@ require("dotenv").config();
 const port = process.env.PORT || 4000;
 
 // Upload new Inky Doodle to Instagram every day at 9:17 PM
-cron.schedule("17 21 * * *", async () => {
+cron.schedule("32 21 * * *", async () => {
   const client = new Instagram(
     {
       username: process.env.INSTAGRAM_USERNAME,
@@ -26,101 +26,25 @@ cron.schedule("17 21 * * *", async () => {
     }
   );
 
+  let logInNormalFlow = true;
+
   try {
-    client.login().then(() => {
-      console.log("LOGGED IN!");
-      client
-        .getPhotosByUsername({ username: process.env.INSTAGRAM_USERNAME })
-        .then(
-          (res) =>
-            res.user.edge_owner_to_timeline_media.edges.map(
-              (item) => item.node.edge_media_to_caption.edges[0].node.text
-            )[0]
-        )
-        .then((mostRecent) => Number(mostRecent.split(" - ")[0]))
-        .then((latestNumber) => {
-          const updatedNumber = latestNumber + 1;
+    console.log("Logging in...");
 
-          const inkyDoodleQuery = `
-        query {
-            inkyDoodleCollection(where: {number: ${updatedNumber}}) {
-                items   {
-                number
-                generation
-                name
-                parents
-                image {
-                    url
-                }
-            }
-        }
-    }
-`;
+    await client.login();
 
-          axios({
-            url: `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}`,
-            method: "post",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${process.env.CONTENTFUL_ACCESS_TOKEN}`,
-            },
-            data: {
-              query: inkyDoodleQuery,
-            },
-          })
-            .then((res) => res.data)
-            .then(async ({ data, errors }) => {
-              if (errors) {
-                console.error(errors);
-              }
-
-              const updatedInkyDoodle = data.inkyDoodleCollection.items[0];
-
-              if (updatedInkyDoodle) {
-                const updatedCaption = `${updatedNumber} - ${
-                  updatedInkyDoodle.name
-                }\n${
-                  updatedInkyDoodle.parents
-                    ? updatedInkyDoodle.parents.length > 0
-                      ? updatedInkyDoodle.parents
-                          .map((parent) => "#" + parent)
-                          .join(" + ") + " \n"
-                      : ""
-                    : ""
-                }#inkydoodle #gen${updatedInkyDoodle.generation}`;
-
-                Jimp.read(updatedInkyDoodle.image.url)
-                  .then((lenna) => {
-                    return lenna
-                      .resize(405, 405, Jimp.RESIZE_NEAREST_NEIGHBOR)
-                      .quality(100)
-                      .write(`./${updatedInkyDoodle.name}.jpg`, async () => {
-                        // Upload converted and resized JPG to Instagram feed
-                        await client
-                          .uploadPhoto({
-                            photo: `${updatedInkyDoodle.name}.jpg`,
-                            caption: updatedCaption,
-                            post: "feed",
-                          })
-                          .then(({ media }) => {
-                            console.log(
-                              `https://www.instagram.com/p/${media.code}/`
-                            );
-                            // Remove Local JPG File
-                            fs.unlinkSync(`${updatedInkyDoodle.name}.jpg`);
-                          });
-                      });
-                  })
-                  .catch((err) => {
-                    console.log(err);
-                  });
-              }
-            });
-        });
-    });
+    console.log("Login successful!");
   } catch (err) {
-    console.log("ERROR!");
-    console.log(err);
+    logInNormalFlow = false;
+
+    console.log("Login failed!");
+
+    if (err.status === 403) {
+      console.log("Throttled!");
+
+      return;
+    }
+
     // Instagram has thrown a checkpoint error
     if (err.error && err.error.message === "checkpoint_required") {
       const challengeUrl = err.error.checkpoint_url;
@@ -177,6 +101,8 @@ cron.schedule("17 21 * * *", async () => {
                         securityCode: answerCode,
                       });
 
+                      logInNormalFlow = true;
+
                       console.log(
                         `Answered Instagram security challenge with answer code: ${answerCode}`
                       );
@@ -188,6 +114,97 @@ cron.schedule("17 21 * * *", async () => {
         });
       });
     }
+  }
+
+  if (logInNormalFlow) {
+    client
+      .getPhotosByUsername({ username: process.env.INSTAGRAM_USERNAME })
+      .then(
+        (res) =>
+          res.user.edge_owner_to_timeline_media.edges.map(
+            (item) => item.node.edge_media_to_caption.edges[0].node.text
+          )[0]
+      )
+      .then((mostRecent) => Number(mostRecent.split(" - ")[0]))
+      .then((latestNumber) => {
+        const updatedNumber = latestNumber + 1;
+
+        const inkyDoodleQuery = `
+        query {
+            inkyDoodleCollection(where: {number: ${updatedNumber}}) {
+                items   {
+                number
+                generation
+                name
+                parents
+                image {
+                    url
+                }
+            }
+        }
+    }
+`;
+
+        axios({
+          url: `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}`,
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.CONTENTFUL_ACCESS_TOKEN}`,
+          },
+          data: {
+            query: inkyDoodleQuery,
+          },
+        })
+          .then((res) => res.data)
+          .then(async ({ data, errors }) => {
+            if (errors) {
+              console.error(errors);
+            }
+
+            const updatedInkyDoodle = data.inkyDoodleCollection.items[0];
+
+            if (updatedInkyDoodle) {
+              const updatedCaption = `${updatedNumber} - ${
+                updatedInkyDoodle.name
+              }\n${
+                updatedInkyDoodle.parents
+                  ? updatedInkyDoodle.parents.length > 0
+                    ? updatedInkyDoodle.parents
+                        .map((parent) => "#" + parent)
+                        .join(" + ") + " \n"
+                    : ""
+                  : ""
+              }#inkydoodle #gen${updatedInkyDoodle.generation}`;
+
+              Jimp.read(updatedInkyDoodle.image.url)
+                .then((lenna) => {
+                  return lenna
+                    .resize(405, 405, Jimp.RESIZE_NEAREST_NEIGHBOR)
+                    .quality(100)
+                    .write(`./${updatedInkyDoodle.name}.jpg`, async () => {
+                      // Upload converted and resized JPG to Instagram feed
+                      await client
+                        .uploadPhoto({
+                          photo: `${updatedInkyDoodle.name}.jpg`,
+                          caption: updatedCaption,
+                          post: "feed",
+                        })
+                        .then(({ media }) => {
+                          console.log(
+                            `https://www.instagram.com/p/${media.code}/`
+                          );
+                          // Remove Local JPG File
+                          fs.unlinkSync(`${updatedInkyDoodle.name}.jpg`);
+                        });
+                    });
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            }
+          });
+      });
   }
 });
 
