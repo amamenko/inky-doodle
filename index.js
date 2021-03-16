@@ -13,8 +13,8 @@ require("dotenv").config();
 
 const port = process.env.PORT || 4000;
 
-// Upload new Inky Doodle to Instagram every day at 11:10 PM
-cron.schedule("10 23 * * *", async () => {
+// Upload new Inky Doodle to Instagram every day at 09:50 AM
+cron.schedule("50 09 * * *", async () => {
   const client = new Instagram(
     {
       username: process.env.INSTAGRAM_USERNAME,
@@ -22,7 +22,7 @@ cron.schedule("10 23 * * *", async () => {
     },
     {
       language: "en-US",
-      proxy: process.NODE_ENV === "production" ? process.FIXIE_URL : undefined,
+      proxy: process.NODE_ENV === "production" ? process.env.FIXIE_URL : undefined,
     }
   );
 
@@ -122,6 +122,8 @@ cron.schedule("10 23 * * *", async () => {
     }
   }
 
+  console.log({logInNormalFlow});
+  
   if (logInNormalFlow) {
     client
       .getPhotosByUsername({ username: process.env.INSTAGRAM_USERNAME })
