@@ -13,8 +13,8 @@ require("dotenv").config();
 
 const port = process.env.PORT || 4000;
 
-// Upload new Inky Doodle to Instagram every day at 9:42 PM
-cron.schedule("42 21 * * *", async () => {
+// Upload new Inky Doodle to Instagram every day at 9:51 PM
+cron.schedule("51 21 * * *", async () => {
   const client = new Instagram(
     {
       username: process.env.INSTAGRAM_USERNAME,
@@ -66,57 +66,59 @@ cron.schedule("42 21 * * *", async () => {
         },
       };
 
-      // Connect to email and solve Instagram challenge
-      imaps.connect(emailConfig).then(async (connection) => {
-        return connection.openBox("INBOX").then(async () => {
-          const searchCriteria = ["UNSEEN"];
-          const fetchOptions = {
-            bodies: [""],
-          };
-          return connection
-            .search(searchCriteria, fetchOptions)
-            .then((messages) => {
-              messages.forEach((item) => {
-                const all = _.find(item.parts, { which: "" });
-                const id = item.attributes.uid;
-                const idHeader = "Imap-Id: " + id + "\r\n";
-                simpleParser(idHeader + all.body, async (err, mail) => {
-                  if (err) {
-                    console.log(err);
-                  }
-
-                  console.log(mail.subject);
-
-                  const answerCodeArr = mail.text
-                    .split("\n")
-                    .filter(
-                      (item) =>
-                        item && /^\S+$/.test(item) && !isNaN(Number(item))
-                    );
-
-                  if (mail.text.includes("Instagram")) {
-                    console.log(answerCodeArr);
-                    if (answerCodeArr.length > 0) {
-                      const answerCode = Number(answerCodeArr[0]);
-                      console.log(answerCode);
-
-                      await client.updateChallenge({
-                        challengeUrl,
-                        securityCode: answerCode,
-                      });
-
-                      logInNormalFlow = true;
-
-                      console.log(
-                        `Answered Instagram security challenge with answer code: ${answerCode}`
-                      );
+      // Connect to email and solve Instagram challenge after 1 minute
+      setTimeout(() => {
+        imaps.connect(emailConfig).then(async (connection) => {
+          return connection.openBox("INBOX").then(async () => {
+            const searchCriteria = ["UNSEEN"];
+            const fetchOptions = {
+              bodies: [""],
+            };
+            return connection
+              .search(searchCriteria, fetchOptions)
+              .then((messages) => {
+                messages.forEach((item) => {
+                  const all = _.find(item.parts, { which: "" });
+                  const id = item.attributes.uid;
+                  const idHeader = "Imap-Id: " + id + "\r\n";
+                  simpleParser(idHeader + all.body, async (err, mail) => {
+                    if (err) {
+                      console.log(err);
                     }
-                  }
+
+                    console.log(mail.subject);
+
+                    const answerCodeArr = mail.text
+                      .split("\n")
+                      .filter(
+                        (item) =>
+                          item && /^\S+$/.test(item) && !isNaN(Number(item))
+                      );
+
+                    if (mail.text.includes("Instagram")) {
+                      console.log(answerCodeArr);
+                      if (answerCodeArr.length > 0) {
+                        const answerCode = Number(answerCodeArr[0]);
+                        console.log(answerCode);
+
+                        await client.updateChallenge({
+                          challengeUrl,
+                          securityCode: answerCode,
+                        });
+
+                        logInNormalFlow = true;
+
+                        console.log(
+                          `Answered Instagram security challenge with answer code: ${answerCode}`
+                        );
+                      }
+                    }
+                  });
                 });
               });
-            });
+          });
         });
-      });
+      }, 60000);
     }
   }
 
