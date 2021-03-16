@@ -13,8 +13,8 @@ require("dotenv").config();
 
 const port = process.env.PORT || 4000;
 
-// Upload new Inky Doodle to Instagram every day at 9:00 PM
-cron.schedule("0 21 * * *", async () => {
+// Upload new Inky Doodle to Instagram every day at 9:17 PM
+cron.schedule("17 21 * * *", async () => {
   const client = new Instagram(
     {
       username: process.env.INSTAGRAM_USERNAME,
@@ -28,6 +28,7 @@ cron.schedule("0 21 * * *", async () => {
 
   try {
     client.login().then(() => {
+      console.log("LOGGED IN!");
       client
         .getPhotosByUsername({ username: process.env.INSTAGRAM_USERNAME })
         .then(
@@ -118,6 +119,8 @@ cron.schedule("0 21 * * *", async () => {
         });
     });
   } catch (err) {
+    console.log("ERROR!");
+    console.log(err);
     // Instagram has thrown a checkpoint error
     if (err.error && err.error.message === "checkpoint_required") {
       const challengeUrl = err.error.checkpoint_url;
