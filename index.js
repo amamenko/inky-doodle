@@ -13,8 +13,8 @@ require("dotenv").config();
 
 const port = process.env.PORT || 4000;
 
-// Upload new Inky Doodle to Instagram every day at 12:05 PM
-cron.schedule("05 12 * * *", async () => {
+// Begin uploading new Inky Doodle to Instagram every day starting at 3:59 PM
+cron.schedule("59 15 * * *", async () => {
     const instagramLoginFunction = async () => {
         const client = new Instagram(
             {
@@ -41,20 +41,20 @@ cron.schedule("05 12 * * *", async () => {
                     const updatedNumber = latestNumber + 1;
 
                     const inkyDoodleQuery = `
-        query {
-            inkyDoodleCollection(where: {number: ${updatedNumber}}) {
-                items   {
-                number
-                generation
-                name
-                parents
-                image {
-                    url
-                }
-            }
-        }
-    }
-`;
+                            query {
+                                inkyDoodleCollection(where: {number: ${updatedNumber}}) {
+                                    items   {
+                                    number
+                                    generation
+                                    name
+                                    parents
+                                    image {
+                                        url
+                                    }
+                                }
+                            }
+                        }
+                    `;
 
                     axios({
                         url: `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}`,
@@ -164,7 +164,12 @@ cron.schedule("05 12 * * *", async () => {
                     setTimeout(() => {
                         imaps.connect(emailConfig).then(async (connection) => {
                             return connection.openBox("INBOX").then(async () => {
-                                const searchCriteria = ["UNSEEN"];
+                                // Fetch emails from the last hour
+                                const delay = 1 * 3600 * 1000;
+                                let lastHour = new Date();
+                                lastHour.setTime(Date.now() - delay);
+                                lastHour = lastHour.toISOString();
+                                const searchCriteria = ["ALL", ["SINCE", lastHour]];
                                 const fetchOptions = {
                                     bodies: [""],
                                 };
@@ -190,7 +195,6 @@ cron.schedule("05 12 * * *", async () => {
                                                     );
 
                                                 if (mail.text.includes("Instagram")) {
-                                                    console.log(answerCodeArr);
                                                     if (answerCodeArr.length > 0) {
                                                         const answerCode = Number(answerCodeArr[0]);
                                                         console.log(answerCode);
@@ -217,7 +221,7 @@ cron.schedule("05 12 * * *", async () => {
                     }, timeout);
                 }
 
-                await delayedEmailFunction(35000);
+                await delayedEmailFunction(50000);
             }
         }
     }
