@@ -13,8 +13,8 @@ require("dotenv").config();
 
 const port = process.env.PORT || 4000;
 
-// Upload new Inky Doodle to Instagram every day at 9:17 PM
-cron.schedule("32 21 * * *", async () => {
+// Upload new Inky Doodle to Instagram every day at 9:42 PM
+cron.schedule("42 21 * * *", async () => {
   const client = new Instagram(
     {
       username: process.env.INSTAGRAM_USERNAME,
@@ -85,6 +85,8 @@ cron.schedule("32 21 * * *", async () => {
                     console.log(err);
                   }
 
+                  console.log(mail.subject);
+
                   const answerCodeArr = mail.text
                     .split("\n")
                     .filter(
@@ -93,8 +95,10 @@ cron.schedule("32 21 * * *", async () => {
                     );
 
                   if (mail.text.includes("Instagram")) {
+                    console.log(answerCodeArr);
                     if (answerCodeArr.length > 0) {
                       const answerCode = Number(answerCodeArr[0]);
+                      console.log(answerCode);
 
                       await client.updateChallenge({
                         challengeUrl,
