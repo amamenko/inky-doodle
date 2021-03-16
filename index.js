@@ -13,8 +13,8 @@ require("dotenv").config();
 
 const port = process.env.PORT || 4000;
 
-// Upload new Inky Doodle to Instagram every day at 09:50 AM
-cron.schedule("50 09 * * *", async () => {
+// Upload new Inky Doodle to Instagram every day at 10:00 AM
+cron.schedule("00 10 * * *", async () => {
   const client = new Instagram(
     {
       username: process.env.INSTAGRAM_USERNAME,
@@ -44,6 +44,8 @@ cron.schedule("50 09 * * *", async () => {
 
       return;
     }
+    
+    console.log(err.error);
 
     // Instagram has thrown a checkpoint error
     if (err.error && err.error.message === "checkpoint_required") {
