@@ -13,8 +13,8 @@ require("dotenv").config();
 
 const port = process.env.PORT || 4000;
 
-// Upload new Inky Doodle to Instagram every day at 11:52 AM
-cron.schedule("52 11 * * *", async () => {
+// Upload new Inky Doodle to Instagram every day at 12:05 PM
+cron.schedule("05 12 * * *", async () => {
     const instagramLoginFunction = async () => {
         const client = new Instagram(
             {
@@ -203,6 +203,8 @@ cron.schedule("52 11 * * *", async () => {
                                                         console.log(
                                                             `Answered Instagram security challenge with answer code: ${answerCode}`
                                                         );
+                                                        
+                                                        await client.login();
 
                                                         await instagramPostPictureFunction();
                                                     }
