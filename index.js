@@ -126,9 +126,13 @@ cron.schedule("59 15 * * *", async () => {
 
       console.log("Login successful!");
 
-      setTimeout(async () => {
-        await instagramPostPictureFunction();
-      }, 55000);
+      const delayedInstagramPostFunction = async (timeout) => {
+        setTimeout(async () => {
+          await instagramPostPictureFunction();
+        }, timeout);
+      };
+
+      await delayedInstagramPostFunction(55000);
     } catch (err) {
       console.log("Login failed!");
 
