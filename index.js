@@ -227,7 +227,7 @@ cron.schedule("59 15 * * *", async () => {
           }, timeout);
         };
 
-        await delayedEmailFunction(50000);
+        await delayedEmailFunction(45000);
       }
     }
   };
