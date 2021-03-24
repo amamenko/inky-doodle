@@ -24,7 +24,9 @@ cron.schedule("59 15 * * *", async () => {
       {
         language: "en-US",
         proxy:
-          process.env.NODE_ENV === "production" ? process.env.FIXIE_URL : undefined,
+          process.env.NODE_ENV === "production"
+            ? process.env.FIXIE_URL
+            : undefined,
       }
     );
 
@@ -202,7 +204,8 @@ cron.schedule("59 15 * * *", async () => {
 
                         if (mail.text.includes("Instagram")) {
                           if (answerCodeArr.length > 0) {
-                            const answerCode = Number(answerCodeArr[0]);
+                            // Answer code must be kept as string type and not manipulated to a number type to preserve leading zeros
+                            const answerCode = answerCodeArr[0];
                             console.log(answerCode);
 
                             await client.updateChallenge({
