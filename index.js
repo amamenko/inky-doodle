@@ -134,7 +134,7 @@ cron.schedule("59 15 * * *", async () => {
         }, timeout);
       };
 
-      await delayedInstagramPostFunction(55000);
+      await delayedInstagramPostFunction(50000);
     } catch (err) {
       console.log("Login failed!");
 
@@ -230,7 +230,7 @@ cron.schedule("59 15 * * *", async () => {
           }, timeout);
         };
 
-        await delayedEmailFunction(45000);
+        await delayedEmailFunction(40000);
       }
     }
   };
