@@ -83,6 +83,13 @@ The project also incudes an [Express](https://expressjs.com) server that posts a
 
 The server was deployed to [Heroku](https://www.heroku.com) and the Heroku dyno kept awake with [Kaffeine](https://kaffeine.herokuapp.com).
 
+## Upcoming Features (Dev Branch)
+
+The following additional features are in progress:
+  - [ ] Landing page
+  - [ ] Inky Doodle search functionality (with pagination and profiles)
+  - [ ] Circular pedigree tree
+
 ## Local Development
 
 To set up this project locally, you can follow the steps below.
