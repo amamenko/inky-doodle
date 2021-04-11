@@ -86,7 +86,7 @@ The server was deployed to [Heroku](https://www.heroku.com) and the Heroku dyno 
 ## Upcoming Features (Dev Branch)
 
 The following additional features are in progress:
-  - [ ] Landing page
+  - [X] Landing page
   - [ ] Inky Doodle search functionality (with pagination and profiles)
   - [ ] Circular pedigree tree
 
