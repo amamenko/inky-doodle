@@ -27,7 +27,8 @@ div {
 
 /* Color/shape of close button cross */
 .bm-cross {
-  background: #bdc3c7;
+  background: #fff;
+  cursor: pointer;
 }
 
 /*
@@ -35,13 +36,16 @@ div {
   Note: Beware of modifying this element as it can break the animations - you should not need to touch it in most cases
   */
 .bm-menu-wrap {
-  position: fixed;
+  position: absolute;
   height: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  background: #fff;
 }
 
 /* General sidebar styles */
 .bm-menu {
-  background: #373a47;
+  background: #fff;
   padding: 2.5em 1.5em 0;
   font-size: 1.15em;
 }
@@ -55,6 +59,7 @@ div {
 .bm-item-list {
   color: #b8b7ad;
   padding: 0.8em;
+  overflow: auto;
 }
 
 /* Individual item */
@@ -67,7 +72,19 @@ div {
   background: rgba(0, 0, 0, 0.3);
 }
 
-@media only screen and (min-width: 40rem) {
+@media only screen and (min-width: 0px) and (orientation: landscape) {
+  .bm-menu-wrap {
+    width: 300px !important;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .bm-menu-wrap {
+    width: 400px !important;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
   .bm-menu-wrap {
     width: 600px !important;
   }

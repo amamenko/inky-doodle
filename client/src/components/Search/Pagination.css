@@ -3,6 +3,7 @@
   padding-left: 0;
   margin: 22px 0;
   border-radius: 4px;
+  position: relative;
 }
 
 .pagination > li {
@@ -106,4 +107,17 @@
 .pagination-sm > li:last-child > span {
   border-bottom-right-radius: 3px;
   border-top-right-radius: 3px;
+}
+
+@media only screen and (max-width: 500px) {
+  .pagination {
+    font-size: 0.7rem;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .pagination {
+    top: 60rem;
+    position: fixed;
+  }
 }

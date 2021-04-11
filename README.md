@@ -6,7 +6,7 @@
 <p align="center">
   <a href="https://github.com/amamenko/inky-doodle">
     <img src="client/src/images/InkyDoodleLogo.png" alt="Logo" width="350"  />
-  </a> 
+  </a>
 
   <h3 align="center">Inky Doodle</h3>
 
@@ -41,7 +41,6 @@ arrows designate breeding to create a new generation:
 <p align="center">A, B, A, B &rarr; Ab, Ab &rarr; Ab</p>
 <p align="center">A, B, A, C &rarr; Ab, Ac &rarr; Abac</p>
 <p align="center">A, B, C, D &rarr; Ab, Cd &rarr; No Match</p>
-
 
 ## UX / UI
 
@@ -79,9 +78,17 @@ Project was deployed to [Vercel](https://vercel.com), custom domain acquired fro
 
 ## Automated Server-side Instagram Posting
 
-The project also incudes an [Express](https://expressjs.com) server that posts a new Inky Doodle from [Contentful](https://www.contentful.com/) with a custom caption (including the Inky Doodle's name, ID number, parents, if any, and its generation) to the [@inkydoodle.ml](https://www.instagram.com/inkydoodle.ml) Instagram page every day at 4PM Eastern Time via [node-cron](https://www.npmjs.com/package/node-cron) and [instagram-web-api](https://www.npmjs.com/package/instagram-web-api). 
+The project also incudes an [Express](https://expressjs.com) server that posts a new Inky Doodle from [Contentful](https://www.contentful.com/) with a custom caption (including the Inky Doodle's name, ID number, parents, if any, and its generation) to the [@inkydoodle.ml](https://www.instagram.com/inkydoodle.ml) Instagram page every day at 4PM Eastern Time via [node-cron](https://www.npmjs.com/package/node-cron) and [instagram-web-api](https://www.npmjs.com/package/instagram-web-api).
 
 The server was deployed to [Heroku](https://www.heroku.com) and the Heroku dyno kept awake with [Kaffeine](https://kaffeine.herokuapp.com).
+
+## Upcoming Features (Dev Branch)
+
+The following additional features are in progress:
+
+- [x] Landing page
+- [ ] Inky Doodle search functionality (with pagination and profiles)
+- [ ] Circular pedigree tree
 
 ## Local Development
 
@@ -141,11 +148,11 @@ You will need to have the following software installed:
 
 Contributions are welcome!
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/MyFeature`)
-3. Commit your Changes (`git commit -m 'Add my feature'`)
-4. Push to the Branch (`git push origin feature/MyFeature`)
-5. Open a Pull Request
+1. Fork the project.
+2. Create your feature branch (`git checkout -b feature/MyFeature`).
+3. Commit your changes (`git commit -m 'Add my feature'`).
+4. Push to the branch (`git push origin feature/MyFeature`).
+5. Open a pull request.
 
 <!-- LICENSE -->
 

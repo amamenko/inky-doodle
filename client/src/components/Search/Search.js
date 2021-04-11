@@ -8,21 +8,35 @@ import InkyDoodleProfile from "./InkyDoodleProfile";
 
 const StyledSearchPageContainer = styled.div`
   width: 100%;
+  height: 100%;
+  overflow: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
+
+  @media (min-width: 1200px) {
+    height: 80vh;
+  }
 `;
 
 const StyledSearchField = styled.div`
-  margin: 2rem;
+  font-size: 0.8rem;
+  width: 75%;
+  margin-top: 2rem;
+
   input {
     color: #000 !important;
   }
 
-  @media (min-width: 52rem) {
+  @media (min-width: 1200px) {
     width: 40%;
+    position: fixed;
+    top: 6rem;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
   }
 `;
 
@@ -31,16 +45,23 @@ const StyledPreviewContainer = styled.div`
   margin: 1rem;
   background: #fff;
   position: relative;
-  width: calc(100% - 4rem);
+  width: calc(100% - 6rem);
 
   &:hover {
     cursor: pointer;
   }
 
   p {
-    padding: 0.3rem 0 0 20%;
+    padding: 0.5rem 0 0 20%;
     margin: 0;
+    font-size: 0.8rem;
+
+    &:last-child {
+      position: absolute;
+      right: 10%;
+    }
   }
+
   img {
     position: absolute;
     top: 20%;
@@ -51,22 +72,55 @@ const StyledPreviewContainer = styled.div`
     object-fit: cover;
   }
 
+  @media (max-width: 374px) {
+    p {
+      font-size: 0.6rem;
+      padding: 0.7rem 0 0 25%;
+    }
+  }
+
+  @media (min-width: 376px) {
+    width: calc(100% - 6.5rem);
+  }
+
   @media (min-width: 500px) {
     width: 75%;
   }
 
-  @media (min-width: 700px) {
-    width: 50%;
+  @media (min-width: 768px) {
+    height: 7rem;
+
+    img {
+      top: 28%;
+      left: 4rem;
+    }
+
+    p {
+      padding: 0.3rem 0 0 30%;
+      font-size: 1rem;
+    }
   }
 
-  @media (min-width: 52rem) {
+  @media (min-width: 1200px) {
     height: 6rem;
     margin: 1rem;
     width: 40%;
   }
 `;
 
+const StyledPreviewContentsContainer = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @media (min-width: 768px) {
+    height: 65%;
+  }
+`;
+
 const StyledPreviewTextContainer = styled.div`
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -74,10 +128,13 @@ const StyledPreviewTextContainer = styled.div`
 `;
 
 const StyledNavLogo = styled.img`
-  position: absolute;
-  top: 0;
-  left: 0;
-  max-width: 100%;
+  max-width: 6rem;
+
+  @media (min-width: 1200px) {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+  }
 `;
 
 const StyledAnchor = styled.a`
@@ -95,6 +152,21 @@ const StyledAnchor = styled.a`
   @media (max-width: 1024px) and (orientation: landscape) {
     margin-top: 0.5rem;
     margin-left: 0rem;
+  }
+`;
+
+const StyledResultsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 1rem 0;
+
+  @media (min-width: 1200px) {
+    margin: 5rem 0;
+    position: absolute;
+    top: 15rem;
   }
 `;
 
@@ -122,9 +194,9 @@ const Search = () => {
                 wave
                 image {
                     url
-                }
-                color 
+                } 
                 number
+                parents
             }
         }
     }
@@ -200,25 +272,29 @@ const Search = () => {
             onChange={handleUserInput}
           />
         </StyledSearchField>
-        {inkyDoodleResults &&
-          inkyDoodleResults
-            .slice(currentPage * 4, currentPage * 4 + 4)
-            .map((result) => {
-              return (
-                <StyledPreviewContainer
-                  key={result.number}
-                  className="nes-container with-title"
-                  onClick={() => changeInkyDoodleSelected(result.number)}
-                >
-                  <p className="title">Gen {result.generation}</p>
-                  <StyledPreviewTextContainer>
-                    <p>{result.name}</p>
-                    <p>{">"}</p>
-                  </StyledPreviewTextContainer>
-                  <img src={result.image.url} alt={`${result.name}`} />
-                </StyledPreviewContainer>
-              );
-            })}
+        <StyledResultsContainer>
+          {inkyDoodleResults &&
+            inkyDoodleResults
+              .slice(currentPage * 4, currentPage * 4 + 4)
+              .map((result) => {
+                return (
+                  <StyledPreviewContainer
+                    key={result.number}
+                    className="nes-container with-title"
+                    onClick={() => changeInkyDoodleSelected(result.number)}
+                  >
+                    <p className="title">Gen {result.generation}</p>
+                    <StyledPreviewContentsContainer>
+                      <StyledPreviewTextContainer>
+                        <p>{result.name}</p>
+                        <p>{">"}</p>
+                      </StyledPreviewTextContainer>
+                      <img src={result.image.url} alt={`${result.name}`} />
+                    </StyledPreviewContentsContainer>
+                  </StyledPreviewContainer>
+                );
+              })}
+        </StyledResultsContainer>
 
         {inkyDoodleResults && inkyDoodleResults.length > 5 ? (
           <ReactPaginate

@@ -33,8 +33,13 @@ const StyledNavButtonsContainer = styled.div`
 
 const StyledLink = styled(Link)`
   width: 80%;
+  max-width: 50rem;
 
-  @media (min-width: 52rem) {
+  @media (min-width: 768px) {
+    width: 70%;
+  }
+
+  @media (min-width: 1200px) {
     width: 40%;
   }
 `;
