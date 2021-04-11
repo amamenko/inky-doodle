@@ -19,6 +19,7 @@
   "homepage": "https://github.com/amamenko/inky-doodle#readme",
   "dependencies": {
     "axios": "^0.21.1",
+    "contentful-management": "^7.14.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "imap-simple": "^5.0.0",
