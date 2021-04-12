@@ -9,6 +9,7 @@ const cron = require("node-cron");
 const imaps = require("imap-simple");
 const _ = require("lodash");
 const simpleParser = require("mailparser").simpleParser;
+const dayjs = require("dayjs");
 
 require("dotenv").config();
 
@@ -128,7 +129,12 @@ cron.schedule("59 15 * * *", async () => {
                                       .getEntry(updatedInkyDoodle.sys.id)
                                       .then((entry) => {
                                         entry.fields.instagram = {
-                                          "en-US": `https://www.instagram.com/p/${media.code}/`,
+                                          "en-US": {
+                                            url: `https://www.instagram.com/p/${media.code}/`,
+                                            date: dayjs().format(
+                                              "MMMM D, YYYY"
+                                            ),
+                                          },
                                         };
 
                                         entry.update().then(() => {
@@ -138,7 +144,7 @@ cron.schedule("59 15 * * *", async () => {
                                               updatedEntry.publish();
 
                                               console.log(
-                                                `Entry updated successfully and published. New updated entry Instagram link is ${updatedEntry.fields.instagram["en-US"]}`
+                                                `Entry updated successfully and published. New updated entry Instagram link is ${updatedEntry.fields.instagram["en-US"].url}`
                                               );
                                             });
                                         });
