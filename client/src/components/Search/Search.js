@@ -17,7 +17,15 @@ const StyledSearchPageContainer = styled.div`
   position: relative;
 
   @media (min-width: 1200px) {
-    height: 80vh;
+    height: 75vh;
+  }
+
+  @media (min-width: 1900px) {
+    height: 85vh;
+  }
+
+  @media (min-width: 1950px) {
+    height: 75vh;
   }
 `;
 
@@ -164,9 +172,12 @@ const StyledResultsContainer = styled.div`
   margin: 1rem 0;
 
   @media (min-width: 1200px) {
+    top: 15rem;
+  }
+
+  @media (min-width: 2000px) {
     margin: 5rem 0;
     position: absolute;
-    top: 15rem;
   }
 `;
 
@@ -176,6 +187,9 @@ const Search = () => {
   const [pageCount, changePageCount] = useState(0);
   const [currentPage, changeCurrentPage] = useState(0);
   const [inkyDoodleSelected, changeInkyDoodleSelected] = useState("");
+
+  // For individual profile
+  const [parentsInkyDoodles, changeParentsInkyDoodles] = useState("");
 
   const handleUserInput = (e) => {
     changeUserInput(e.target.value);
@@ -257,6 +271,8 @@ const Search = () => {
           )[0]
         }
         changeInkyDoodleSelected={changeInkyDoodleSelected}
+        parentsInkyDoodles={parentsInkyDoodles}
+        changeParentsInkyDoodles={changeParentsInkyDoodles}
       />
       <StyledSearchPageContainer>
         <StyledAnchor href="/">

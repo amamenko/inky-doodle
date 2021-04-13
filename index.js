@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const axios = require("axios");
+const contentful = require("contentful-management");
 const fs = require("fs");
 const Jimp = require("jimp");
 const Instagram = require("instagram-web-api");
@@ -8,6 +9,7 @@ const cron = require("node-cron");
 const imaps = require("imap-simple");
 const _ = require("lodash");
 const simpleParser = require("mailparser").simpleParser;
+const dayjs = require("dayjs");
 
 require("dotenv").config();
 
@@ -46,7 +48,10 @@ cron.schedule("59 15 * * *", async () => {
           const inkyDoodleQuery = `
                             query {
                                 inkyDoodleCollection(where: {number: ${updatedNumber}}) {
-                                    items   {
+                                  items   {
+                                    sys {
+                                      id
+                                    }
                                     number
                                     generation
                                     name
@@ -108,6 +113,45 @@ cron.schedule("59 15 * * *", async () => {
                             console.log(
                               `https://www.instagram.com/p/${media.code}/`
                             );
+
+                            const client = contentful.createClient({
+                              accessToken:
+                                process.env.CONTENTFUL_MANAGEMENT_TOKEN,
+                            });
+
+                            client
+                              .getSpace(process.env.CONTENTFUL_SPACE_ID)
+                              .then((space) => {
+                                space
+                                  .getEnvironment("master")
+                                  .then((environment) => {
+                                    environment
+                                      .getEntry(updatedInkyDoodle.sys.id)
+                                      .then((entry) => {
+                                        entry.fields.instagram = {
+                                          "en-US": {
+                                            url: `https://www.instagram.com/p/${media.code}/`,
+                                            date: dayjs().format(
+                                              "MMMM D, YYYY"
+                                            ),
+                                          },
+                                        };
+
+                                        entry.update().then(() => {
+                                          environment
+                                            .getEntry(updatedInkyDoodle.sys.id)
+                                            .then((updatedEntry) => {
+                                              updatedEntry.publish();
+
+                                              console.log(
+                                                `Entry updated successfully and published. New updated entry Instagram link is ${updatedEntry.fields.instagram["en-US"].url}`
+                                              );
+                                            });
+                                        });
+                                      });
+                                  });
+                              });
+
                             // Remove Local JPG File
                             fs.unlinkSync(`${updatedInkyDoodle.name}.jpg`);
                           });

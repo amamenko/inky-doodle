@@ -121,3 +121,16 @@
     position: fixed;
   }
 }
+
+@media only screen and (min-width: 1900px) {
+  .pagination {
+    top: 50rem;
+    position: fixed;
+  }
+}
+
+@media only screen and (min-width: 2000px) {
+  .pagination {
+    top: 60rem;
+  }
+}
