@@ -21,71 +21,69 @@ const InkyDoodleProfile = (props) => {
     inkyDoodleSelected,
     changeInkyDoodleSelected,
     inkyDoodleResult,
-    parentsInkyDoodles,
-    changeParentsInkyDoodles,
   } = props;
 
-  const [linkedInkyDoodle, changeLinkedInkyDoodle] = useState("");
-  // const [secondLinkedInkyDoodle, changeSecondLinkedInkyDoodle] = useState("");
+  const [inkyDoodleStack, changeInkyDoodleStack] = useState([
+    { main: "", parents: [] },
+  ]);
+  const [currentInkyDoodleIndex, changeCurrentInkyDoodleIndex] = useState(0);
+  const [currentInkyDoodle, changeCurrentInkyDoodle] = useState("");
+  const [currentInkyDoodleParents, changeCurrentInkyDoodleParents] = useState(
+    ""
+  );
   const [parent1, changeParent1] = useState("");
   const [parent2, changeParent2] = useState("");
 
-  useEffect(() => {
-    if (inkyDoodleResult) {
-      if (inkyDoodleResult.parents) {
-        let inkyDoodleParentsQuery;
-
-        if (linkedInkyDoodle) {
-          if (linkedInkyDoodle.parents) {
-            inkyDoodleParentsQuery = `
-      query {
-          inkyDoodleCollection(where: { 
-            OR: [
-              { name_contains: "${linkedInkyDoodle.parents[0]}" },
-              { name_contains: "${linkedInkyDoodle.parents[1]}" }
-            ]
-          }) {
-              items   {
-              generation
-              instagram
-              name
-              wave
-              image {
-                  url
-              } 
-              number
-              parents
-          }
-      }
-  }
-`;
-          }
-        } else {
-          inkyDoodleParentsQuery = `
-      query {
-          inkyDoodleCollection(where: { 
-            OR: [
-              { name_contains: "${inkyDoodleResult.parents[0]}" },
-              { name_contains: "${inkyDoodleResult.parents[1]}" }
-            ]
-          }) {
-              items   {
-              generation
-              instagram
-              name
-              wave
-              image {
-                  url
-              } 
-              number
-              parents
-          }
-      }
-  }
-`;
+  useMemo(() => {
+    if (inkyDoodleStack) {
+      if (inkyDoodleStack[currentInkyDoodleIndex]) {
+        if (inkyDoodleStack[currentInkyDoodleIndex].main) {
+          changeCurrentInkyDoodle(inkyDoodleStack[currentInkyDoodleIndex].main);
         }
 
-        if (inkyDoodleParentsQuery) {
+        if (inkyDoodleStack[currentInkyDoodleIndex].parents) {
+          changeCurrentInkyDoodleParents(
+            inkyDoodleStack[currentInkyDoodleIndex].parents
+          );
+        }
+      }
+    }
+  }, [inkyDoodleStack, currentInkyDoodleIndex]);
+
+  useEffect(() => {
+    if (inkyDoodleResult) {
+      if (!inkyDoodleStack[0].main) {
+        changeInkyDoodleStack([{ main: inkyDoodleResult, parents: [] }]);
+      }
+    }
+  }, [inkyDoodleResult, inkyDoodleStack, currentInkyDoodleIndex]);
+
+  useEffect(() => {
+    if (currentInkyDoodle) {
+      if (currentInkyDoodle.parents) {
+        if (currentInkyDoodleParents.length === 0) {
+          const inkyDoodleParentsQuery = `
+      query {
+          inkyDoodleCollection(where: { 
+            OR: [
+              { name_contains: "${currentInkyDoodle.parents[0]}" },
+              { name_contains: "${currentInkyDoodle.parents[1]}" }
+            ]
+          }) {
+              items   {
+              generation
+              instagram
+              name
+              wave
+              image {
+                  url
+              } 
+              number
+              parents
+          }
+      }
+  }
+`;
           axios({
             url: `https://graphql.contentful.com/content/v1/spaces/${process.env.REACT_APP_SPACE_ID}`,
             method: "post",
@@ -106,101 +104,70 @@ const InkyDoodleProfile = (props) => {
               if (data) {
                 if (data.inkyDoodleCollection) {
                   if (data.inkyDoodleCollection.items) {
-                    changeParentsInkyDoodles(data.inkyDoodleCollection.items);
+                    const copyArr = [...inkyDoodleStack];
+                    let inkyDoodleObj = copyArr[currentInkyDoodleIndex];
+
+                    if (inkyDoodleObj) {
+                      inkyDoodleObj.parents = data.inkyDoodleCollection.items;
+                      changeInkyDoodleStack(copyArr);
+                      console.log(copyArr);
+                    }
                   }
                 }
               }
             });
-        } else {
-          if (linkedInkyDoodle) {
-            changeParentsInkyDoodles([linkedInkyDoodle, linkedInkyDoodle]);
-          } else {
-            changeParentsInkyDoodles([inkyDoodleResult, inkyDoodleResult]);
-          }
         }
       } else {
-        if (linkedInkyDoodle) {
-          changeParentsInkyDoodles([linkedInkyDoodle, linkedInkyDoodle]);
-        } else {
-          changeParentsInkyDoodles([inkyDoodleResult, inkyDoodleResult]);
+        if (currentInkyDoodleParents.length === 0) {
+          const copyArr = [...inkyDoodleStack];
+          let inkyDoodleObj = copyArr[currentInkyDoodleIndex];
+
+          if (inkyDoodleObj) {
+            inkyDoodleObj.parents = [currentInkyDoodle, currentInkyDoodle];
+            changeInkyDoodleStack(copyArr);
+          }
         }
       }
     }
-  }, [inkyDoodleResult, linkedInkyDoodle, changeParentsInkyDoodles]);
+  }, [
+    currentInkyDoodle,
+    currentInkyDoodleIndex,
+    currentInkyDoodleParents.length,
+    inkyDoodleStack,
+  ]);
 
   const handleMenuClose = () => {
+    changeInkyDoodleStack([{ main: "", parents: [] }]);
     changeInkyDoodleSelected("");
-    changeParentsInkyDoodles("");
+    changeCurrentInkyDoodleIndex(0);
+    changeCurrentInkyDoodle("");
+    changeCurrentInkyDoodleParents([]);
     changeParent1("");
     changeParent2("");
-    changeLinkedInkyDoodle("");
   };
 
   const handleParentClick = (parent) => {
-    if (parentsInkyDoodles) {
-      if (inkyDoodleResult.generation > 1) {
-        changeLinkedInkyDoodle(parent);
-      }
+    if (currentInkyDoodle.generation > 1) {
+      changeCurrentInkyDoodleIndex(currentInkyDoodleIndex + 1);
+      changeInkyDoodleStack([
+        ...inkyDoodleStack,
+        { main: parent, parents: [] },
+      ]);
+      changeCurrentInkyDoodleParents([]);
+      changeParent1("");
+      changeParent2("");
     }
   };
 
-  useMemo(() => {
-    if (inkyDoodleResult) {
-      if (parentsInkyDoodles) {
-        changeParent1(
-          parentsInkyDoodles.filter((item) => {
-            if (inkyDoodleResult.parents) {
-              return item.name === inkyDoodleResult.parents[0];
-            } else {
-              return item.name === inkyDoodleResult.name;
-            }
-          })[0]
-        );
-
-        changeParent2(
-          parentsInkyDoodles.filter((item) => {
-            if (inkyDoodleResult.parents) {
-              return item.name === inkyDoodleResult.parents[1];
-            } else {
-              return item.name === inkyDoodleResult.name;
-            }
-          })[0]
-        );
-      }
-    }
-  }, [inkyDoodleResult, parentsInkyDoodles]);
-
-  useMemo(() => {
-    if (linkedInkyDoodle) {
-      if (parentsInkyDoodles) {
-        changeParent1(
-          parentsInkyDoodles.filter((item) => {
-            if (linkedInkyDoodle.parents) {
-              return item.name === linkedInkyDoodle.parents[0];
-            } else {
-              return item.name === linkedInkyDoodle.name;
-            }
-          })[0]
-        );
-
-        changeParent2(
-          parentsInkyDoodles.filter((item) => {
-            if (linkedInkyDoodle.parents) {
-              return item.name === linkedInkyDoodle.parents[1];
-            } else {
-              return item.name === linkedInkyDoodle.name;
-            }
-          })[0]
-        );
-      }
-    }
-  }, [linkedInkyDoodle, parentsInkyDoodles]);
-
   const handleBackProfileClick = () => {
-    changeLinkedInkyDoodle("");
-    changeParentsInkyDoodles("");
+    const copyArr = [...inkyDoodleStack];
+    copyArr.pop();
+    changeInkyDoodleStack(copyArr);
+
     changeParent1("");
     changeParent2("");
+    changeCurrentInkyDoodleIndex(currentInkyDoodleIndex - 1);
+    changeCurrentInkyDoodleParents([]);
   };
 
   const handleInstagramPostClick = (e, url) => {
@@ -208,7 +175,35 @@ const InkyDoodleProfile = (props) => {
     window.open(url, "_blank", "noopener, noreferrer");
   };
 
-  if (inkyDoodleResult) {
+  useEffect(() => {
+    if (currentInkyDoodle) {
+      if (currentInkyDoodleParents) {
+        if (currentInkyDoodleParents.length > 0) {
+          changeParent1(
+            currentInkyDoodleParents.filter((item) => {
+              if (currentInkyDoodle.parents) {
+                return item.name === currentInkyDoodle.parents[0];
+              } else {
+                return item.name === currentInkyDoodle.name;
+              }
+            })[0]
+          );
+
+          changeParent2(
+            currentInkyDoodleParents.filter((item) => {
+              if (currentInkyDoodle.parents) {
+                return item.name === currentInkyDoodle.parents[1];
+              } else {
+                return item.name === currentInkyDoodle.name;
+              }
+            })[0]
+          );
+        }
+      }
+    }
+  }, [currentInkyDoodle, currentInkyDoodleParents]);
+
+  if (inkyDoodleResult && currentInkyDoodle) {
     return (
       <Menu
         disableAutoFocus
@@ -218,53 +213,34 @@ const InkyDoodleProfile = (props) => {
         right
       >
         <StyledProfileTopContainer>
-          {linkedInkyDoodle ? (
+          {currentInkyDoodleIndex > 0 ? (
             <StyledProfileBackContainer
               className="nes-pointer"
               onClick={handleBackProfileClick}
             >
               <MdArrowBack />
-              <p>Back to {inkyDoodleResult.name}</p>
+              <p>
+                Back to {inkyDoodleStack[currentInkyDoodleIndex - 1].main.name}
+              </p>
             </StyledProfileBackContainer>
           ) : null}
-          <h2>
-            {linkedInkyDoodle ? linkedInkyDoodle.name : inkyDoodleResult.name}
-          </h2>
+          <h2>{currentInkyDoodle.name}</h2>
           <StyledImageContainer>
             <img
-              src={
-                linkedInkyDoodle
-                  ? linkedInkyDoodle.image.url
-                  : inkyDoodleResult.image.url
-              }
-              alt={`${
-                linkedInkyDoodle ? linkedInkyDoodle.name : inkyDoodleResult.name
-              }`}
+              src={currentInkyDoodle.image.url}
+              alt={`${currentInkyDoodle.name}`}
             />
           </StyledImageContainer>
-          <h2>
-            {"#" +
-              (linkedInkyDoodle
-                ? linkedInkyDoodle.number
-                : inkyDoodleResult.number)}
-          </h2>
+          <h2>{"#" + currentInkyDoodle.number}</h2>
         </StyledProfileTopContainer>
         <StyledProfileDescriptionContainer>
           <StyledParentsContainer>
             <StyledIndividualParentContainer
               onClick={() => handleParentClick(parent1)}
               className={
-                linkedInkyDoodle
-                  ? linkedInkyDoodle.generation > 1
-                  : inkyDoodleResult.generation > 1
-                  ? "nes-pointer"
-                  : null
+                currentInkyDoodle.generation > 1 ? "nes-pointer" : null
               }
-              linked={
-                linkedInkyDoodle
-                  ? linkedInkyDoodle.generation > 1
-                  : inkyDoodleResult.generation > 1
-              }
+              linked={currentInkyDoodle.generation > 1}
             >
               {parent1 ? (
                 <>
@@ -273,11 +249,7 @@ const InkyDoodleProfile = (props) => {
                   </p>
                   <p>{parent1.name}</p>
                   <img src={parent1.image.url} alt={parent1.name} />
-                  {(
-                    linkedInkyDoodle
-                      ? linkedInkyDoodle.generation > 1
-                      : inkyDoodleResult.generation > 1
-                  ) ? (
+                  {currentInkyDoodle.generation > 1 ? (
                     <MdSubdirectoryArrowRight />
                   ) : null}
                 </>
@@ -288,17 +260,9 @@ const InkyDoodleProfile = (props) => {
             <StyledIndividualParentContainer
               onClick={() => handleParentClick(parent2)}
               className={
-                linkedInkyDoodle
-                  ? linkedInkyDoodle.generation > 1
-                  : inkyDoodleResult.generation > 1
-                  ? "nes-pointer"
-                  : null
+                currentInkyDoodle.generation > 1 ? "nes-pointer" : null
               }
-              linked={
-                linkedInkyDoodle
-                  ? linkedInkyDoodle.generation > 1
-                  : inkyDoodleResult.generation > 1
-              }
+              linked={currentInkyDoodle.generation > 1}
             >
               {parent2 ? (
                 <>
@@ -307,11 +271,7 @@ const InkyDoodleProfile = (props) => {
                   </p>
                   <p>{parent2.name}</p>
                   <img src={parent2.image.url} alt={parent2.name} />
-                  {(
-                    linkedInkyDoodle
-                      ? linkedInkyDoodle.generation > 1
-                      : inkyDoodleResult.generation > 1
-                  ) ? (
+                  {currentInkyDoodle.generation > 1 ? (
                     <MdSubdirectoryArrowRight />
                   ) : null}
                 </>
@@ -326,25 +286,14 @@ const InkyDoodleProfile = (props) => {
               <p>
                 <b>Generation:</b>
               </p>
-              <p>
-                {" " +
-                  (linkedInkyDoodle
-                    ? linkedInkyDoodle.generation
-                    : inkyDoodleResult.generation)}
-              </p>
+              <p>{" " + currentInkyDoodle.generation}</p>
             </StyledDescriptionLine>
             <StyledDescriptionLine>
               <p>
                 <b>Wave:</b>
               </p>
               <p>
-                {linkedInkyDoodle
-                  ? linkedInkyDoodle.wave
-                    ? " " + linkedInkyDoodle.wave
-                    : " 1"
-                  : inkyDoodleResult.wave
-                  ? " " + inkyDoodleResult.wave
-                  : " 1"}
+                {currentInkyDoodle.wave ? " " + currentInkyDoodle.wave : " 1"}
               </p>
             </StyledDescriptionLine>
           </StyledSectionContainer>

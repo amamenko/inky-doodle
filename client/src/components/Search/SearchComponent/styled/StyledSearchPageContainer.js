@@ -9,13 +9,20 @@ export const StyledSearchPageContainer = styled.div`
   align-items: center;
   justify-content: center;
   position: relative;
+
   @media (min-width: 1200px) {
     height: 75vh;
   }
+
   @media (min-width: 1900px) {
     height: 85vh;
   }
+
   @media (min-width: 1950px) {
     height: 75vh;
+  }
+
+  @media (min-width: 1200px) and (max-width: 2000px) and (max-height: 1000px) {
+    height: 90vh;
   }
 `;

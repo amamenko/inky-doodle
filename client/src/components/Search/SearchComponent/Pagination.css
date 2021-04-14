@@ -134,3 +134,9 @@
     top: 60rem;
   }
 }
+
+@media only screen and (min-width: 1200px) and (max-width: 2000px) and (max-height: 1000px) {
+  .pagination {
+    top: 47rem;
+  }
+}

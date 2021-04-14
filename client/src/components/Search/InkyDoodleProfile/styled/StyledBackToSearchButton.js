@@ -8,12 +8,10 @@ export const StyledBackToSearchButton = styled.button`
   margin: 0 auto;
   font-size: 0.8rem;
 
-  @media (max-width: 768px) {
-    ::after {
-      content: "";
-      height: 5rem;
-      box-shadow: none;
-    }
+  ::after {
+    content: "";
+    height: 5rem;
+    box-shadow: none !important;
   }
 
   @media (min-width: 768px) {

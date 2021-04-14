@@ -23,12 +23,14 @@ div {
 .bm-cross-button {
   height: 24px;
   width: 24px;
+  cursor: default !important;
 }
 
 /* Color/shape of close button cross */
 .bm-cross {
   background: #fff;
   font-size: 1.5rem !important;
+  cursor: default !important;
 }
 
 /*

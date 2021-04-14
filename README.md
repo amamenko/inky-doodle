@@ -80,6 +80,8 @@ Project was deployed to [Vercel](https://vercel.com), custom domain acquired fro
 
 The project also incudes an [Express](https://expressjs.com) server that posts a new Inky Doodle from [Contentful](https://www.contentful.com/) with a custom caption (including the Inky Doodle's name, ID number, parents, if any, and its generation) to the [@inkydoodle.ml](https://www.instagram.com/inkydoodle.ml) Instagram page every day at 4PM Eastern Time via [node-cron](https://www.npmjs.com/package/node-cron) and [instagram-web-api](https://www.npmjs.com/package/instagram-web-api).
 
+The Instagram link and date of posting for that particular Inky Doodle are then automatically stored via [the JavaScript SDK for Contentful's Content Management API](https://www.npmjs.com/package/contentful-management).
+
 The server was deployed to [Heroku](https://www.heroku.com) and the Heroku dyno kept awake with [Kaffeine](https://kaffeine.herokuapp.com).
 
 ## Upcoming Features (Dev Branch)
@@ -87,7 +89,14 @@ The server was deployed to [Heroku](https://www.heroku.com) and the Heroku dyno 
 The following additional features are in progress:
 
 - [x] Landing page
-- [ ] Inky Doodle search functionality (with pagination and profiles)
+- [ ] About page
+- [ ] Inky Doodle search functionality
+  - [x] Pagination
+  - [x] Profiles
+  - [x] Instagram Post Links
+  - [x] Scheduled Posts
+  - [ ] Nested Parents
+  - [ ] Nested Children
 - [ ] Circular pedigree tree
 
 ## Local Development

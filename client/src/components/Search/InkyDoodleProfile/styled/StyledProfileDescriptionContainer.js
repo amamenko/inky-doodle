@@ -13,20 +13,29 @@ export const StyledProfileDescriptionContainer = styled.div`
   color: #000;
   border-top: 1px solid rgb(150, 150, 150);
   font-size: 0.55rem;
+
   @media (min-width: 0px) and (orientation: landscape) {
     height: 35%;
   }
+
   @media (min-width: 500px) and (orientation: portrait) {
     height: 80%;
   }
+
   @media (min-width: 768px) and (orientation: portrait) {
     height: 75%;
     font-size: 1rem;
   }
+
   @media (min-width: 1200px) {
     height: 75%;
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
+
+  @media (min-width: 1900px) and (max-height: 1000px) {
+    height: 65%;
+  }
+
   @media (min-width: 2000px) {
     height: 75%;
   }
