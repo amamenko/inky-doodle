@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.21.1",
+    "dayjs": "^1.10.4",
     "nes.css": "^2.3.0",
     "react": "^16.8.6",
     "react-burger-menu": "^3.0.6",
