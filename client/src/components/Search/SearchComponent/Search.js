@@ -1,185 +1,19 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
-import InkyLogo from "../../images/inky.png";
+import EmptySearch from "./EmptySearch";
+import InkyLogo from "../../../images/inky.png";
+import InkyDoodleProfile from "../InkyDoodleProfile/InkyDoodleProfile";
+import { StyledSearchPageContainer } from "./styled/StyledSearchPageContainer";
+import { StyledAnchor } from "./styled/StyledAnchor";
+import { StyledNavLogo } from "./styled/StyledNavLogo";
+import { StyledSearchField } from "./styled/StyledSearchField";
+import { StyledResultsContainer } from "./styled/StyledResultsContainer";
+import { StyledPreviewContainer } from "./styled/StyledPreviewContainer";
+import { StyledPreviewContentsContainer } from "./styled/StyledPreviewContentsContainer";
+import { StyledPreviewTextContainer } from "./styled/StyledPreviewTextContainer";
+import { StyledPreviewNumberContainer } from "./styled/StyledPreviewNumberContainer";
 import "./Pagination.css";
-import InkyDoodleProfile from "./InkyDoodleProfile";
-
-const StyledSearchPageContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-
-  @media (min-width: 1200px) {
-    height: 75vh;
-  }
-
-  @media (min-width: 1900px) {
-    height: 85vh;
-  }
-
-  @media (min-width: 1950px) {
-    height: 75vh;
-  }
-`;
-
-const StyledSearchField = styled.div`
-  font-size: 0.8rem;
-  width: 75%;
-  margin-top: 2rem;
-
-  input {
-    color: #000 !important;
-  }
-
-  @media (min-width: 1200px) {
-    width: 40%;
-    position: fixed;
-    top: 6rem;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-  }
-`;
-
-const StyledPreviewContainer = styled.div`
-  height: 5rem;
-  margin: 1rem;
-  background: #fff;
-  position: relative;
-  width: calc(100% - 6rem);
-
-  &:hover {
-    cursor: pointer;
-  }
-
-  p {
-    padding: 0.5rem 0 0 20%;
-    margin: 0;
-    font-size: 0.8rem;
-
-    &:last-child {
-      position: absolute;
-      right: 10%;
-    }
-  }
-
-  img {
-    position: absolute;
-    top: 20%;
-    bottom: 20%;
-    left: 10%;
-    margin: 0 auto;
-    max-height: 2.5rem;
-    object-fit: cover;
-  }
-
-  @media (max-width: 374px) {
-    p {
-      font-size: 0.6rem;
-      padding: 0.7rem 0 0 25%;
-    }
-  }
-
-  @media (min-width: 376px) {
-    width: calc(100% - 6.5rem);
-  }
-
-  @media (min-width: 500px) {
-    width: 75%;
-  }
-
-  @media (min-width: 768px) {
-    height: 7rem;
-
-    img {
-      top: 28%;
-      left: 4rem;
-    }
-
-    p {
-      padding: 0.3rem 0 0 30%;
-      font-size: 1rem;
-    }
-  }
-
-  @media (min-width: 1200px) {
-    height: 6rem;
-    margin: 1rem;
-    width: 40%;
-  }
-`;
-
-const StyledPreviewContentsContainer = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  @media (min-width: 768px) {
-    height: 65%;
-  }
-`;
-
-const StyledPreviewTextContainer = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  overflow: hidden;
-`;
-
-const StyledNavLogo = styled.img`
-  max-width: 6rem;
-
-  @media (min-width: 1200px) {
-    position: fixed;
-    top: 1rem;
-    left: 1rem;
-  }
-`;
-
-const StyledAnchor = styled.a`
-  align-self: flex-start;
-  height: 5vh;
-  display: block;
-  position: relative;
-  width: 100px;
-  margin-top: 1rem;
-  margin-left: 1rem;
-  @media (max-width: 330px) {
-    margin-left: 0.5rem;
-  }
-
-  @media (max-width: 1024px) and (orientation: landscape) {
-    margin-top: 0.5rem;
-    margin-left: 0rem;
-  }
-`;
-
-const StyledResultsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  margin: 1rem 0;
-
-  @media (min-width: 1200px) {
-    top: 15rem;
-  }
-
-  @media (min-width: 2000px) {
-    margin: 5rem 0;
-    position: absolute;
-  }
-`;
 
 const Search = () => {
   const [userInput, changeUserInput] = useState("");
@@ -201,9 +35,14 @@ const Search = () => {
 
   const inkyDoodlesMatchQuery = `
         query {
-            inkyDoodleCollection(limit: 2000, order: [generation_ASC, name_ASC], where: {name_contains: "${userInput}"}) {
+            inkyDoodleCollection(limit: 2000, order: [generation_ASC, name_ASC], where: ${
+              Number(userInput)
+                ? `{number_in: ${Number(userInput)}}`
+                : `{name_contains: "${userInput}"}`
+            }) {
                 items   {
                 generation
+                instagram
                 name
                 wave
                 image {
@@ -239,9 +78,16 @@ const Search = () => {
             if (data.inkyDoodleCollection) {
               if (data.inkyDoodleCollection.items) {
                 const filteredInkyDoodles = data.inkyDoodleCollection.items.filter(
-                  (item) =>
-                    item.name.toLowerCase().slice(0, userInput.length) ===
-                    userInput.toLowerCase().trim()
+                  (item) => {
+                    if (!Number(userInput)) {
+                      return (
+                        item.name.toLowerCase().slice(0, userInput.length) ===
+                        userInput.toLowerCase().trim()
+                      );
+                    }
+
+                    return true;
+                  }
                 );
 
                 changeInkyDoodleResults(filteredInkyDoodles);
@@ -289,7 +135,7 @@ const Search = () => {
           />
         </StyledSearchField>
         <StyledResultsContainer>
-          {inkyDoodleResults &&
+          {inkyDoodleResults ? (
             inkyDoodleResults
               .slice(currentPage * 4, currentPage * 4 + 4)
               .map((result) => {
@@ -302,6 +148,9 @@ const Search = () => {
                     <p className="title">Gen {result.generation}</p>
                     <StyledPreviewContentsContainer>
                       <StyledPreviewTextContainer>
+                        <StyledPreviewNumberContainer>
+                          {result.number}
+                        </StyledPreviewNumberContainer>
                         <p>{result.name}</p>
                         <p>{">"}</p>
                       </StyledPreviewTextContainer>
@@ -309,7 +158,10 @@ const Search = () => {
                     </StyledPreviewContentsContainer>
                   </StyledPreviewContainer>
                 );
-              })}
+              })
+          ) : (
+            <EmptySearch />
+          )}
         </StyledResultsContainer>
 
         {inkyDoodleResults && inkyDoodleResults.length > 5 ? (

@@ -1,227 +1,20 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { slide as Menu } from "react-burger-menu";
-import styled from "styled-components";
 import axios from "axios";
 import ClipLoader from "react-spinners/ClipLoader";
 import { MdSubdirectoryArrowRight, MdArrowBack } from "react-icons/md";
+import dayjs from "dayjs";
+import { StyledProfileTopContainer } from "./styled/StyledProfileTopContainer";
+import { StyledProfileBackContainer } from "./styled/StyledProfileBackContainer";
+import { StyledImageContainer } from "./styled/StyledImageContainer";
+import { StyledProfileDescriptionContainer } from "./styled/StyledProfileDescriptionContainer";
+import { StyledParentsContainer } from "./styled/StyledParentsContainer";
+import { StyledIndividualParentContainer } from "./styled/StyledIndividualParentContainer";
+import { StyledSectionContainer } from "./styled/StyledSectionContainer";
+import { StyledDescriptionLine } from "./styled/StyledDescriptionLine";
+import { StyledInstagramLink } from "./styled/StyledInstagramLink";
+import { StyledBackToSearchButton } from "./styled/StyledBackToSearchButton";
 import "./ProfileSliderStyles.css";
-
-const StyledProfileTopContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  text-align: center;
-
-  h2 {
-    font-size: 1rem;
-    color: #000;
-    margin-top: 0.5rem;
-  }
-
-  @media (max-width: 374px) {
-    h2 {
-      font-size: 0.8rem;
-    }
-  }
-`;
-
-const StyledProfileBackContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  left: 8px;
-  top: 8px;
-  background: transparent;
-  padding: 0.5rem 1rem 0.5rem 1rem;
-  margin: 0;
-  color: #07c;
-  border: 1px solid #07c;
-  border-radius: 20px;
-  font-size: 0.8rem;
-
-  svg {
-    path {
-      fill: #07c;
-    }
-  }
-
-  p {
-    margin: 0;
-    padding: 0 0 0 0.5rem;
-    font-size: 0.5rem;
-  }
-
-  @media (min-width: 768px) {
-    p {
-      margin: 0;
-      padding: 0 0 0 0.5rem;
-      font-size: 0.8rem;
-    }
-  }
-`;
-
-const StyledImageContainer = styled.div`
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
-  overflow: hidden;
-  background: transparent;
-  width: 100%;
-
-  @media (max-width: 374px) {
-    img {
-      height: 4rem;
-    }
-  }
-
-  @media (max-width: 768px) {
-    img {
-      height: 5rem;
-    }
-  }
-
-  @media (min-width: 0px) and (orientation: landscape) {
-    img {
-      height: 4rem;
-    }
-  }
-
-  @media (min-width: 1200px) and (orientation: landscape) {
-    img {
-      height: auto;
-    }
-  }
-`;
-
-const StyledProfileDescriptionContainer = styled.div`
-  display: flex;
-  flex: 1;
-  height: 68%;
-  width: 100%;
-  background: #fff;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  color: #000;
-  border-top: 1px solid rgb(150, 150, 150);
-  font-size: 0.6rem;
-
-  @media (min-width: 0px) and (orientation: landscape) {
-    height: 35%;
-  }
-
-  @media (min-width: 500px) and (orientation: portrait) {
-    height: 70%;
-  }
-
-  @media (min-width: 768px) and (orientation: portrait) {
-    height: 75%;
-    font-size: 1rem;
-  }
-
-  @media (min-width: 1200px) {
-    height: 65%;
-    font-size: 1rem;
-  }
-
-  @media (min-width: 2000px) {
-    height: 75%;
-  }
-`;
-
-const StyledParentsContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  @media (min-width: 1024px) {
-    justify-content: space-evenly;
-  }
-`;
-
-const StyledIndividualParentContainer = styled.div`
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: #fff;
-  padding: 1rem;
-  text-align: center;
-  border: 1px solid rgba(150, 150, 150, 0.3);
-  height: 10rem;
-  width: 100%;
-
-  svg {
-    font-size: 1rem;
-    position: absolute;
-    bottom: 0.5rem;
-    right: 0.5rem;
-
-    path {
-      fill: rgb(90, 90, 90);
-    }
-  }
-
-  & > p:first-child {
-    color: rgb(100, 100, 100);
-  }
-
-  img {
-    max-height: 3rem;
-  }
-
-  & > span {
-    padding: 1.4rem;
-  }
-
-  @media (min-width: 1024px) {
-    &:hover {
-      background: ${(props) => (props.linked ? "rgb(200, 200, 200)" : "#fff")};
-      transition: background 0.2s ease;
-    }
-  }
-
-  @media (min-width: 1200px) {
-    height: 15rem;
-
-    svg {
-      font-size: 2rem;
-    }
-
-    img {
-      max-height: 5rem;
-    }
-
-    & > span {
-      padding: 2.5rem;
-    }
-  }
-`;
-
-const StyledDescriptionLine = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem 0;
-  background: rgb(235, 235, 235);
-
-  & > p:first-child {
-    color: rgb(100, 100, 100);
-  }
-
-  @media (min-width: 1024px) {
-    padding: 2rem 0;
-  }
-`;
 
 const InkyDoodleProfile = (props) => {
   const {
@@ -233,7 +26,7 @@ const InkyDoodleProfile = (props) => {
   } = props;
 
   const [linkedInkyDoodle, changeLinkedInkyDoodle] = useState("");
-  const [secondLinkedInkyDoodle, changeSecondLinkedInkyDoodle] = useState("");
+  // const [secondLinkedInkyDoodle, changeSecondLinkedInkyDoodle] = useState("");
   const [parent1, changeParent1] = useState("");
   const [parent2, changeParent2] = useState("");
 
@@ -254,6 +47,7 @@ const InkyDoodleProfile = (props) => {
           }) {
               items   {
               generation
+              instagram
               name
               wave
               image {
@@ -277,6 +71,7 @@ const InkyDoodleProfile = (props) => {
           }) {
               items   {
               generation
+              instagram
               name
               wave
               image {
@@ -310,7 +105,6 @@ const InkyDoodleProfile = (props) => {
 
               if (data) {
                 if (data.inkyDoodleCollection) {
-                  console.log(data.inkyDoodleCollection);
                   if (data.inkyDoodleCollection.items) {
                     changeParentsInkyDoodles(data.inkyDoodleCollection.items);
                   }
@@ -409,6 +203,11 @@ const InkyDoodleProfile = (props) => {
     changeParent2("");
   };
 
+  const handleInstagramPostClick = (e, url) => {
+    e.preventDefault();
+    window.open(url, "_blank", "noopener, noreferrer");
+  };
+
   if (inkyDoodleResult) {
     return (
       <Menu
@@ -451,31 +250,6 @@ const InkyDoodleProfile = (props) => {
           </h2>
         </StyledProfileTopContainer>
         <StyledProfileDescriptionContainer>
-          <StyledDescriptionLine>
-            <p>
-              <b>Generation:</b>
-            </p>
-            <p>
-              {" " +
-                (linkedInkyDoodle
-                  ? linkedInkyDoodle.generation
-                  : inkyDoodleResult.generation)}
-            </p>
-          </StyledDescriptionLine>
-          <StyledDescriptionLine>
-            <p>
-              <b>Wave:</b>
-            </p>
-            <p>
-              {linkedInkyDoodle
-                ? linkedInkyDoodle.wave
-                  ? " " + linkedInkyDoodle.wave
-                  : " 1"
-                : inkyDoodleResult.wave
-                ? " " + inkyDoodleResult.wave
-                : " 1"}
-            </p>
-          </StyledDescriptionLine>
           <StyledParentsContainer>
             <StyledIndividualParentContainer
               onClick={() => handleParentClick(parent1)}
@@ -546,6 +320,71 @@ const InkyDoodleProfile = (props) => {
               )}
             </StyledIndividualParentContainer>
           </StyledParentsContainer>
+          <StyledSectionContainer>
+            <p>Description</p>
+            <StyledDescriptionLine>
+              <p>
+                <b>Generation:</b>
+              </p>
+              <p>
+                {" " +
+                  (linkedInkyDoodle
+                    ? linkedInkyDoodle.generation
+                    : inkyDoodleResult.generation)}
+              </p>
+            </StyledDescriptionLine>
+            <StyledDescriptionLine>
+              <p>
+                <b>Wave:</b>
+              </p>
+              <p>
+                {linkedInkyDoodle
+                  ? linkedInkyDoodle.wave
+                    ? " " + linkedInkyDoodle.wave
+                    : " 1"
+                  : inkyDoodleResult.wave
+                  ? " " + inkyDoodleResult.wave
+                  : " 1"}
+              </p>
+            </StyledDescriptionLine>
+          </StyledSectionContainer>
+          <StyledSectionContainer instagram>
+            <p>Instagram</p>
+            <StyledDescriptionLine>
+              <p>
+                <b>Posted:</b>
+              </p>
+              <p>{inkyDoodleResult.instagram ? "Yes" : "No"}</p>
+            </StyledDescriptionLine>
+            <StyledDescriptionLine>
+              <p>
+                <b>{inkyDoodleResult.instagram ? `Date:` : `Scheduled:`}</b>
+              </p>
+              <p>
+                {inkyDoodleResult.instagram
+                  ? `${inkyDoodleResult.instagram.date}`
+                  : `${dayjs("February 7, 2021")
+                      .add(inkyDoodleResult.number + 1, "day")
+                      .format("MMMM D, YYYY")} `}
+              </p>
+            </StyledDescriptionLine>
+            {inkyDoodleResult.instagram ? (
+              <StyledInstagramLink
+                className="nes-btn is-primary"
+                onClick={(e) =>
+                  handleInstagramPostClick(e, inkyDoodleResult.instagram.url)
+                }
+              >
+                <p>View Post</p>
+              </StyledInstagramLink>
+            ) : null}
+          </StyledSectionContainer>
+          <StyledBackToSearchButton
+            className="nes-btn"
+            onClick={handleMenuClose}
+          >
+            Back to Search
+          </StyledBackToSearchButton>
         </StyledProfileDescriptionContainer>
       </Menu>
     );

@@ -28,6 +28,7 @@ div {
 /* Color/shape of close button cross */
 .bm-cross {
   background: #fff;
+  font-size: 1.5rem !important;
 }
 
 /*
@@ -68,7 +69,7 @@ div {
 
 /* Styling of overlay */
 .bm-overlay {
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.6) !important;
 }
 
 @media only screen and (min-width: 0px) and (orientation: landscape) {
@@ -77,9 +78,9 @@ div {
   }
 }
 
-@media only screen and (min-width: 1024px) {
+@media only screen and (min-width: 600px) {
   .bm-menu-wrap {
-    width: 400px !important;
+    width: 500px !important;
   }
 }
 
