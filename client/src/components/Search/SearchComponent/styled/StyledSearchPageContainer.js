@@ -25,4 +25,13 @@ export const StyledSearchPageContainer = styled.div`
   @media (min-width: 1200px) and (max-width: 2000px) and (max-height: 1000px) {
     height: 90vh;
   }
+
+  @media (min-width: 1200px) and (max-width: 1700px) and (max-height: 900px) {
+    height: 100vh;
+  }
+
+  @media (min-width: 1200px) and (max-width: 2000px) and (max-height: 750px) {
+    position: fixed;
+    height: 135vh;
+  }
 `;

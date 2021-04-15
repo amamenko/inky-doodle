@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
 import EmptySearch from "./EmptySearch";
 import InkyLogo from "../../../images/inky.png";
 import InkyDoodleProfile from "../InkyDoodleProfile/InkyDoodleProfile";
+import ClipLoader from "react-spinners/ClipLoader";
 import { StyledSearchPageContainer } from "./styled/StyledSearchPageContainer";
 import { StyledAnchor } from "./styled/StyledAnchor";
 import { StyledNavLogo } from "./styled/StyledNavLogo";
@@ -13,6 +14,17 @@ import { StyledPreviewContainer } from "./styled/StyledPreviewContainer";
 import { StyledPreviewContentsContainer } from "./styled/StyledPreviewContentsContainer";
 import { StyledPreviewTextContainer } from "./styled/StyledPreviewTextContainer";
 import { StyledPreviewNumberContainer } from "./styled/StyledPreviewNumberContainer";
+import { StyledLoadingContainer } from "./styled/StyledLoadingContainer";
+import { override } from "./styled/OverridenSpinnerStyles";
+import AerBlack from "../../../images/AerBlack.png";
+import BeeBlack from "../../../images/BeeBlack.png";
+import GavBlack from "../../../images/GavBlack.png";
+import HalBlack from "../../../images/HalBlack.png";
+import KarBlack from "../../../images/KarBlack.png";
+import QuaBlack from "../../../images/QuaBlack.png";
+import RadBlack from "../../../images/RadBlack.png";
+import ScrBlack from "../../../images/ScrBlack.png";
+import XltBlack from "../../../images/XltBlack.png";
 import "./Pagination.css";
 
 const Search = () => {
@@ -21,12 +33,43 @@ const Search = () => {
   const [pageCount, changePageCount] = useState(0);
   const [currentPage, changeCurrentPage] = useState(0);
   const [inkyDoodleSelected, changeInkyDoodleSelected] = useState("");
+  const [loadingResults, changeLoadingResults] = useState(false);
 
   // For individual profile
   const [parentsInkyDoodles, changeParentsInkyDoodles] = useState("");
 
+  // For empty state
+  const [selectedOption, changeSelectedOption] = useState(0);
+
+  const searchRef = useRef(null);
+
+  const optionsArr = [
+    AerBlack,
+    BeeBlack,
+    GavBlack,
+    HalBlack,
+    KarBlack,
+    QuaBlack,
+    RadBlack,
+    ScrBlack,
+    XltBlack,
+  ];
+
+  useEffect(() => {
+    changeSelectedOption(Math.floor(Math.random() * 8));
+  }, []);
+
+  useEffect(() => {
+    if (searchRef) {
+      if (searchRef.current) {
+        searchRef.current.focus();
+      }
+    }
+  }, []);
+
   const handleUserInput = (e) => {
     changeUserInput(e.target.value);
+    changeLoadingResults(true);
 
     if (currentPage !== 0) {
       changeCurrentPage(0);
@@ -72,6 +115,7 @@ const Search = () => {
         .then(({ data, errors }) => {
           if (errors) {
             console.error(errors);
+            changeLoadingResults(false);
           }
 
           if (data) {
@@ -93,12 +137,15 @@ const Search = () => {
                 changeInkyDoodleResults(filteredInkyDoodles);
 
                 changePageCount(Math.ceil(filteredInkyDoodles.length / 4));
+
+                changeLoadingResults(false);
               }
             }
           }
         });
     } else {
       changeInkyDoodleResults("");
+      changeLoadingResults(false);
     }
   }, [inkyDoodlesMatchQuery, userInput]);
 
@@ -132,10 +179,11 @@ const Search = () => {
             className="nes-input"
             value={userInput}
             onChange={handleUserInput}
+            ref={searchRef}
           />
         </StyledSearchField>
         <StyledResultsContainer>
-          {inkyDoodleResults ? (
+          {inkyDoodleResults && inkyDoodleResults.length > 0 ? (
             inkyDoodleResults
               .slice(currentPage * 4, currentPage * 4 + 4)
               .map((result) => {
@@ -159,8 +207,16 @@ const Search = () => {
                   </StyledPreviewContainer>
                 );
               })
+          ) : loadingResults ? (
+            <StyledLoadingContainer>
+              <ClipLoader loading={true} size={150} css={override} />
+            </StyledLoadingContainer>
           ) : (
-            <EmptySearch />
+            <EmptySearch
+              userInput={userInput}
+              selectedOption={selectedOption}
+              optionsArr={optionsArr}
+            />
           )}
         </StyledResultsContainer>
 

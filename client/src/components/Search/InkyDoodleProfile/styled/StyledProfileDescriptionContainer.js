@@ -19,17 +19,33 @@ export const StyledProfileDescriptionContainer = styled.div`
   }
 
   @media (min-width: 500px) and (orientation: portrait) {
+    height: 70%;
+  }
+
+  @media (min-width: 500px) and (orientation: portrait) and (min-height: 1000px) {
     height: 80%;
   }
 
-  @media (min-width: 768px) and (orientation: portrait) {
+  @media (min-width: 768px) {
     height: 75%;
     font-size: 1rem;
+  }
+
+  @media (min-width: 768px) and (max-height: 1000px) {
+    height: 65%;
   }
 
   @media (min-width: 1200px) {
     height: 75%;
     font-size: 0.8rem;
+  }
+
+  @media (min-width: 1200px) and (max-height: 1000px) {
+    height: 70%;
+  }
+
+  @media (min-width: 1400px) and (max-height: 900px) {
+    height: 60%;
   }
 
   @media (min-width: 1900px) and (max-height: 1000px) {

@@ -14,11 +14,6 @@ export const StyledProfileBackContainer = styled.div`
   border: 1px solid #07c;
   border-radius: 20px;
   font-size: 0.8rem;
-  svg {
-    path {
-      fill: #07c;
-    }
-  }
   p {
     margin: 0;
     padding: 0 0 0 0.5rem;

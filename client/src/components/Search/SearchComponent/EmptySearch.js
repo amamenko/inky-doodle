@@ -38,11 +38,30 @@ const StyledEmptyStateContainer = styled.div`
   }
 `;
 
-const EmptySearch = () => {
+const EmptySearch = (props) => {
+  const { userInput, optionsArr, selectedOption } = props;
+
   return (
     <StyledEmptyStateContainer>
-      <StyledEmptyStateImage src={PadushkaBlack} alt={"No input entered"} />
-      <p>Enter an Inky Doodle's name or number to get started!</p>
+      {userInput ? (
+        <>
+          <StyledEmptyStateImage
+            src={optionsArr[selectedOption]}
+            alt={"No results"}
+          />
+          <h2>No results found</h2>
+          <p>
+            We couldn't find any Inky Doodles with that{" "}
+            {Number(userInput) ? "number" : "name"}.
+          </p>
+        </>
+      ) : (
+        <>
+          <StyledEmptyStateImage src={PadushkaBlack} alt={"No input entered"} />
+          <h2>Find an Inky Doodle</h2>
+          <p>Enter an Inky Doodle's name or number to get started!</p>
+        </>
+      )}
     </StyledEmptyStateContainer>
   );
 };

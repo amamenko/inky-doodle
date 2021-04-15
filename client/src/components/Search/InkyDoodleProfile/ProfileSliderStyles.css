@@ -43,6 +43,7 @@ div {
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   background: #fff;
+  overflow-x: hidden;
 }
 
 /* General sidebar styles */

@@ -6,6 +6,7 @@ export const StyledSearchField = styled.div`
   margin-top: 2rem;
   input {
     color: #000 !important;
+    caret-color: #000 !important;
   }
   @media (min-width: 1200px) {
     width: 40%;

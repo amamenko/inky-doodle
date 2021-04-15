@@ -17,8 +17,10 @@ export const StyledIndividualParentContainer = styled.div`
     position: absolute;
     bottom: 0.5rem;
     right: 0.5rem;
+    background: #fff;
+    border: 1px solid #dedede;
     path {
-      fill: rgb(90, 90, 90);
+      fill: #07c;
     }
   }
   & > p:first-child {
@@ -46,6 +48,12 @@ export const StyledIndividualParentContainer = styled.div`
     }
     & > span {
       padding: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1600px) {
+    img {
+      max-height: 8rem;
     }
   }
 `;
