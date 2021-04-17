@@ -90,13 +90,14 @@ The server was deployed to [Heroku](https://www.heroku.com) and the Heroku dyno 
 The following additional features are in progress:
   - [X] Landing page
   - [ ] About page
-  - [ ] Inky Doodle search functionality
+  - [X] Inky Doodle search functionality
     - [X] Pagination
     - [X] Profiles
     - [X] Instagram Post Links
     - [X] Scheduled Posts
-    - [ ] Nested Parents
-    - [ ] Nested Children
+    - [X] Nested Parents
+    - [X] Nested Children
+  - [ ] All Inky Doodles list view
   - [ ] Circular pedigree tree
 
 ## Local Development
