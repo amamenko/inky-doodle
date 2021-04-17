@@ -99,6 +99,7 @@ The following additional features are in progress:
     - [X] Nested Children
   - [ ] All Inky Doodles list view
   - [ ] Circular pedigree tree
+  - [ ] Server-side Instagram posting video tutorial
 
 ## Local Development
 
