@@ -5,8 +5,9 @@ export const StyledBackToSearchButton = styled.button`
   align-self: center;
   align-items: center;
   justify-content: center;
-  margin: 0 auto;
+  margin: 1rem auto;
   font-size: 0.8rem;
+  width: 75%;
 
   ::after {
     content: "";

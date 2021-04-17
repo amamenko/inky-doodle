@@ -1,23 +1,18 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { slide as Menu } from "react-burger-menu";
 import axios from "axios";
-import ClipLoader from "react-spinners/ClipLoader";
-import { MdSubdirectoryArrowRight } from "react-icons/md";
-import dayjs from "dayjs";
 import { StyledProfileTopContainer } from "./styled/StyledProfileTopContainer";
 import { StyledProfileBackContainer } from "./styled/StyledProfileBackContainer";
 import { StyledImageContainer } from "./styled/StyledImageContainer";
 import { StyledProfileDescriptionContainer } from "./styled/StyledProfileDescriptionContainer";
-import { StyledParentsContainer } from "./styled/StyledParentsContainer";
-import { StyledIndividualParentContainer } from "./styled/StyledIndividualParentContainer";
 import { StyledSectionContainer } from "./styled/StyledSectionContainer";
 import { StyledDescriptionLine } from "./styled/StyledDescriptionLine";
-import { StyledInstagramLink } from "./styled/StyledInstagramLink";
 import { StyledBackToSearchButton } from "./styled/StyledBackToSearchButton";
-import { StyledChildrenContainer } from "./styled/StyledChildrenContainer";
-import { StyledIndividualChildContainer } from "./styled/StyledIndividualChildContainer";
-import { StyledChildrenOuterContainer } from "./styled/StyledChildrenOuterContainer";
+import ChildrenSection from "./components/ChildrenSection";
+import ParentsSection from "./components/ParentsSection";
+import InstagramSection from "./components/InstagramSection";
 import "./ProfileSliderStyles.css";
+import { StyledProfileMenuXButton } from "./styled/StyleProfileMenuXButton";
 
 const InkyDoodleProfile = (props) => {
   const {
@@ -201,32 +196,39 @@ const InkyDoodleProfile = (props) => {
     changeCurrentInkyDoodleChildren([]);
   };
 
-  const handleInstagramPostClick = (e, url) => {
-    e.preventDefault();
-    window.open(url, "_blank", "noopener, noreferrer");
-  };
-
   if (inkyDoodleResult && currentInkyDoodle) {
     return (
       <Menu
         disableAutoFocus
         isOpen={inkyDoodleSelected ? true : false}
         onClose={handleMenuClose}
-        customCrossIcon={<p className="nes-pointer">X</p>}
+        customCrossIcon={false}
         right
       >
+        <StyledProfileMenuXButton
+          type="button"
+          className="nes-btn is-error"
+          onClick={handleMenuClose}
+        >
+          X
+        </StyledProfileMenuXButton>
+        {currentInkyDoodleIndex > 0 ? (
+          <StyledProfileBackContainer
+            className="nes-pointer nes-container"
+            onClick={handleBackProfileClick}
+          >
+            <span>{"<"}</span>
+            <p>
+              Back to {inkyDoodleStack[currentInkyDoodleIndex - 1].main.name}
+            </p>
+          </StyledProfileBackContainer>
+        ) : null}
+        <ParentsSection
+          currentInkyDoodle={currentInkyDoodle}
+          currentInkyDoodleParents={currentInkyDoodleParents}
+          handleParentOrChildClick={handleParentOrChildClick}
+        />
         <StyledProfileTopContainer>
-          {currentInkyDoodleIndex > 0 ? (
-            <StyledProfileBackContainer
-              className="nes-pointer nes-container"
-              onClick={handleBackProfileClick}
-            >
-              <span>{"<"}</span>
-              <p>
-                Back to {inkyDoodleStack[currentInkyDoodleIndex - 1].main.name}
-              </p>
-            </StyledProfileBackContainer>
-          ) : null}
           <h2>{currentInkyDoodle.name}</h2>
           <StyledImageContainer>
             <img
@@ -238,127 +240,37 @@ const InkyDoodleProfile = (props) => {
         </StyledProfileTopContainer>
         <StyledProfileDescriptionContainer>
           <StyledSectionContainer>
-            <p>Description</p>
-            <StyledDescriptionLine>
-              <p>
-                <b>Generation:</b>
-              </p>
-              <p>{" " + currentInkyDoodle.generation}</p>
-            </StyledDescriptionLine>
-            <StyledDescriptionLine>
-              <p>
-                <b>Wave:</b>
-              </p>
-              <p>
-                {currentInkyDoodle.wave ? " " + currentInkyDoodle.wave : " 1"}
-              </p>
-            </StyledDescriptionLine>
+            <span className="profile_header_section">
+              <p>Description</p>
+            </span>
+            <div className="profile_desciption_content">
+              <StyledDescriptionLine>
+                <p>
+                  <b>Generation:</b>
+                </p>
+                <p>{" " + currentInkyDoodle.generation}</p>
+              </StyledDescriptionLine>
+              <StyledDescriptionLine>
+                <p>
+                  <b>Wave:</b>
+                </p>
+                <p>
+                  {currentInkyDoodle.wave ? " " + currentInkyDoodle.wave : " 1"}
+                </p>
+              </StyledDescriptionLine>
+            </div>
           </StyledSectionContainer>
-          <StyledParentsContainer>
-            <StyledIndividualParentContainer
-              onClick={() =>
-                handleParentOrChildClick(currentInkyDoodleParents[0])
-              }
-              className={
-                currentInkyDoodle.generation > 1 ? "nes-pointer" : null
-              }
-              linked={currentInkyDoodle.generation > 1}
-            >
-              {currentInkyDoodleParents[0] ? (
-                <>
-                  <p>
-                    <b>Parent 1:</b>
-                  </p>
-                  <p>{currentInkyDoodleParents[0].name}</p>
-                  <img
-                    src={currentInkyDoodleParents[0].image.url}
-                    alt={currentInkyDoodleParents[0].name}
-                  />
-                  {currentInkyDoodle.generation > 1 ? (
-                    <MdSubdirectoryArrowRight />
-                  ) : null}
-                </>
-              ) : (
-                <ClipLoader loading={true} size={40} />
-              )}
-            </StyledIndividualParentContainer>
-            <StyledIndividualParentContainer
-              onClick={() =>
-                handleParentOrChildClick(currentInkyDoodleParents[1])
-              }
-              className={
-                currentInkyDoodle.generation > 1 ? "nes-pointer" : null
-              }
-              linked={currentInkyDoodle.generation > 1}
-            >
-              {currentInkyDoodleParents[1] ? (
-                <>
-                  <p>
-                    <b>Parent 2:</b>
-                  </p>
-                  <p>{currentInkyDoodleParents[1].name}</p>
-                  <img
-                    src={currentInkyDoodleParents[1].image.url}
-                    alt={currentInkyDoodleParents[1].name}
-                  />
-                  {currentInkyDoodle.generation > 1 ? (
-                    <MdSubdirectoryArrowRight />
-                  ) : null}
-                </>
-              ) : (
-                <ClipLoader loading={true} size={40} />
-              )}
-            </StyledIndividualParentContainer>
-          </StyledParentsContainer>
           {currentInkyDoodleChildren.length > 0 ? (
-            <StyledChildrenOuterContainer>
-              <p>Children</p>
-              <StyledChildrenContainer gen={currentInkyDoodle.generation}>
-                {currentInkyDoodleChildren.map((child) => (
-                  <StyledIndividualChildContainer
-                    key={child.number}
-                    className="nes-pointer"
-                    onClick={() => handleParentOrChildClick(child)}
-                  >
-                    <p>{child.name}</p>
-                    <img src={child.image.url} alt={child.name} />
-                    {child.generation > 1 ? <MdSubdirectoryArrowRight /> : null}
-                  </StyledIndividualChildContainer>
-                ))}
-              </StyledChildrenContainer>
-            </StyledChildrenOuterContainer>
+            <ChildrenSection
+              currentInkyDoodle={currentInkyDoodle}
+              currentInkyDoodleChildren={currentInkyDoodleChildren}
+              handleParentOrChildClick={handleParentOrChildClick}
+            />
           ) : null}
-          <StyledSectionContainer instagram>
-            <p>Instagram</p>
-            <StyledDescriptionLine>
-              <p>
-                <b>Posted:</b>
-              </p>
-              <p>{currentInkyDoodle.instagram ? "Yes" : "No"}</p>
-            </StyledDescriptionLine>
-            <StyledDescriptionLine>
-              <p>
-                <b>{currentInkyDoodle.instagram ? `Date:` : `Scheduled:`}</b>
-              </p>
-              <p>
-                {currentInkyDoodle.instagram
-                  ? `${currentInkyDoodle.instagram.date}`
-                  : `${dayjs("February 7, 2021")
-                      .add(currentInkyDoodle.number + 1, "day")
-                      .format("MMMM D, YYYY")} `}
-              </p>
-            </StyledDescriptionLine>
-            {currentInkyDoodle.instagram ? (
-              <StyledInstagramLink
-                className="nes-btn is-primary"
-                onClick={(e) =>
-                  handleInstagramPostClick(e, currentInkyDoodle.instagram.url)
-                }
-              >
-                <p>View Post</p>
-              </StyledInstagramLink>
-            ) : null}
-          </StyledSectionContainer>
+          <InstagramSection
+            currentInkyDoodle={currentInkyDoodle}
+            currentInkyDoodleChildren={currentInkyDoodleChildren}
+          />
           <StyledBackToSearchButton
             className="nes-btn"
             onClick={handleMenuClose}

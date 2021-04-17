@@ -6,8 +6,9 @@ export const StyledChildrenContainer = styled.div`
     props.gen > 1 ? "repeat(4, minmax(0, 1fr))" : "repeat(3, minmax(0, 1fr))"};
   text-align: center;
   position: relative;
-  width: 300px;
+  width: 100%;
   margin: auto;
+  padding-top: 1rem;
 
   img {
     max-width: 60%;
@@ -31,17 +32,9 @@ export const StyledChildrenContainer = styled.div`
     }
   }
 
-  @media (min-width: 600px) {
-    width: 500px;
-  }
-
   @media (min-width: 768px) {
     svg {
       font-size: 1.5rem;
     }
-  }
-
-  @media (min-width: 1200px) {
-    width: 600px;
   }
 `;

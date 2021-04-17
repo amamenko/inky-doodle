@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 export const StyledProfileBackContainer = styled.div`
-  display: flex;
+  display: flex !important;
   align-items: center;
   justify-content: center;
   position: absolute;
-  left: 8px;
+  left: 16px;
   top: 8px;
   background: transparent;
   padding: 0.5rem 1rem 0.5rem 1rem;

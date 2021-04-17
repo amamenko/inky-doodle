@@ -90,13 +90,14 @@ The following additional features are in progress:
 
 - [x] Landing page
 - [ ] About page
-- [ ] Inky Doodle search functionality
+- [x] Inky Doodle search functionality
   - [x] Pagination
   - [x] Profiles
   - [x] Instagram Post Links
   - [x] Scheduled Posts
-  - [ ] Nested Parents
-  - [ ] Nested Children
+  - [x] Nested Parents
+  - [x] Nested Children
+- [ ] All Inky Doodles list view
 - [ ] Circular pedigree tree
 
 ## Local Development

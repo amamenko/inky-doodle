@@ -7,11 +7,14 @@ export const StyledIndividualParentContainer = styled.div`
   align-items: center;
   justify-content: center;
   background: #fff;
-  padding: 1rem;
   text-align: center;
-  border: 1px solid rgba(150, 150, 150, 0.3);
-  height: 10rem;
+  border-top: 1px solid rgba(150, 150, 150, 0.3);
+  border-bottom: 1px solid rgba(150, 150, 150, 0.3);
+  border-right: ${(props) =>
+    props.right ? "none" : "1px solid rgba(150, 150, 150, 0.3)"};
+  height: 5rem;
   width: 100%;
+  font-size: 0.55rem;
   svg {
     font-size: 1rem;
     position: absolute;
@@ -27,7 +30,7 @@ export const StyledIndividualParentContainer = styled.div`
     color: rgb(100, 100, 100);
   }
   img {
-    max-height: 3rem;
+    max-height: 2rem;
   }
   & > span {
     padding: 1.4rem;
@@ -39,12 +42,12 @@ export const StyledIndividualParentContainer = styled.div`
     }
   }
   @media (min-width: 1200px) {
-    height: 15rem;
+    height: 8rem;
     svg {
       font-size: 2rem;
     }
     img {
-      max-height: 5rem;
+      max-height: 3rem;
     }
     & > span {
       padding: 2.5rem;
@@ -53,7 +56,7 @@ export const StyledIndividualParentContainer = styled.div`
 
   @media (min-width: 1600px) {
     img {
-      max-height: 8rem;
+      max-height: 3rem;
     }
   }
 `;

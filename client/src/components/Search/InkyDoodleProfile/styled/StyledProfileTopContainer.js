@@ -6,9 +6,13 @@ export const StyledProfileTopContainer = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100%;
   overflow: hidden;
   text-align: center;
+  background: #fff;
+  padding: 1rem 0;
+  position: relative;
+  z-index: 999;
+
   h2 {
     font-size: 1rem;
     color: #000;

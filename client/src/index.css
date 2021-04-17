@@ -42,6 +42,11 @@ input {
   top: 30% !important;
 }
 
+.is-error {
+  height: auto !important;
+  width: auto !important;
+}
+
 @media only screen and (max-width: 375px) {
   .css-1y20v6-menu > div[aria-hidden="true"],
   .css-1hb7zxy-IndicatorsContainer,
