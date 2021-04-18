@@ -92,6 +92,7 @@ The following additional features are in progress:
   - [ ] About page
   - [X] Inky Doodle search functionality
     - [X] Pagination
+    - [X] Empty States
     - [X] Profiles
     - [X] Instagram Post Links
     - [X] Scheduled Posts
