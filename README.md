@@ -89,7 +89,8 @@ The server was deployed to [Heroku](https://www.heroku.com) and the Heroku dyno 
 
 The following additional features are in progress:
   - [X] Landing page
-  - [ ] About page
+  - [ ] FAQ Page
+  - [ ] Contact Form
   - [X] Inky Doodle search functionality
     - [X] Pagination
     - [X] Empty States
