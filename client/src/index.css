@@ -1,16 +1,26 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "Press Start 2P", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: rgb(211, 211, 211);
+  background: rgb(225, 225, 225);
+  height: 100%;
+}
+
+html {
+  height: 100%;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.ReactCollapse--collapse {
+  transition: height 500ms;
+  width: 100%;
 }
 
 /* NES CSS Override */
@@ -35,6 +45,11 @@ input {
 
 .css-18v5hh9 {
   top: 30% !important;
+}
+
+.is-error {
+  height: auto !important;
+  width: auto !important;
 }
 
 @media only screen and (max-width: 375px) {

@@ -6,7 +6,7 @@
 <p align="center">
   <a href="https://github.com/amamenko/inky-doodle">
     <img src="client/src/images/InkyDoodleLogo.png" alt="Logo" width="350"  />
-  </a> 
+  </a>
 
   <h3 align="center">Inky Doodle</h3>
 
@@ -41,7 +41,6 @@ arrows designate breeding to create a new generation:
 <p align="center">A, B, A, B &rarr; Ab, Ab &rarr; Ab</p>
 <p align="center">A, B, A, C &rarr; Ab, Ac &rarr; Abac</p>
 <p align="center">A, B, C, D &rarr; Ab, Cd &rarr; No Match</p>
-
 
 ## UX / UI
 
@@ -79,7 +78,9 @@ Project was deployed to [Vercel](https://vercel.com), custom domain acquired fro
 
 ## Automated Server-side Instagram Posting
 
-The project also incudes an [Express](https://expressjs.com) server that posts a new Inky Doodle from [Contentful](https://www.contentful.com/) with a custom caption (including the Inky Doodle's name, ID number, parents, if any, and its generation) to the [@inkydoodle.ml](https://www.instagram.com/inkydoodle.ml) Instagram page every day at 4PM Eastern Time via [node-cron](https://www.npmjs.com/package/node-cron) and [instagram-web-api](https://www.npmjs.com/package/instagram-web-api). 
+The project also incudes an [Express](https://expressjs.com) server that posts a new Inky Doodle from [Contentful](https://www.contentful.com/) with a custom caption (including the Inky Doodle's name, ID number, parents, if any, and its generation) to the [@inkydoodle.ml](https://www.instagram.com/inkydoodle.ml) Instagram page every day at 4PM Eastern Time via [node-cron](https://www.npmjs.com/package/node-cron) and [instagram-web-api](https://www.npmjs.com/package/instagram-web-api).
+
+The Instagram link and date of posting for that particular Inky Doodle are then automatically stored via [the JavaScript SDK for Contentful's Content Management API](https://www.npmjs.com/package/contentful-management).
 
 The Instagram link and date of posting for that particular Inky Doodle are then automatically stored via [the JavaScript SDK for Contentful's Content Management API](https://www.npmjs.com/package/contentful-management).
 
