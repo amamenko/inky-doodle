@@ -55,4 +55,8 @@ export const StyledPreviewContainer = styled.div`
     margin: 1rem;
     width: 40%;
   }
+
+  @media (min-width: 1024px) and (max-width: 1400px) {
+    width: 55%;
+  }
 `;

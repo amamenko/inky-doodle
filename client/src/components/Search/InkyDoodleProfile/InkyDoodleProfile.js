@@ -8,11 +8,11 @@ import { StyledProfileDescriptionContainer } from "./styled/StyledProfileDescrip
 import { StyledSectionContainer } from "./styled/StyledSectionContainer";
 import { StyledDescriptionLine } from "./styled/StyledDescriptionLine";
 import { StyledBackToSearchButton } from "./styled/StyledBackToSearchButton";
+import { StyledProfileMenuXButton } from "./styled/StyleProfileMenuXButton";
 import ChildrenSection from "./components/ChildrenSection";
 import ParentsSection from "./components/ParentsSection";
 import InstagramSection from "./components/InstagramSection";
 import "./ProfileSliderStyles.css";
-import { StyledProfileMenuXButton } from "./styled/StyleProfileMenuXButton";
 
 const InkyDoodleProfile = (props) => {
   const {
@@ -80,7 +80,7 @@ const InkyDoodleProfile = (props) => {
                             { parents_contains_some: "${
                               currentInkyDoodle.name
                             }"}
-                        ]
+                        ], wave_not_in: [2, 3, 4, 5]
                 }) {
                     items   {
                     generation

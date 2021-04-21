@@ -15,6 +15,9 @@ import { StyledPreviewContentsContainer } from "./styled/StyledPreviewContentsCo
 import { StyledPreviewTextContainer } from "./styled/StyledPreviewTextContainer";
 import { StyledPreviewNumberContainer } from "./styled/StyledPreviewNumberContainer";
 import { StyledLoadingContainer } from "./styled/StyledLoadingContainer";
+import { StyledBackToHomeButton } from "../../Home/styled/StyledBackToHomeButton";
+import { Link } from "react-router-dom";
+import { ImHome3 } from "react-icons/im";
 import { override } from "./styled/OverridenSpinnerStyles";
 import AerBlack from "../../../images/AerBlack.png";
 import BeeBlack from "../../../images/BeeBlack.png";
@@ -80,9 +83,9 @@ const Search = () => {
         query {
             inkyDoodleCollection(limit: 2000, order: [generation_ASC, name_ASC], where: ${
               Number(userInput)
-                ? `{number_in: ${Number(userInput)}}`
-                : `{name_contains: "${userInput}"}`
-            }) {
+                ? `{number_in: ${Number(userInput)}, `
+                : `{name_contains: "${userInput}, "`
+            } wave_not_in: [2, 3, 4, 5]}) {
                 items   {
                 generation
                 instagram
@@ -171,6 +174,12 @@ const Search = () => {
         <StyledAnchor href="/">
           <StyledNavLogo src={InkyLogo} alt="Inky Doodle Logo" />
         </StyledAnchor>
+        <Link to="/">
+          <StyledBackToHomeButton type="button" className="nes-btn is-warning">
+            <ImHome3 />
+            <p>Back to Home</p>
+          </StyledBackToHomeButton>
+        </Link>
         <StyledSearchField className="nes-field">
           <label htmlFor="search_field">Search for an Inky Doodle</label>
           <input
@@ -219,7 +228,6 @@ const Search = () => {
             />
           )}
         </StyledResultsContainer>
-
         {inkyDoodleResults && inkyDoodleResults.length > 5 ? (
           <ReactPaginate
             previousLabel={"prev"}

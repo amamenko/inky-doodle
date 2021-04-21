@@ -55,6 +55,7 @@ cron.schedule("59 15 * * *", async () => {
                                     number
                                     generation
                                     name
+                                    wave
                                     parents
                                     image {
                                         url
@@ -94,7 +95,11 @@ cron.schedule("59 15 * * *", async () => {
                           .join(" + ") + " \n"
                       : ""
                     : ""
-                }#inkydoodle #gen${updatedInkyDoodle.generation}`;
+                }#inkydoodle #gen${updatedInkyDoodle.generation}${
+                  updatedInkyDoodle.wave
+                    ? ` #wave${updatedInkyDoodle.wave}`
+                    : ""
+                }`;
 
                 Jimp.read(updatedInkyDoodle.image.url)
                   .then((lenna) => {

@@ -29,6 +29,10 @@ const StyledEmptyStateContainer = styled.div`
   color: rgb(100, 100, 100);
   width: 80%;
 
+  @media (min-width: 1024px) {
+    width: 55%;
+  }
+
   @media (min-width: 1200px) {
     width: 40%;
   }
@@ -41,20 +45,38 @@ const StyledEmptyStateContainer = styled.div`
 const EmptySearch = (props) => {
   const { userInput, optionsArr, selectedOption } = props;
 
+  const renderEmptyState = (header, description) => {
+    return (
+      <>
+        <StyledEmptyStateImage
+          src={optionsArr[selectedOption]}
+          alt={"No results"}
+        />
+        <h2>{header}</h2>
+        <p>{description}</p>
+      </>
+    );
+  };
+
   return (
     <StyledEmptyStateContainer>
       {userInput ? (
-        <>
-          <StyledEmptyStateImage
-            src={optionsArr[selectedOption]}
-            alt={"No results"}
-          />
-          <h2>No results found</h2>
-          <p>
-            We couldn't find any Inky Doodles with that{" "}
-            {Number(userInput) ? "number" : "name"}.
-          </p>
-        </>
+        Number(userInput) || userInput === "0" ? (
+          renderEmptyState(
+            "No results found",
+            "We couldn't find any Inky Doodles with that number."
+          )
+        ) : userInput.length === 1 ? (
+          renderEmptyState(
+            "Minimum 2 characters",
+            "Enter at least two letters to search by name."
+          )
+        ) : (
+          renderEmptyState(
+            "No results found",
+            "We couldn't find any Inky Doodles with that name."
+          )
+        )
       ) : (
         <>
           <StyledEmptyStateImage src={PadushkaBlack} alt={"No input entered"} />

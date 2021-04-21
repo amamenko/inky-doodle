@@ -16,4 +16,8 @@ export const StyledSearchField = styled.div`
     right: 0;
     margin: 0 auto;
   }
+
+  @media (min-width: 1024px) and (max-width: 1400px) {
+    width: 55%;
+  }
 `;

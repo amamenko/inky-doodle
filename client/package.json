@@ -8,6 +8,7 @@
     "nes.css": "^2.3.0",
     "react": "^16.8.6",
     "react-burger-menu": "^3.0.6",
+    "react-collapse": "^5.1.0",
     "react-dom": "^16.8.6",
     "react-icons": "^4.2.0",
     "react-paginate": "^7.1.2",
