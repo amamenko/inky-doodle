@@ -86,12 +86,12 @@ The Instagram link and date of posting for that particular Inky Doodle are then 
 
 The server was deployed to [Heroku](https://www.heroku.com) and the Heroku dyno kept awake with [Kaffeine](https://kaffeine.herokuapp.com).
 
-## Upcoming Features (Dev Branch)
+## New and Upcoming Features
 
 The following additional features are in progress:
   - [X] Landing page
-  - [ ] FAQ Page
-  - [ ] Contact Form
+  - [X] FAQ Page
+  - [X] Contact Form
   - [X] Inky Doodle search functionality
     - [X] Pagination
     - [X] Empty States
