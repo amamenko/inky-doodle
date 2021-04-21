@@ -11,7 +11,7 @@
   <h3 align="center">Inky Doodle</h3>
 
   <p align="center">
-    Interactive Pedigree Single-Page Application (SPA) Integrated with Contentful
+    Single-Page Application (SPA) Integrated with Contentful
     <br />
     <br />
     <a href="https://inkydoodle.ml">View Demo</a>
@@ -24,12 +24,16 @@
   </p>
 </p>
 
-## Introduction
+## Overview
 
-Inky Doodle is a single-page application (SPA) that illustrates and explores the biological concepts of hybridization and heredity with the use of imaginary species of "Inky Doodles."
-The application itself takes the form of a pedigree chart with three generations. The first generation has a left tree and a right tree with spaces for two
+Inky Doodle is a single-page application (SPA) that illustrates and explores the biological concepts of hybridization and heredity with the use of imaginary species of "Inky Doodles." The website includes a landing page that allows the user to navigate to a Frequently Asked Questions (FAQ) page, a Search Inky Doodle page, a Pedigree Chart page, and a Contact Us page. 
+
+The search functionality gives users the ability to look up Inky Doodles by name or sequence number. This search input queries the Inky Doodle Contentful database and shows all the matching Inky Doodles in a paginated format. Users can then click on a desired Inky Doodle preview thumbnail to open up that specific Inky Doodle's full profile. This profile includes their picture, name, number, parents, children, and Instagram history. If the Inky Doodle has already been posted to the [@inkydoodle.ml](https://www.instagram.com/inkydoodle.ml) Instagram page, then users can see when it was posted and also click a link that leads to that specific post. Otherwise, the scheduled date for that Inky Doodle's post will be shown.
+
+In the Inky Doodle profile, any parent (if not the same as the Inky Doodle itself) or child can be clicked to view the associated parent or child's profile. Users can traverse back and forth through nested profiles easily since the profile states are stored and manipulated through a stack data structure (last in, first out).
+
+An additional feature of the application is a pedigree chart with three generations. The first generation has a left tree and a right tree with spaces for two
 sets of parents. These parents can then be bred to form second generation offspring, which can, in turn, be bred to potentialy create third generation offspring.
-
 Second-generation Inky Doodle mates can only produce viable offpspring if either one or both mates are purebreds or, in the case of both second-generation mates being F1 (filial 1) hybrids, if at least one of each mate's parents is of the same species.
 The seven possible combinations of the three generations are as follows, where capital letters (e.g. A, B) designate purebred parents, mixed letters (e.g. Ab, Bc) designate hybrids, and
 arrows designate breeding to create a new generation:
@@ -86,20 +90,9 @@ The Instagram link and date of posting for that particular Inky Doodle are then 
 
 The server was deployed to [Heroku](https://www.heroku.com) and the Heroku dyno kept awake with [Kaffeine](https://kaffeine.herokuapp.com).
 
-## New and Upcoming Features
+## Upcoming Features
 
-The following additional features are in progress:
-  - [X] Landing page
-  - [X] FAQ Page
-  - [X] Contact Form
-  - [X] Inky Doodle search functionality
-    - [X] Pagination
-    - [X] Empty States
-    - [X] Profiles
-    - [X] Instagram Post Links
-    - [X] Scheduled Posts
-    - [X] Nested Parents
-    - [X] Nested Children
+The following are additional upcoming features of Inky Doodle: 
   - [ ] All Inky Doodles list view
   - [ ] Circular pedigree tree
   - [ ] Server-side Instagram posting video tutorial
@@ -146,6 +139,7 @@ You will need to have the following software installed:
    ```JS
    REACT_APP_SPACE_ID=YOUR CONTENTFUL SPACE ID
    REACT_APP_ACCESS_TOKEN=YOUR CONTENTFUL ACCESS TOKEN
+   REACT_APP_GETFORM_CONTACT_ENDPOINT=YOUR GETFORM URL ENDPOINT
    ```
 8. Start the local server.
    ```JS
