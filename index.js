@@ -35,15 +35,21 @@ cron.schedule("59 15 * * *", async () => {
     const instagramPostPictureFunction = async () => {
       await client
         .getPhotosByUsername({ username: process.env.INSTAGRAM_USERNAME })
-        .then(
-          (res) =>
-            res.user.edge_owner_to_timeline_media.edges.map(
-              (item) => item.node.edge_media_to_caption.edges[0].node.text
-            )[0]
-        )
-        .then((mostRecent) => Number(mostRecent.split(" - ")[0]))
-        .then((latestNumber) => {
-          const updatedNumber = latestNumber + 1;
+        .then((res) => {
+              const allCaptions = res.user.edge_owner_to_timeline_media.edges.map(
+                  (item) => item.node.edge_media_to_caption.edges[0]
+              );
+
+              const allCaptionsExisting = allCaptions.filter((caption) => caption);
+
+              return { mostRecent: allCaptions[allCaptions.length - allCaptionsExisting.length].node.text, offset: allCaptions.length - allCaptionsExisting.length };
+          }
+      )
+      .then(({ mostRecent, offset }) => {
+          return { latestNumber: Number(mostRecent.split(" - ")[0]), offset: offset };
+      })
+      .then(({ latestNumber, offset }) => {
+          const updatedNumber = latestNumber + (offset + 1);
 
           const inkyDoodleQuery = `
                             query {
