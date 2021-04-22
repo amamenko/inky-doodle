@@ -85,21 +85,21 @@ cron.schedule("59 15 * * *", async () => {
               const updatedInkyDoodle = data.inkyDoodleCollection.items[0];
 
               if (updatedInkyDoodle) {
-                const updatedCaption = `${updatedNumber} - ${
-                  updatedInkyDoodle.name
-                }\n${
-                  updatedInkyDoodle.parents
-                    ? updatedInkyDoodle.parents.length > 0
-                      ? updatedInkyDoodle.parents
-                          .map((parent) => "#" + parent)
-                          .join(" + ") + " \n"
-                      : ""
-                    : ""
-                }#inkydoodle #gen${updatedInkyDoodle.generation}${
-                  updatedInkyDoodle.wave
-                    ? ` #wave${updatedInkyDoodle.wave}`
-                    : ""
-                }`;
+//                 const updatedCaption = `${updatedNumber} - ${
+//                   updatedInkyDoodle.name
+//                 }\n${
+//                   updatedInkyDoodle.parents
+//                     ? updatedInkyDoodle.parents.length > 0
+//                       ? updatedInkyDoodle.parents
+//                           .map((parent) => "#" + parent)
+//                           .join(" + ") + " \n"
+//                       : ""
+//                     : ""
+//                 }#inkydoodle #gen${updatedInkyDoodle.generation}${
+//                   updatedInkyDoodle.wave
+//                     ? ` #wave${updatedInkyDoodle.wave}`
+//                     : ""
+//                 }`;
 
                 Jimp.read(updatedInkyDoodle.image.url)
                   .then((lenna) => {
@@ -111,7 +111,7 @@ cron.schedule("59 15 * * *", async () => {
                         await client
                           .uploadPhoto({
                             photo: `${updatedInkyDoodle.name}.jpg`,
-                            caption: updatedCaption,
+                            caption: "",
                             post: "feed",
                           })
                           .then(({ media }) => {
