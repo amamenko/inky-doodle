@@ -48,7 +48,9 @@ const InkyDoodleProfile = (props) => {
 
         if (inkyDoodleStack[currentInkyDoodleIndex].children) {
           changeCurrentInkyDoodleChildren(
-            inkyDoodleStack[currentInkyDoodleIndex].children
+            inkyDoodleStack[currentInkyDoodleIndex].children.sort(
+              (a, b) => a.number - b.number
+            )
           );
         }
       }
