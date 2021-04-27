@@ -32,7 +32,7 @@ The search functionality gives users the ability to look up Inky Doodles by name
 
 In the Inky Doodle profile, any parent (if not the same as the Inky Doodle itself) or child can be clicked to view the associated parent or child's profile. Users can traverse back and forth through nested profiles easily since the profile states are stored and manipulated through a stack data structure (last in, first out).
 
-The contact page includes a form (consisting of a name, email, and any questions/comments) that is tied to a [Getform.io](https://getform.io) endpoint. This endpoint is, in turn, tied to an email associated with Inky Doodle that receives the form when it is submitted.
+The contact page includes a form (consisting of a name, email, and any questions/comments) that is connected to a [Getform.io](https://getform.io) endpoint. This endpoint is, in turn, connected to an email associated with Inky Doodle that receives the form when it is submitted.
 
 An additional feature of the application is a pedigree chart with three generations. The first generation has a left tree and a right tree with spaces for two
 sets of parents. These parents can then be bred to form second generation offspring, which can, in turn, be bred to potentialy create third generation offspring.
@@ -189,6 +189,7 @@ Project Link: [https://github.com/amamenko/inky-doodle](https://github.com/amame
 - [instagram-web-api](https://www.npmjs.com/package/instagram-web-api)
 - [Jimp](https://www.npmjs.com/package/jimp)
 - [React Icons](https://react-icons.github.io/react-icons)
+- [Getform.io](https://getform.io/)
 - [React Spinners](https://www.npmjs.com/package/react-spinners)
 - [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
 
