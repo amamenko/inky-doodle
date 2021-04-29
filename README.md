@@ -32,9 +32,9 @@ The search functionality gives users the ability to look up Inky Doodles by name
 
 In the Inky Doodle profile, any parent (if not the same as the Inky Doodle itself) or child can be clicked to view the associated parent or child's profile. Users can traverse back and forth through nested profiles easily since the profile states are stored and manipulated through a stack data structure (last in, first out).
 
-The contact page includes a form (consisting of a name, email, and any questions/comments) that is connected to a [Getform.io](https://getform.io) endpoint. This endpoint is, in turn, connected to an email associated with Inky Doodle that receives the form when it is submitted.
+The contact page includes a form (consisting of a name, email, and any questions/comments) that is connected to a [Getform.io](https://getform.io) endpoint. This endpoint is, in turn, connected to an email associated with Inky Doodle that receives the form when it is submitted. The form inputs then reset after submission.
 
-An additional feature of the application is a pedigree chart with three generations. The first generation has a left tree and a right tree with spaces for two
+An additional feature of the application is a tree-structured pedigree chart with three generations. The first generation has a left tree and a right tree with spaces for two
 sets of parents. These parents can then be bred to form second generation offspring, which can, in turn, be bred to potentialy create third generation offspring.
 Second-generation Inky Doodle mates can only produce viable offpspring if either one or both mates are purebreds or, in the case of both second-generation mates being F1 (filial 1) hybrids, if at least one of each mate's parents is of the same species.
 The seven possible combinations of the three generations are as follows, where capital letters (e.g. A, B) designate purebred parents, mixed letters (e.g. Ab, Bc) designate hybrids, and
