@@ -42,7 +42,9 @@ const InkyDoodleProfile = (props) => {
 
         if (inkyDoodleStack[currentInkyDoodleIndex].parents) {
           changeCurrentInkyDoodleParents(
-            inkyDoodleStack[currentInkyDoodleIndex].parents
+            inkyDoodleStack[currentInkyDoodleIndex].parents.sort(
+              (a, b) => a.number - b.number
+            )
           );
         }
 
