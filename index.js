@@ -132,12 +132,14 @@ cron.schedule("59 15 * * *", async () => {
                               `https://www.instagram.com/p/${media.code}/`
                             );
 
-                            const client = contentful.createClient({
+                            client.logout();
+
+                            const contentfulClient = contentful.createClient({
                               accessToken:
                                 process.env.CONTENTFUL_MANAGEMENT_TOKEN,
                             });
 
-                            client
+                            contentfulClient
                               .getSpace(process.env.CONTENTFUL_SPACE_ID)
                               .then((space) => {
                                 space
