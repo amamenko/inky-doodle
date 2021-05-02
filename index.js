@@ -36,19 +36,26 @@ cron.schedule("59 15 * * *", async () => {
       await client
         .getPhotosByUsername({ username: process.env.INSTAGRAM_USERNAME })
         .then((res) => {
-              const allCaptions = res.user.edge_owner_to_timeline_media.edges.map(
-                  (item) => item.node.edge_media_to_caption.edges[0]
-              );
+          const allCaptions = res.user.edge_owner_to_timeline_media.edges.map(
+            (item) => item.node.edge_media_to_caption.edges[0]
+          );
 
-              const allCaptionsExisting = allCaptions.filter((caption) => caption);
+          const allCaptionsExisting = allCaptions.filter((caption) => caption);
 
-              return { mostRecent: allCaptions[allCaptions.length - allCaptionsExisting.length].node.text, offset: allCaptions.length - allCaptionsExisting.length };
-          }
-      )
-      .then(({ mostRecent, offset }) => {
-          return { latestNumber: Number(mostRecent.split(" - ")[0]), offset: offset };
-      })
-      .then(({ latestNumber, offset }) => {
+          return {
+            mostRecent:
+              allCaptions[allCaptions.length - allCaptionsExisting.length].node
+                .text,
+            offset: allCaptions.length - allCaptionsExisting.length,
+          };
+        })
+        .then(({ mostRecent, offset }) => {
+          return {
+            latestNumber: Number(mostRecent.split(" - ")[0]),
+            offset: offset,
+          };
+        })
+        .then(({ latestNumber, offset }) => {
           const updatedNumber = latestNumber + (offset + 1);
 
           const inkyDoodleQuery = `
@@ -176,6 +183,12 @@ cron.schedule("59 15 * * *", async () => {
         });
     };
 
+    const delayedInstagramPostFunction = async (timeout) => {
+      setTimeout(async () => {
+        await instagramPostPictureFunction();
+      }, timeout);
+    };
+
     try {
       console.log("Logging in...");
 
@@ -183,23 +196,17 @@ cron.schedule("59 15 * * *", async () => {
 
       console.log("Login successful!");
 
-      const delayedInstagramPostFunction = async (timeout) => {
-        setTimeout(async () => {
-          await instagramPostPictureFunction();
-        }, timeout);
-      };
-
       await delayedInstagramPostFunction(50000);
     } catch (err) {
       console.log("Login failed!");
 
-      if (err.status === 403) {
+      if (err.status === 403 || err.status === 429) {
         console.log("Throttled!");
 
-        return;
+        await delayedInstagramPostFunction(60000);
       }
 
-      console.log(err.error);
+      console.log(err);
 
       // Instagram has thrown a checkpoint error
       if (err.error && err.error.message === "checkpoint_required") {
