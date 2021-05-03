@@ -132,8 +132,6 @@ cron.schedule("59 15 * * *", async () => {
                               `https://www.instagram.com/p/${media.code}/`
                             );
 
-                            client.logout();
-
                             const contentfulClient = contentful.createClient({
                               accessToken:
                                 process.env.CONTENTFUL_MANAGEMENT_TOKEN,
@@ -202,10 +200,16 @@ cron.schedule("59 15 * * *", async () => {
     } catch (err) {
       console.log("Login failed!");
 
-      if (err.status === 403 || err.status === 429) {
+      if (err.statusCode === 403 || err.statusCode === 429) {
         console.log("Throttled!");
 
-        await delayedInstagramPostFunction(60000);
+        const delayedLoginFunction = async (timeout) => {
+          setTimeout(async () => {
+            await client.login().then(() => instagramPostPictureFunction());
+          }, timeout);
+        };
+
+        await delayedLoginFunction(60000);
       }
 
       console.log(err);
