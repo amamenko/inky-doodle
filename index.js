@@ -25,10 +25,6 @@ cron.schedule("59 15 * * *", async () => {
       },
       {
         language: "en-US",
-        proxy:
-          process.env.NODE_ENV === "production"
-            ? process.env.FIXIE_URL
-            : undefined,
       }
     );
 
