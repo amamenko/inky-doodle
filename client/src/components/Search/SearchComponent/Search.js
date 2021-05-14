@@ -124,8 +124,8 @@ const Search = () => {
           if (data) {
             if (data.inkyDoodleCollection) {
               if (data.inkyDoodleCollection.items) {
-                const filteredInkyDoodles = data.inkyDoodleCollection.items.filter(
-                  (item) => {
+                const filteredInkyDoodles =
+                  data.inkyDoodleCollection.items.filter((item) => {
                     if (!Number(userInput)) {
                       return (
                         item.name.toLowerCase().slice(0, userInput.length) ===
@@ -134,8 +134,7 @@ const Search = () => {
                     }
 
                     return true;
-                  }
-                );
+                  });
 
                 changeInkyDoodleResults(filteredInkyDoodles);
 
@@ -177,7 +176,7 @@ const Search = () => {
         <Link to="/">
           <StyledBackToHomeButton type="button" className="nes-btn is-warning">
             <ImHome3 />
-            <p>Back to Home</p>
+            <p>Home</p>
           </StyledBackToHomeButton>
         </Link>
         <StyledSearchField className="nes-field">

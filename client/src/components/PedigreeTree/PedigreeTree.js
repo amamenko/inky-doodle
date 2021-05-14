@@ -6,6 +6,9 @@ import LeftParents from "./LeftParents";
 import RightParents from "./RightParents";
 import InkyLogo from "../../images/inky.png";
 import Select from "react-select";
+import { StyledBackToHomeButton } from "../Home/styled/StyledBackToHomeButton";
+import { ImHome3 } from "react-icons/im";
+import { Link } from "react-router-dom";
 import nesTheme from "react-select-nes-css-theme";
 import "nes.css/css/nes.min.css";
 
@@ -109,76 +112,6 @@ const StyledRandomizedDropdownContainer = styled.div`
   @media (min-width: 751px) and (max-width: 1024px) and (orientation: landscape) {
     margin-top: 0.8rem;
     width: 110px;
-  }
-`;
-
-const StyledIconsSection = styled.section`
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin-top: 0.75rem;
-  margin-right: 14rem;
-  width: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-
-  @media (max-width: 330px) {
-    margin-right: 8.25rem;
-    margin-top: 1.5rem;
-    width: 50px;
-  }
-
-  @media (min-width: 331px) and (max-width: 360px) {
-    margin-right: 8rem;
-    margin-top: 1.4rem;
-    width: 100px;
-  }
-
-  @media (min-width: 361px) and (max-width: 375px) {
-    margin-right: 11.5rem;
-    margin-top: 1.3rem;
-    width: 10px;
-  }
-
-  @media (min-width: 376px) and (max-width: 500px) {
-    margin-right: 8.25rem;
-    margin-top: 0.9rem;
-    width: 150px;
-  }
-
-  @media (min-width: 501px) and (max-width: 599px) {
-    margin-top: 0.9rem;
-    margin-right: 8.5rem;
-  }
-
-  @media (min-width: 600px) and (max-width: 699px) {
-    margin-top: 1rem;
-    margin-right: 8.5rem;
-  }
-
-  @media (min-width: 700px) and (max-width: 950px) {
-    margin-top: 1rem;
-    margin-right: 8.5rem;
-  }
-
-  @media (min-width: 951px) and (max-width: 1000px) {
-    margin-top: 0.5rem;
-    margin-right: 9rem;
-  }
-
-  @media (min-width: 1001px) {
-    margin-right: 9rem;
-  }
-
-  @media (min-width: 1024px) {
-    margin-top: 1rem;
-    margin-right: 13rem;
-  }
-
-  @media (max-width: 1024px) and (orientation: landscape) {
-    margin-top: 0.8rem;
-    margin-right: 9rem;
   }
 `;
 
@@ -713,29 +646,16 @@ const PedigreeTree = () => {
           ]}
         />
       </StyledRandomizedDropdownContainer>
-      <StyledIconsSection className="icon-list">
-        <a
-          href="https://www.instagram.com/inkydoodle.ml"
-          target="_blank"
-          rel="noopener noreferrer"
+      <Link to="/">
+        <StyledBackToHomeButton
+          tree
+          type="button"
+          className="nes-btn is-warning"
         >
-          <i className="nes-icon instagram is-medium" />
-        </a>
-        <a
-          href="https://github.com/amamenko/inky-doodle"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <i className="nes-icon github is-medium" />
-        </a>
-        <a
-          href="https://www.youtube.com/watch?v=VPKyCoFkgS0"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <i className="nes-icon youtube is-medium" />
-        </a>
-      </StyledIconsSection>
+          <ImHome3 />
+          <p>Home</p>
+        </StyledBackToHomeButton>
+      </Link>
       <StyledMainContainer parentInkyDoodles={parentInkyDoodles}>
         <StyledParentsContainer>
           <LeftParents

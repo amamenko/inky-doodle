@@ -145,7 +145,7 @@ const Contact = () => {
       <Link to="/">
         <StyledBackToHomeButton type="button" className="nes-btn is-warning">
           <ImHome3 />
-          <p>Back to Home</p>
+          <p>Home</p>
         </StyledBackToHomeButton>
       </Link>
       <StyledContactPage>
@@ -184,7 +184,7 @@ const Contact = () => {
             id="textarea_field"
             maxLength={1000}
             className="nes-textarea"
-            rows="8"
+            rows="7"
           />
 
           <StyledSubmitContainer>

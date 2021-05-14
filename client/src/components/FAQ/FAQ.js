@@ -111,7 +111,7 @@ const FAQ = () => {
       <Link to="/">
         <StyledBackToHomeButton type="button" className="nes-btn is-warning">
           <ImHome3 />
-          <p>Back to Home</p>
+          <p>Home</p>
         </StyledBackToHomeButton>
       </Link>
       <StyledFAQPage>
@@ -257,9 +257,17 @@ const FAQ = () => {
           </StyledCollapsibleQuestionContainer>
           <Collapse isOpened={selectedCollapse === 7}>
             <StyledCollapsibleContentContainer>
-              We are working on a YouTube tutorial showing how you can use
-              Node.js, Express, and Contentful to automatically post your own
-              photos to Instagram. Keep an eye out!
+              We've created a YouTube tutorial showing how you can use Node.js,
+              Express, and Contentful to automatically post your own photos to
+              Instagram. Check it out{" "}
+              <a
+                href="https://www.youtube.com/watch?v=XzyYi_yv86A"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                here
+              </a>
+              !
             </StyledCollapsibleContentContainer>
           </Collapse>
         </StyledQuestionContainer>
