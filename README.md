@@ -90,13 +90,6 @@ The Instagram link and date of posting for that particular Inky Doodle are then 
 
 The server was initially deployed to [Heroku](https://www.heroku.com) and the Heroku dyno kept awake with [Kaffeine](https://kaffeine.herokuapp.com), but is now deployed on [AWS](https://aws.amazon.com). A video walkthrough of the code for this server can be found on [YouTube](https://www.youtube.com/watch?v=XzyYi_yv86A).
 
-## Upcoming Features
-
-The following are additional upcoming features of Inky Doodle: 
-  - [ ] All Inky Doodles list view
-  - [ ] Circular pedigree tree
-  - [X] Server-side Instagram posting video tutorial
-
 ## Local Development
 
 To set up this project locally, you can follow the steps below.
