@@ -73,7 +73,7 @@ Inky Doodles are the intellectual property of Alex Jaloza. Inky Doodle assets, i
 
 <br />
 
-Production application added generational title indicators to each individual parent's tree node.
+As opposed to the initial design mock-ups, which just included the Inky Doodle's name underneath each individual parent's tree node, the production application added generational title indicators underneath each node. These allow for the dynamic setting of the Inky Doodle tree structure.
 
 First generation parent dropdowns also highlight names (with appropriate associated Inky Doodle colors) of parent species selected on the opposite side of the tree
 to suggest a next selection that will produce a successful generation 3 offspring.
