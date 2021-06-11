@@ -60,7 +60,7 @@ arrows designate breeding to create a new generation:
 <br />
 
 The application was built by using React, [Styled Components](https://github.com/styled-components/styled-components), and [NES.css](https://github.com/nostalgic-css/NES.css).
-All Inky Doodle information including names, parent information, images, and order number are stored in a [Contentful](https://www.contentful.com/) space and queried as needed by using Contentful's GraphQL API.
+All Inky Doodle information including names, parent information, images, and order number are stored in a [Contentful](https://www.contentful.com/) space and queried as needed by using Contentful's [Content Delivery API](https://www.contentful.com/developers/docs/references/content-delivery-api).
 
 Inky Doodles are the intellectual property of Alex Jaloza. Inky Doodle assets, info, and initial design mockups courtesy of Alex Jaloza.
 
@@ -80,7 +80,7 @@ to suggest a next selection that will produce a successful generation 3 offsprin
 
 A randomizer button was also added in production that automatically selects first generation parents according to one of the seven breeding combinations mentioned in the introduction.
 
-Project was deployed to [Vercel](https://vercel.com), custom domain acquired from [Freenom](https://www.freenom.com/en/index.html?lang=en).
+The project was deployed to [Vercel](https://vercel.com). The custom domain was acquired from [Freenom](https://www.freenom.com/en/index.html?lang=en). DNS routing provided by [Cloudflare](https://www.cloudflare.com).
 
 ## Automated Server-side Instagram Posting
 
