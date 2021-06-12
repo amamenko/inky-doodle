@@ -28,11 +28,17 @@
 
 Inky Doodle is a single-page application (SPA) that illustrates and explores the biological concepts of hybridization and heredity with the use of imaginary species of "Inky Doodles." The website includes a landing page that allows the user to navigate to a Frequently Asked Questions (FAQ) page, a Search Inky Doodle page, a Pedigree Chart page, and a Contact Us page. 
 
+### Search Functionality
+
 The search functionality gives users the ability to look up Inky Doodles by name or ID number. This search input queries the Inky Doodle Contentful database and shows all the matching Inky Doodles in a paginated result page format. Users can then click on a desired Inky Doodle preview thumbnail to open up that specific Inky Doodle's full profile. This profile includes their picture, name, number, parents, children, and Instagram history. If the Inky Doodle has already been posted to the [@inkydoodle.ml](https://www.instagram.com/inkydoodle.ml) Instagram page, then users can see when it was posted and also click a link that leads to that specific post. Otherwise, the scheduled date for that Inky Doodle's post will be shown.
 
 In the Inky Doodle profile, any parent (if not the same as the Inky Doodle itself) or child can be clicked to view the associated parent or child's profile. Users can traverse back and forth through nested profiles easily since the profile states are stored and manipulated through a stack data structure (last in, first out).
 
+### Contact Page
+
 The contact page includes a form (consisting of a name, email, and any questions/comments) that is connected to a [Getform.io](https://getform.io) endpoint. This endpoint is, in turn, connected to an email associated with Inky Doodle that receives the form when it is submitted. The form inputs then reset after submission.
+
+### Pedigree Chart
 
 An additional feature of the application is a tree-structured pedigree chart with three generations. The first generation has a left tree and a right tree with spaces for two
 sets of parents. These parents can then be bred to form second generation offspring, which can, in turn, be bred to potentialy create third generation offspring.
