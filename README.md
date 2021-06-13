@@ -188,6 +188,7 @@ Project Link: [https://github.com/amamenko/inky-doodle](https://github.com/amame
 - [react-select-nes-css-theme](https://www.npmjs.com/package/react-select-nes-css-theme)
 - [Vercel](https://vercel.com)
 - [Heroku](https://www.heroku.com)
+- [AWS](https://aws.amazon.com)
 - [instagram-web-api](https://www.npmjs.com/package/instagram-web-api)
 - [Jimp](https://www.npmjs.com/package/jimp)
 - [React Icons](https://react-icons.github.io/react-icons)
