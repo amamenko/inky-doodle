@@ -5,6 +5,7 @@ const contentful = require("contentful-management");
 const fs = require("fs");
 const Jimp = require("jimp");
 const Instagram = require("instagram-web-api");
+const FileCookieStore = require("tough-cookie-filestore2");
 const cron = require("node-cron");
 const imaps = require("imap-simple");
 const _ = require("lodash");
@@ -18,10 +19,14 @@ const port = process.env.PORT || 4000;
 // Upload new Inky Doodle to Instagram every day at 4:00 PM
 cron.schedule("59 15 * * *", async () => {
   const instagramLoginFunction = async () => {
+    // Persist cookies after Instagram client log in
+    const cookieStore = new FileCookieStore("./cookies.json");
+
     const client = new Instagram(
       {
         username: process.env.INSTAGRAM_USERNAME,
         password: process.env.INSTAGRAM_PASSWORD,
+        cookieStore,
       },
       {
         language: "en-US",
