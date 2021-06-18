@@ -94,7 +94,7 @@ The project also incudes an [Express](https://expressjs.com) server that posts a
 
 The Instagram link and date of posting for that particular Inky Doodle are then automatically stored via [the JavaScript SDK for Contentful's Content Management API](https://www.npmjs.com/package/contentful-management).
 
-The server was initially deployed to [Heroku](https://www.heroku.com) and the Heroku dyno kept awake with [Kaffeine](https://kaffeine.herokuapp.com), but is now deployed on [AWS](https://aws.amazon.com). A video walkthrough of the code for this server can be found on [YouTube](https://www.youtube.com/watch?v=XzyYi_yv86A). This video provides a fairly in-depth explanation and I plan on making a shorter tutorial in the near future simply going over the basics of automating daily Instagram posts without necessarily daily customization.
+The server was initially deployed to [Heroku](https://www.heroku.com) and the Heroku dyno kept awake with [Kaffeine](https://kaffeine.herokuapp.com), but is now deployed on [AWS](https://aws.amazon.com). A video walkthrough of the code for this server can be found on [YouTube](https://www.youtube.com/watch?v=XzyYi_yv86A). This video provides a fairly in-depth explanation and I plan on making a shorter tutorial in the near future simply going over the basics of automating daily Instagram posts without necessarily daily customization with something as sophisticated as Contentful. This video will also include how to set up a cookie store, which the previous tutorial did not mention.
 
 ## Local Development
 
