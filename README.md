@@ -26,7 +26,7 @@
 
 ## Overview
 
-Inky Doodle is a single-page application (SPA) that illustrates and explores the biological concepts of hybridization and heredity with the use of imaginary species of "Inky Doodles." The website includes a landing page that allows the user to navigate to a Frequently Asked Questions (FAQ) page, a Search Inky Doodle page, a Pedigree Chart page, and a Contact Us page. 
+Inky Doodle is a single-page application (SPA) that illustrates and explores the biological concepts of hybridization and heredity with the use of imaginary species of "Inky Doodles." The website also has a [Pokédex](https://www.pokemon.com/us/pokedex/)-like search functionality. The website includes a landing page that allows the user to navigate to a Frequently Asked Questions (FAQ) page, a Search Inky Doodle page, a Pedigree Chart page, and a Contact Us page. 
 
 ### Search Functionality
 
