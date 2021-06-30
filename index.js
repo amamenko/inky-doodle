@@ -128,10 +128,15 @@ cron.schedule("59 15 * * *", async () => {
                             caption: updatedCaption,
                             post: "feed",
                           })
-                          .then(({ media }) => {
+                          .then(async ({ media }) => {
                             console.log(
                               `https://www.instagram.com/p/${media.code}/`
                             );
+
+                            await client.addComment({
+                              mediaId: media.id,
+                              text: "#nftcollectors #nftcollectibles #dibujo #dibujodigital #pixel #pixelart #digitalart #cute #artist #instadaily #artdaily #pixelartist #dailyart #nfts #nft #16bitart #8bitart #8bit #32bit #arteespanol #artebrasil #gatoslindos #gatosdeinstagram #nycart",
+                            });
 
                             const contentfulClient = contentful.createClient({
                               accessToken:
