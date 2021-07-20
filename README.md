@@ -96,7 +96,7 @@ The server logs in to Instagram initially with a username and password. It then 
 
 The server was initially deployed to [Heroku](https://www.heroku.com) and the Heroku dyno kept awake with [Kaffeine](https://kaffeine.herokuapp.com), but is now deployed on [AWS](https://aws.amazon.com). A video walkthrough of the code for this server can be found on [YouTube](https://www.youtube.com/watch?v=XzyYi_yv86A). 
 
-I plan on making a shorter tutorial in the near future simply going over the basics of automating daily Instagram posts with one static, local photo without necessarily adding daily customization with something as sophisticated as Contentful. This shorter tutorial will be along the lines of the source code of another one of my projects called [Daily Pixel Mike](https://github.com/amamenko/daily-pixel-mike). This video will also include how to set up a cookie store via [tough-cookie-filestore2](https://www.npmjs.com/package/tough-cookie-filestore2), which the previous tutorial did not mention.
+I have also created a [shorter tutorial on YouTube](https://www.youtube.com/watch?v=E46vCLlJ2Dw) going over the basics of automating daily Instagram posts with one static, local photo. This shorter tutorial centers around my other project called [Daily Pixel Mike](https://github.com/amamenko/daily-pixel-mike). This video also includes how to set up a cookie store via [tough-cookie-filestore2](https://www.npmjs.com/package/tough-cookie-filestore2), which the previous tutorial did not mention.
 
 ## Local Development
 
