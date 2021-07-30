@@ -189,12 +189,6 @@ cron.schedule("59 15 * * *", async () => {
         });
     };
 
-    const delayedInstagramPostFunction = async (timeout) => {
-      setTimeout(async () => {
-        await instagramPostPictureFunction();
-      }, timeout);
-    };
-
     try {
       console.log("Logging in...");
 
@@ -202,18 +196,24 @@ cron.schedule("59 15 * * *", async () => {
 
       console.log("Login successful!");
 
+      const delayedInstagramPostFunction = async (timeout) => {
+        setTimeout(async () => {
+          await instagramPostPictureFunction();
+        }, timeout);
+      };
+
       await delayedInstagramPostFunction(50000);
     } catch (err) {
       console.log("Login failed!");
 
+      const delayedLoginFunction = async (timeout) => {
+        setTimeout(async () => {
+          await client.login().then(() => instagramPostPictureFunction());
+        }, timeout);
+      };
+
       if (err.statusCode === 403 || err.statusCode === 429) {
         console.log("Throttled!");
-
-        const delayedLoginFunction = async (timeout) => {
-          setTimeout(async () => {
-            await client.login().then(() => instagramPostPictureFunction());
-          }, timeout);
-        };
 
         await delayedLoginFunction(60000);
       }
@@ -306,6 +306,37 @@ cron.schedule("59 15 * * *", async () => {
 
         await delayedEmailFunction(40000);
       }
+
+      // Delete stored cookies, if any, and log in again
+      console.log("Logging in again and setting new cookie store");
+      fs.unlinkSync("./cookies.json");
+      const newCookieStore = new FileCookieStore("./cookies.json");
+
+      const newClient = new Instagram(
+        {
+          username: process.env.INSTAGRAM_USERNAME,
+          password: process.env.INSTAGRAM_PASSWORD,
+          cookieStore: newCookieStore,
+        },
+        {
+          language: "en-US",
+        }
+      );
+
+      const delayedNewLoginFunction = async (timeout) => {
+        setTimeout(async () => {
+          console.log("Logging in again");
+          await newClient
+            .login()
+            .then(() => instagramPostPictureFunction())
+            .catch((err) => {
+              console.log(err);
+              console.log("Login failed again!");
+            });
+        }, timeout);
+      };
+
+      await delayedNewLoginFunction(10000);
     }
   };
 
