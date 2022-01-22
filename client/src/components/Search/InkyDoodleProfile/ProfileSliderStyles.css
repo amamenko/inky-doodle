@@ -46,6 +46,8 @@ div {
   -webkit-overflow-scrolling: touch;
   background: #fff;
   overflow-x: hidden;
+  top: 0 !important;
+  z-index: 999999 !important;
 }
 
 /* General sidebar styles */
@@ -76,6 +78,16 @@ div {
 /* Styling of overlay */
 .bm-overlay {
   background: rgba(0, 0, 0, 0.6) !important;
+  top: 0 !important;
+  z-index: 10000 !important;
+}
+
+.nes-pointer > svg path {
+  fill: #000 !important;
+}
+
+.nes-pointer > svg path:nth-child(1) {
+  fill: #fff !important;
 }
 
 @media only screen and (min-width: 0px) and (orientation: landscape) {
