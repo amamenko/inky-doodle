@@ -34,4 +34,8 @@ export const StyledSearchPageContainer = styled.div`
     position: fixed;
     height: 135vh;
   }
+
+  @media (min-width: 1400px) and (max-height: 750px) {
+    height: 100vh;
+  }
 `;

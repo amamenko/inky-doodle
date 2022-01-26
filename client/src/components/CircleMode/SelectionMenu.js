@@ -30,6 +30,10 @@ const StyledMenuImage = styled.img`
   width: 30%;
   border-right: ${(props) => `3px solid ${props.color}`};
   padding-right: 1rem;
+
+  @media only screen and (min-width: 1400px) and (max-height: 700px) {
+    width: 20%;
+  }
 `;
 
 const SelectionMenu = (props) => {

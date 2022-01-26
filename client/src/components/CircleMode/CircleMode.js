@@ -108,6 +108,13 @@ const StyledInkyContainer = styled.div`
       box-shadow: none;
     }
   }
+
+  @media only screen and (min-width: 1400px) and (max-height: 700px) {
+    width: ${(props) =>
+      props.gen === 1 ? "100px" : props.gen === 2 ? "80px" : "70px"};
+    height: ${(props) =>
+      props.gen === 1 ? "100px" : props.gen === 2 ? "80px" : "70px"};
+  }
 `;
 
 const StyledTitle = styled.div`

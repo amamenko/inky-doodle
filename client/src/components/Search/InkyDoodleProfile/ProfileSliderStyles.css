@@ -94,6 +94,10 @@ div {
   .bm-menu-wrap {
     width: 300px !important;
   }
+
+  .nes-btn.is-error {
+    z-index: 999;
+  }
 }
 
 @media only screen and (min-width: 600px) {
@@ -105,5 +109,11 @@ div {
 @media only screen and (min-width: 1200px) {
   .bm-menu-wrap {
     width: 600px !important;
+  }
+}
+
+@media only screen and (min-width: 1400px) and (max-height: 700px) {
+  .bm-menu-wrap {
+    width: 350px !important;
   }
 }

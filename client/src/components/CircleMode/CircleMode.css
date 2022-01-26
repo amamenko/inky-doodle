@@ -178,3 +178,28 @@
     background: #dedede;
   }
 }
+
+@media only screen and (min-width: 1400px) and (max-height: 700px) {
+  .circle_title {
+    font-size: 3rem;
+  }
+
+  .circle_prompt {
+    font-size: 2rem;
+    margin-bottom: 10rem;
+  }
+
+  .inky_name_tag {
+    max-width: 108px !important;
+    width: 108px !important;
+  }
+
+  .inky_name_tag.gen2 {
+    max-width: 88px !important;
+  }
+
+  .inky_name_tag.gen3 {
+    max-width: 77px !important;
+    width: 77px !important;
+  }
+}
