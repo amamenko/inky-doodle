@@ -26,7 +26,7 @@
 
 ## Overview
 
-Inky Doodle is a single-page application (SPA) that illustrates and explores the biological concepts of hybridization and heredity with the use of imaginary species of "Inky Doodles." The website also has a [Pokédex](https://www.pokemon.com/us/pokedex/)-like search functionality. The website includes a landing page that allows the user to navigate to a Frequently Asked Questions (FAQ) page, a Search Inky Doodle page, a Pedigree Chart page, and a Contact Us page. 
+Inky Doodle is a single-page application (SPA) that illustrates and explores the biological concepts of hybridization and heredity with the use of imaginary species of "Inky Doodles." The website also has a [Pokédex](https://www.pokemon.com/us/pokedex/)-like search functionality. The website includes a landing page that allows the user to navigate to a Frequently Asked Questions (FAQ) page, a Search Inky Doodle page, a Pedigree Chart page, and a Contact Us page.
 
 ### Search Functionality
 
@@ -73,7 +73,7 @@ Inky Doodles are the intellectual property of Alex Jaloza. Inky Doodle assets, i
 <br />
 
 <p align="center">
-  <img  src="client/src/images/PreliminarySketch.PNG" alt="Inky Doodle Preliminary Sketch" width="300" />
+  <img  src="client/src/images/PreliminarySketch.png" alt="Inky Doodle Preliminary Sketch" width="300" />
   <img src="client/src/images/ProductionScreenshot.png" alt="Inky Doodle Production Screenshot" width="400" /> 
 </p>
 
@@ -90,11 +90,11 @@ The project was deployed to [Vercel](https://vercel.com). The custom domain was 
 
 ## Automated Server-side Instagram Posting
 
-The project also incudes an [Express](https://expressjs.com) server that posts a new Inky Doodle from [Contentful](https://www.contentful.com/) with a custom caption (including the Inky Doodle's name, ID number, parents, if any, and its generation) to the [@inkydoodle.ml](https://www.instagram.com/inkydoodle.ml) Instagram page every day at 4PM Eastern Time via [node-cron](https://www.npmjs.com/package/node-cron) and [instagram-web-api](https://www.npmjs.com/package/instagram-web-api). 
+The project also incudes an [Express](https://expressjs.com) server that posts a new Inky Doodle from [Contentful](https://www.contentful.com/) with a custom caption (including the Inky Doodle's name, ID number, parents, if any, and its generation) to the [@inkydoodle.ml](https://www.instagram.com/inkydoodle.ml) Instagram page every day at 4PM Eastern Time via [node-cron](https://www.npmjs.com/package/node-cron) and [instagram-web-api](https://www.npmjs.com/package/instagram-web-api).
 
 The server logs in to Instagram initially with a username and password. It then persists the authenticated cookies in a cookie store via [tough-cookie-filestore2](https://www.npmjs.com/package/tough-cookie-filestore2) for future use. The Instagram link and date of posting for that particular Inky Doodle are then automatically stored via [the JavaScript SDK for Contentful's Content Management API](https://www.npmjs.com/package/contentful-management).
 
-The server was initially deployed to [Heroku](https://www.heroku.com) and the Heroku dyno kept awake with [Kaffeine](https://kaffeine.herokuapp.com), but is now deployed on [AWS](https://aws.amazon.com). A video walkthrough of the code for this server can be found on [YouTube](https://www.youtube.com/watch?v=XzyYi_yv86A). 
+The server was initially deployed to [Heroku](https://www.heroku.com) and the Heroku dyno kept awake with [Kaffeine](https://kaffeine.herokuapp.com), but is now deployed on [AWS](https://aws.amazon.com). A video walkthrough of the code for this server can be found on [YouTube](https://www.youtube.com/watch?v=XzyYi_yv86A).
 
 I have also created a [shorter tutorial on YouTube](https://www.youtube.com/watch?v=E46vCLlJ2Dw) going over the basics of automating daily Instagram posts with one static photo. This shorter tutorial centers around my other project called [Daily Pixel Mike](https://github.com/amamenko/daily-pixel-mike). This video also includes how to set up a cookie store via [tough-cookie-filestore2](https://www.npmjs.com/package/tough-cookie-filestore2), which the previous tutorial did not mention. It also includes random words generated daily using the [wordpos](https://www.npmjs.com/package/wordpos) library. The source code also shows how I implemented daily definitions for the randomly generated adjectives.
 
