@@ -54,6 +54,20 @@ arrows designate breeding to create a new generation:
 <p align="center">A, B, A, C &rarr; Ab, Ac &rarr; Abac</p>
 <p align="center">A, B, C, D &rarr; Ab, Cd &rarr; No Match</p>
 
+### Circle Mode
+
+This feature is similar to the pedigree tree except it includes an additional generation 1 parent.
+
+Generation 2 Inky Doodles can only breed with other generation 2 Inky Doodles that share a parent with them. This means that any two generation 2 Inky Doodles will have a natural third partner that is the child of the two parents they don't share.
+
+This results in 3 triangular-shaped relationships that make up a pedigree "circle": the three generation 1 parents, the three generation 2s that the generation 1 parents create, and the three generation 3 cousins that result from the pairing of the generation 2 offspring.
+
+### Deployment
+
+The project was deployed to [Vercel](https://vercel.com). The custom domain was acquired from [Freenom](https://www.freenom.com/en/index.html?lang=en). DNS routing provided by [Cloudflare](https://www.cloudflare.com).
+
+<br />
+
 ## UX / UI
 
 <br /> 
@@ -73,20 +87,31 @@ Inky Doodles are the intellectual property of Alex Jaloza. Inky Doodle assets, i
 <br />
 
 <p align="center">
-  <img  src="client/src/images/PreliminarySketch.png" alt="Inky Doodle Preliminary Sketch" width="300" />
+  <img  src="client/src/images/PreliminarySketch.PNG" alt="Inky Doodle Preliminary Sketch" width="300" />
   <img src="client/src/images/ProductionScreenshot.png" alt="Inky Doodle Production Screenshot" width="400" /> 
 </p>
 
 <br />
 
-As opposed to the initial design mock-ups, which just included the Inky Doodle's name underneath each individual parent's tree node, the production application added generational title indicators underneath each node. These allow for the dynamic setting of the Inky Doodle tree structure.
+As opposed to the initial design mock-ups for the Pedigree Tree, which just included the Inky Doodle's name underneath each individual parent's tree node, the production application added generational title indicators underneath each node. These allow for the dynamic setting of the Inky Doodle tree structure.
 
-First generation parent dropdowns also highlight names (with appropriate associated Inky Doodle colors) of parent species selected on the opposite side of the tree
+First generation parent dropdowns in the Pedigree Tree also highlight names (with appropriate associated Inky Doodle colors) of parent species selected on the opposite side of the tree
 to suggest a next selection that will produce a successful generation 3 offspring.
 
-A randomizer button was also added in production that automatically selects first generation parents according to one of the seven breeding combinations mentioned in the introduction.
+A randomizer button was also added to the Pedigree Tree in production that automatically selects first generation parents according to one of the seven breeding combinations mentioned in the introduction.
 
-The project was deployed to [Vercel](https://vercel.com). The custom domain was acquired from [Freenom](https://www.freenom.com/en/index.html?lang=en). DNS routing provided by [Cloudflare](https://www.cloudflare.com).
+<br />
+
+<p align="center">
+  <img  src="client/src/images/CircleModeSketch.png" alt="Inky Doodle Circle Mode Preliminary Sketch" width="300" />
+  <img src="client/src/images/CircleModeProd.png" alt="Inky Doodle Circle Mode Production Screenshot" width="450" /> 
+</p>
+
+<br />
+
+Similarly, as opposed to the preliminary sketch, the production feature of Circle Mode includes generational title indicators and each Inky Doodle's name under each Inky Doodle's associated image. Arrows are also included to better illustrate the relationship that each generation 2 and generation 3 Inky Doodles have to their parents.
+
+Red arrows indicate generation 1 pairings that form generation 2 offspring. Blue arrows indicate generation 2 pairings that form generation 3 offspring.
 
 ## Automated Server-side Instagram Posting
 
