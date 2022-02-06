@@ -3,7 +3,7 @@ import axios from "axios";
 export const getGen3 = async (parent1, parent2) => {
   const gen3InkyDoodlesQuery = `
           query {
-              inkyDoodleCollection(where: {wave_not_in: [2, 3, 4, 5, 6], parents_contains_all: [${JSON.stringify(
+              inkyDoodleCollection(where: {wave_not_in: [3, 4, 5, 6], parents_contains_all: [${JSON.stringify(
                 parent1.name
               )}, ${JSON.stringify(parent2.name)}]}) {
                   items {

@@ -11,10 +11,13 @@ const StyledMenuContainer = styled.div`
   width: 100%;
   padding-left: 1rem;
   position: relative;
-  border-bottom: 1px solid #dedede;
   padding: 1rem;
   background: ${(props) =>
     props.selected === props.name ? "#dedede" : "#fff"};
+
+  &:not(:first-child):not(:last-child) {
+    border-bottom: 1px solid #dedede;
+  }
 
   h3 {
     margin: 0;
@@ -33,6 +36,20 @@ const StyledMenuImage = styled.img`
 
   @media only screen and (min-width: 1400px) and (max-height: 700px) {
     width: 20%;
+  }
+`;
+
+const StyledMenuGroupTitle = styled.h3`
+  font-size: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: -0.1rem;
+  padding: 0.5rem 1.5rem;
+  background: rgb(75, 75, 75);
+  color: #fff;
+
+  @media only screen and (max-width: 800px) {
+    font-size: 0.75rem;
+    margin-top: 0.75rem;
   }
 `;
 
@@ -64,6 +81,21 @@ const SelectionMenu = (props) => {
     }, 500);
   };
 
+  const renderMenuItems = (item, i) => {
+    return (
+      <StyledMenuContainer
+        className="side_menu_item"
+        key={i}
+        onClick={() => handleItemClick(item)}
+        selected={selected}
+        name={item.name}
+      >
+        <StyledMenuImage src={item.image.url} color={item.color} />
+        <h3>{item.name}</h3>
+      </StyledMenuContainer>
+    );
+  };
+
   return (
     <Menu
       disableAutoFocus
@@ -80,23 +112,24 @@ const SelectionMenu = (props) => {
         X
       </StyledProfileMenuXButton>
       <div>
-        {availableGen1 &&
-          availableGen1
-            .sort((a, b) => a.number - b.number)
-            .map((item, i) => {
-              return (
-                <StyledMenuContainer
-                  className="side_menu_item"
-                  key={i}
-                  onClick={() => handleItemClick(item)}
-                  selected={selected}
-                  name={item.name}
-                >
-                  <StyledMenuImage src={item.image.url} color={item.color} />
-                  <h3>{item.name}</h3>
-                </StyledMenuContainer>
-              );
-            })}
+        {availableGen1 && (
+          <>
+            <div>
+              <StyledMenuGroupTitle>Wave 1</StyledMenuGroupTitle>
+              {availableGen1
+                .sort((a, b) => a.number - b.number)
+                .filter((item) => !item.wave)
+                .map((item, i) => renderMenuItems(item, i))}
+            </div>
+            <div>
+              <StyledMenuGroupTitle>Wave 2</StyledMenuGroupTitle>
+              {availableGen1
+                .sort((a, b) => a.number - b.number)
+                .filter((item) => item.wave === 2)
+                .map((item, i) => renderMenuItems(item, i))}
+            </div>
+          </>
+        )}
       </div>
     </Menu>
   );

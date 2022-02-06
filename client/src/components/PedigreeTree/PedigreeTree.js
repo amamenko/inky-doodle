@@ -180,9 +180,9 @@ const PedigreeTree = () => {
           if (data.inkyDoodleCollection) {
             if (data.inkyDoodleCollection.items) {
               changeParentInkyDoodles(
-                data.inkyDoodleCollection.items
-                  .filter((item) => !item.wave)
-                  .sort((a, b) => a.number - b.number)
+                data.inkyDoodleCollection.items.sort(
+                  (a, b) => a.number - b.number
+                )
               );
             }
           }

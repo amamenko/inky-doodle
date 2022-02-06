@@ -15,11 +15,8 @@ import InstagramSection from "./components/InstagramSection";
 import "./ProfileSliderStyles.css";
 
 const InkyDoodleProfile = (props) => {
-  const {
-    inkyDoodleSelected,
-    changeInkyDoodleSelected,
-    inkyDoodleResult,
-  } = props;
+  const { inkyDoodleSelected, changeInkyDoodleSelected, inkyDoodleResult } =
+    props;
 
   const [inkyDoodleStack, changeInkyDoodleStack] = useState([
     { main: "", parents: [], children: [] },
@@ -84,7 +81,7 @@ const InkyDoodleProfile = (props) => {
                             { parents_contains_some: "${
                               currentInkyDoodle.name
                             }"}
-                        ], wave_not_in: [2, 3, 4, 5]
+                        ], wave_not_in: [3, 4, 5]
                 }) {
                     items   {
                     generation
@@ -132,13 +129,10 @@ const InkyDoodleProfile = (props) => {
                     ];
                     inkyDoodleObj.children = data.inkyDoodleCollection.items;
                   } else {
-                    inkyDoodleObj.parents = data.inkyDoodleCollection.items.slice(
-                      0,
-                      2
-                    );
-                    inkyDoodleObj.children = data.inkyDoodleCollection.items.slice(
-                      2
-                    );
+                    inkyDoodleObj.parents =
+                      data.inkyDoodleCollection.items.slice(0, 2);
+                    inkyDoodleObj.children =
+                      data.inkyDoodleCollection.items.slice(2);
                   }
 
                   changeInkyDoodleStack(copyArr);

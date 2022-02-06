@@ -85,7 +85,7 @@ const Search = () => {
               Number(userInput)
                 ? `{number_in: ${Number(userInput)}, `
                 : `{name_contains: "${userInput}, "`
-            } wave_not_in: [2, 3, 4, 5]}) {
+            } wave_not_in: [3, 4, 5]}) {
                 items   {
                 generation
                 instagram

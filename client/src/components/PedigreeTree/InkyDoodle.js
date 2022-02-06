@@ -99,6 +99,32 @@ const StyledTitle = styled.div`
   white-space: nowrap;
 `;
 
+const groupStyles = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  background: "#000",
+  color: "#fff",
+};
+
+const formatGroupLabel = (data) => (
+  <div style={groupStyles}>
+    <span>{data.label}</span>
+  </div>
+);
+
+const formatDropdownOptions = (arr) => {
+  return [
+    ...arr.map((item, i) => {
+      return {
+        value: i,
+        label: item.name,
+        imageURL: item.image.url,
+      };
+    }),
+  ].sort((a, b) => (a.number > b.number ? -1 : 1));
+};
+
 const InkyDoodle = (props) => {
   const {
     parentInkyDoodles,
@@ -391,24 +417,24 @@ const InkyDoodle = (props) => {
           options={
             parentInkyDoodles
               ? parentInkyDoodles.length > 0
-                ? parentInkyDoodles
-                    .map((item, i) => {
-                      return {
-                        value: i,
-                        label: item.name,
-                        imageURL: item.image.url,
-                      };
-                    })
-                    .sort((a, b) => {
-                      if (a.number > b.number) {
-                        return -1;
-                      } else {
-                        return 1;
-                      }
-                    })
+                ? [
+                    {
+                      label: "Wave 1",
+                      options: formatDropdownOptions(
+                        parentInkyDoodles.filter((item) => !item.wave)
+                      ),
+                    },
+                    {
+                      label: "Wave 2",
+                      options: formatDropdownOptions(
+                        parentInkyDoodles.filter((item) => item.wave === 2)
+                      ),
+                    },
+                  ]
                 : []
               : []
           }
+          formatGroupLabel={formatGroupLabel}
         />
       )}
     </StyledContainer>
