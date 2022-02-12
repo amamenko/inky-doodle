@@ -403,7 +403,13 @@ const InkyDoodle = (props) => {
         </div>
       ) : (
         <Select
-          styles={nesTheme}
+          styles={{
+            ...nesTheme,
+            position: "relative",
+            zIndex: 100,
+            width: "500px",
+            overflow: "hidden",
+          }}
           value={value}
           onChange={changeValue}
           isSearchable={false}
