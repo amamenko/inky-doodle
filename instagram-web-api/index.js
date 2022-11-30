@@ -52,9 +52,9 @@ class Instagram {
     // Get CSRFToken from cookie before login
     let value;
     await this.request("/", { resolveWithFullResponse: true }).then((res) => {
-      const pattern = new RegExp(/(csrf_token":")\w+/);
-      const matches = res.toJSON().body.match(pattern);
-      value = matches[0].substring(13);
+      const pattern = new RegExp(/(csrf_token\\":\\")[\w]+/);
+      const matches = res.body.match(pattern);
+      if (matches && matches[0]) value = matches[0].substring(15);
     });
 
     // Provide CSRFToken for login or challenge request
